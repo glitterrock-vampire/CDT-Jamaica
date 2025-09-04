@@ -1,6 +1,6 @@
 // @ts-nocheck
 // YouTube duration input component
-import YouTubeDurationInput from '../components/YouTubeDurationInput';
+import YouTubeDurationInput from '../components/YouTubeDurationInput.jsx';
 
 // Function to fetch duration from YouTube API
 async function fetchYoutubeDuration(youtubeId) {
@@ -177,26 +177,6 @@ export default {
         }
         
         return true;
-      })
-    },
-    {
-      name: 'duration',
-      title: 'Duration',
-      type: 'string',
-      description: 'Video duration in MM:SS or H:MM:SS format',
-      components: {
-        input: (props) => {
-          const { value, onChange } = props;
-          return <YouTubeDurationInput value={value} onChange={onChange} />;
-        }
-      },
-      validation: Rule => Rule.custom(duration => {
-        if (!duration) return true; // Allow empty
-        const timeFormat = /^([0-9]+:)?[0-5]?[0-9]:[0-5][0-9]$/;
-        if (timeFormat.test(duration)) {
-          return true;
-        }
-        return 'Please enter duration as MM:SS (e.g., 3:45) or H:MM:SS (e.g., 1:23:45)';
       }),
       options: {
         isHighlighted: true

@@ -2,14 +2,14 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
-import repertoireItem from './schemaTypes/repertoireItem'
+import repertoireItem from './schemaTypes/repertoireItem.jsx'
 
 export default defineConfig({
   name: 'default',
   title: 'CDT',
-  projectId: process.env.SANITY_PROJECT_ID || 'sbvvl9vs',
-  dataset: process.env.SANITY_DATASET || 'production',
-  apiVersion: process.env.SANITY_API_VERSION || '2023-05-03',
+  projectId: 'sbvvl9vs',
+  dataset: 'production',
+  apiVersion: '2023-05-03',
   useCdn: process.env.NODE_ENV === 'production',
 
   plugins: [
@@ -21,14 +21,14 @@ export default defineConfig({
     types: [repertoireItem as any],
   },
 
-  // CORS settings for development and production
+  // CORS settings
   server: {
     cors: {
       origin: [
         'http://localhost:3000',
         'http://localhost:3333',
-        'https://cdt-jamaica.vercel.app',  // Add your Vercel production URL
-        'https://*.vercel.app'             // Allow all Vercel preview deployments
+        'https://cdt-jamaica.vercel.app',
+        'https://cdt-jamaica-*.vercel.app' // Wildcard for preview deployments
       ],
       credentials: true,
     },

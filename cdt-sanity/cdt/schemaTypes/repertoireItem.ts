@@ -46,6 +46,7 @@ export default defineType({
       type: 'string',
       description: 'The ID of the YouTube video (the part after v= in the URL)',
     }),
+    // @ts-ignore - TypeScript workaround for Sanity image field
     defineField({
       name: 'thumbnail',
       title: 'Thumbnail Image',
@@ -62,7 +63,7 @@ export default defineType({
           description: 'Important for SEO and accessibility',
           validation: (Rule: any) => Rule.required(),
         },
-      ],
+      ]
     }),
     defineField({
       name: 'description',
