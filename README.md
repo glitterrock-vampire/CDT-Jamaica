@@ -1,62 +1,91 @@
-# CDT Jamaica - Dance Company Website
+# CDT Jamaica - Frontend
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+This is the frontend application for CDT Jamaica, built with React and integrated with Sanity.io as the headless CMS.
 
-A modern, responsive website for CDT Jamaica, featuring a headless CMS for easy content management and a performant React frontend.
-
-## 📋 Project Structure
-
-```
-.
-├── cdt-sanity/     # Sanity Studio (Headless CMS)
-└── frontend/       # React frontend application
-```
-
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js (v14 or later)
 - npm or yarn
-- Sanity CLI (for CMS development)
+- Sanity Studio project (see [cdt-sanity/README.md](../cdt-sanity/README.md))
 
-### Development Setup
+### Installation
 
-1. **Clone the repository**
+1. **Install Dependencies**
    ```bash
-   git clone https://github.com/glitterrock-vampire/CDT-Jamaica.git
-   cd CDT-Jamaica
+   cd frontend
+   npm install
+   # or
+   yarn install
    ```
 
-2. **Set up the Sanity Studio (Backend)**
-   ```bash
-   cd cdt-sanity
-   npm install
-   cp .env.example .env.local
-   # Update environment variables in .env.local
-   npm run dev
+2. **Environment Setup**
+   Create a `.env` file in the frontend directory with the following variables:
+   ```
+   REACT_APP_SANITY_PROJECT_ID=your_project_id
+   REACT_APP_SANITY_DATASET=production
+   REACT_APP_SANITY_API_VERSION=2023-05-03
    ```
 
-3. **Set up the Frontend**
+3. **Start Development Server**
    ```bash
-   cd ../frontend
-   npm install
-   cp .env.example .env.local
-   # Update environment variables in .env.local
    npm start
+   # or
+   yarn start
    ```
+   The app will be available at [http://localhost:3000](http://localhost:3000)
 
-## 🛠 Built With
+## 🛠 Features
 
-- **Frontend**: React, Tailwind CSS, Framer Motion
-- **Backend**: Sanity.io
-- **Deployment**: Vercel
+- **Responsive Design**: Optimized for all device sizes
+- **Dark Mode**: Toggle between light and dark themes
+- **Performance Optimized**: Code splitting and lazy loading
+- **Modern UI**: Built with Tailwind CSS and Framer Motion
 
-## 📄 License
+## 📂 Project Structure
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
+frontend/
+├── public/           # Static files
+├── src/
+│   ├── components/   # Reusable UI components
+│   ├── context/      # React context providers
+│   ├── pages/        # Page components
+│   ├── styles/       # Global styles
+│   ├── App.js        # Main App component
+│   └── index.js      # Entry point
+```
 
-## 🙏 Acknowledgments
+## 🚀 Deployment
 
-- Icons from [React Icons](https://react-icons.github.io/react-icons/)
-- Styling with [Tailwind CSS](https://tailwindcss.com/)
-- Animations with [Framer Motion](https://www.framer.com/motion/)
+This project is configured for deployment on Vercel. The production build can be created with:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

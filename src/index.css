@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #111827;
+    --muted: #6b7280;
+  }
+
+  .dark {
+    --background: #111827;
+    --foreground: #f9fafb;
+    --muted: #9ca3af;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] font-['Raleway'] font-normal;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .text-muted {
+    @apply text-[var(--muted)];
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl font-black;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl font-extrabold;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-bold;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  p, li, a, span {
+    @apply text-base font-normal leading-relaxed;
+  }
+
+  .prose {
+    @apply text-gray-700;
+  }
+
+  .prose h2, .prose h3, .prose h4 {
+    @apply text-gray-900 mt-8 mb-4;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-700;
+}
