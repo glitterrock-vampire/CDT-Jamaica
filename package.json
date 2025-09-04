@@ -8,9 +8,9 @@
   ],
   "scripts": {
     "start": "cd frontend && npm start",
-    "build": "cd frontend && npm run build",
+    "build": "echo 'Build is handled by Vercel using the frontend directory directly'",
     "test": "cd frontend && npm test",
-    "eject": "cd frontend && npm run eject"
+    "vercel-build": "cd frontend && npm install && npm run build"
   },
   "engines": {
     "node": ">=14.0.0"
