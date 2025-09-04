@@ -1,12 +1,12 @@
 import sanityClient from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 
-// Only access environment variables during build time or server-side
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.REACT_APP_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.REACT_APP_SANITY_DATASET || 'production';
+// Configuration for Sanity client
+const projectId = process.env.REACT_APP_SANITY_PROJECT_ID;
+const dataset = process.env.REACT_APP_SANITY_DATASET || 'production';
 
 if (!projectId) {
-  console.error('Missing Sanity project ID. Please set NEXT_PUBLIC_SANITY_PROJECT_ID or REACT_APP_SANITY_PROJECT_ID');
+  console.error('Missing Sanity project ID. Please set REACT_APP_SANITY_PROJECT_ID in your environment variables');
 }
 
 const clientConfig = {
@@ -14,10 +14,9 @@ const clientConfig = {
   dataset,
   apiVersion: '2023-05-03',
   useCdn: process.env.NODE_ENV === 'production',
-  // Only include token if we're on the server side
-  ...(typeof window === 'undefined' && process.env.SANITY_API_TOKEN ? { 
-    token: process.env.SANITY_API_TOKEN 
-  } : {}),
+  // Note: In Create React App, all environment variables are included in the client bundle
+  // if they start with REACT_APP_. Be careful not to expose sensitive tokens.
+  token: process.env.REACT_APP_SANITY_TOKEN,
   ignoreBrowserTokenWarning: true,
 };
 
