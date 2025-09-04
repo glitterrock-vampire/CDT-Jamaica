@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getRepertoireItemById } from '../lib/sanity';
-import { imageUrlFor } from '../lib/image-url';
 import { fetchVideoDuration, formatDuration } from '../lib/youtube';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -14,13 +13,16 @@ const DanceDetail = () => {
   const [error, setError] = useState(null);
   const [videoDuration, setVideoDuration] = useState('');
 
-  const fetchVideoDetails = useCallback(async (youtubeId) => {
-    if (!youtubeId) return;
+  const fetchVideoDetails = useCallback(async (youtubeUrl) => {
+    if (!youtubeUrl) return;
     
     try {
-      const duration = await fetchVideoDuration(youtubeId);
-      if (duration) {
-        setVideoDuration(formatDuration(duration));
+      const videoId = youtubeUrl.split('v=')[1];
+      if (videoId) {
+        const duration = await fetchVideoDuration(videoId);
+        if (duration) {
+          setVideoDuration(formatDuration(duration));
+        }
       }
     } catch (error) {
       console.error('Error fetching video details:', error);
@@ -37,16 +39,15 @@ const DanceDetail = () => {
       }
       
       try {
-        console.log('Fetching dance with ID:', id);
+        setLoading(true);
         const data = await getRepertoireItemById(id);
-        if (!data) {
-          throw new Error('Dance not found');
-        }
-        setDance(data);
-        
-        // Fetch video details if YouTube ID exists
-        if (data.youtubeId) {
-          fetchVideoDetails(data.youtubeId);
+        if (data) {
+          setDance(data);
+          
+          // If there's a YouTube URL, extract the video ID
+          if (data.youtubeUrl) {
+            fetchVideoDetails();
+          }
         }
       } catch (err) {
         console.error('Error fetching dance details:', err);
@@ -57,7 +58,7 @@ const DanceDetail = () => {
     };
 
     fetchDance();
-  }, [id]);
+  }, [id, fetchVideoDetails]);
 
   if (loading) {
     return <LoadingSpinner text="Loading dance details..." />;
@@ -80,26 +81,8 @@ const DanceDetail = () => {
     );
   }
 
-  // Helper function to get thumbnail URL with proper dimensions
-  const getThumbnailUrl = (thumbnail) => {
-    if (!thumbnail?.url) return null;
-    
-    return imageUrlFor(thumbnail)
-      .width(800)
-      .height(Math.floor(800 * (9/16)))
-      .fit('crop')
-      .auto('format')
-      .url();
-  };
-  
   // Get the display duration (from YouTube or fallback to stored duration)
-  const getDisplayDuration = () => {
-    if (videoDuration) return videoDuration;
-    if (dance?.duration) return dance.duration;
-    return '';
-  };
-  
-  const displayDuration = getDisplayDuration();
+  const displayDuration = videoDuration || dance?.duration || '';
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">

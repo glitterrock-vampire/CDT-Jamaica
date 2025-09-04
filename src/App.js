@@ -8,7 +8,7 @@ import DanceDetail from './pages/DanceDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import { getRepertoireItems } from './lib/sanity';
-import { parseDuration, formatDuration } from './utils/duration';
+import { parseDuration } from './utils/duration';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');

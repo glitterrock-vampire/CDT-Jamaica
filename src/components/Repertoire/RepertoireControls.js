@@ -88,8 +88,8 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
                 Sort by
               </div>
               {sortOptions.map((option) => {
-                const [field, order] = option.id.split('-');
                 const isSelected = sortBy === option.id;
+                const order = sortBy.endsWith('-asc') ? 'asc' : 'desc';
                 
                 return (
                   <button

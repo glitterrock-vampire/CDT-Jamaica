@@ -24,9 +24,6 @@ console.log('Sanity client configured with:', {
   endpoint: `https://${config.projectId}.api.sanity.io/v${config.apiVersion}/data/query/${config.dataset}`,
 });
 
-// Set up the API URL for direct fetch calls (if needed)
-const apiUrl = `https://${config.projectId}.api.sanity.io/v${config.apiVersion}/data/query/${config.dataset}?query=`;
-
 // Helper function to generate image URLs
 const builder = imageUrlBuilder(client);
 

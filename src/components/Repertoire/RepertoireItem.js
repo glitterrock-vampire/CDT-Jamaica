@@ -1,15 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { imageUrlFor } from '../../lib/image-url';
-import { parseDuration, formatDuration } from '../../utils/duration';
 
 const RepertoireItem = ({ item }) => {
   const navigate = useNavigate();
   
   if (!item) return null;
   
-  const { _id, title, composer, year, duration: rawDuration, thumbnail } = item;
+  const { _id, title, composer, year, thumbnail } = item;
   
   // Duration display has been removed as per requirements
   

@@ -7,7 +7,6 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const { isDarkMode, toggleDarkMode } = useTheme();
 
   // Close mobile menu when route changes
   useEffect(() => {
