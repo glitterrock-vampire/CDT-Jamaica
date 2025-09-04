@@ -13,12 +13,10 @@ module.exports = {
       }
     ]
   },
+  // Only expose non-sensitive configuration to the client
   env: {
-    // These environment variables will be available on the client side
-    // They will be replaced at build time with the values from Vercel
-    SANITY_PROJECT_ID: process.env.REACT_APP_SANITY_PROJECT_ID,
-    SANITY_DATASET: process.env.REACT_APP_SANITY_DATASET || 'production',
     SANITY_API_VERSION: '2023-05-03',
+    // Sensitive variables like project ID should be accessed server-side only
   },
   // Enable React Strict Mode
   reactStrictMode: true,
