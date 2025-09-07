@@ -88,7 +88,7 @@ const Contact = () => {
                   </svg>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p className="font-medium">Email</p>
-                    <p>info@cdtjamaica.com</p>
+                    <p>thecompany@cdtjamaica.org</p>
                   </div>
                 </motion.div>
                 
@@ -103,7 +103,7 @@ const Contact = () => {
                   </svg>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p className="font-medium">Phone</p>
-                    <p>+1 (876) 555-1234</p>
+                    <p>876-463-7395</p>
                   </div>
                 </motion.div>
                 
@@ -119,7 +119,7 @@ const Contact = () => {
                   </svg>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p className="font-medium">Address</p>
-                    <p>123 Dancehall Avenue<br />Kingston 5, Jamaica</p>
+                    <p>AISK, 2 College Green Avenue, Kingston 6, Jamaica W.I.</p>
                   </div>
                 </motion.div>
               </form>
