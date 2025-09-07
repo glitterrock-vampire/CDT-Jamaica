@@ -177,10 +177,7 @@ export default {
         }
         
         return true;
-      }),
-      options: {
-        isHighlighted: true
-      }
+      })
     },
     {
       name: 'description',

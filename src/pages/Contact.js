@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Hero from '../components/Hero';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { getSiteSettings } from '../lib/siteSettings';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -24,13 +26,23 @@ const staggerContainer = {
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [siteSettings, setSiteSettings] = useState(null);
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+    const fetchSettings = async () => {
+      try {
+        const settings = await getSiteSettings();
+        if (settings) {
+          setSiteSettings(settings);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching site settings:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchSettings();
   }, []);
 
   if (isLoading) {
@@ -39,30 +51,23 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
       {/* Hero Section */}
-      <div className="relative bg-gray-900 text-white overflow-hidden h-80 md:h-96">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="/images/hero-bg.jpg" 
-            alt="CDT Jamaica Performance" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black opacity-60"></div>
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-              Contact Us
-            </h1>
-            <p className="max-w-3xl mx-auto text-lg md:text-xl text-blue-100 mb-8">
-              Get in touch with CDT Jamaica for bookings, inquiries, and more.
-            </p>
-          </div>
-        </div>
-      </div>
+      {siteSettings?.heroImage && (
+        <Hero 
+          image={siteSettings.heroImage}
+          title="Contact Us"
+        />
+      )}
 
-      <main className="relative z-10 py-16 px-4 sm:px-6 lg:px-8">
+      <main className="relative z-10 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
+          <motion.h2 
+            className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-gray-900 dark:text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Get In Touch
+          </motion.h2>
           {/* Contact Form Section */}
           <motion.div 
             initial="hidden"

@@ -9,8 +9,10 @@ const Layout = ({ children }) => {
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
       isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
     }`}>
-      <Navbar />
-      <main className="flex-grow">
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Navbar />
+      </div>
+      <main className="flex-grow pt-20">
         {children}
       </main>
       <footer className={`${

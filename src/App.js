@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
+import Hero from './components/Hero';
 import RepertoireItem from './components/Repertoire/RepertoireItem';
 import RepertoireControls from './components/Repertoire/RepertoireControls';
 import DanceDetail from './pages/DanceDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import { getRepertoireItems } from './lib/sanity';
+import { getRepertoireItems, getSiteSettings } from './lib/siteSettings';
 import { parseDuration } from './utils/duration';
 
 function App() {
@@ -23,13 +24,16 @@ function App() {
       try {
         const data = await getRepertoireItems();
         console.log('Fetched repertoire items:', data);
-        // Log items with their duration values
+        // Log complete item structure for debugging
+        console.log('Complete repertoire data structure:', data);
         data.forEach((item, index) => {
-          console.log(`Item ${index}:`, {
-            title: item.title,
-            duration: item.duration,
-            hasDuration: !!item.duration,
-            durationType: typeof item.duration
+          console.log(`Item ${index} (${item.title}):`, {
+            id: item._id,
+            hasThumbnail: !!item.thumbnail,
+            thumbnail: item.thumbnail,
+            hasImage: !!item.image,
+            image: item.image,
+            allFields: Object.keys(item)
           });
         });
         setRepertoire(data);
@@ -133,34 +137,42 @@ function App() {
       return order === 'desc' ? -comparison : comparison;
     });
 
+  const [siteSettings, setSiteSettings] = useState(null);
+
+  // Fetch site settings for hero image
+  useEffect(() => {
+    const fetchSiteSettings = async () => {
+      try {
+        console.log('Fetching site settings...');
+        const settings = await getSiteSettings();
+        console.log('Site settings fetched:', settings);
+        if (settings?.heroImage) {
+          console.log('Hero image URL:', settings.heroImage.asset?.url);
+        } else {
+          console.log('No hero image found in site settings');
+        }
+        setSiteSettings(settings);
+      } catch (error) {
+        console.error('Error fetching site settings:', error);
+      }
+    };
+
+    fetchSiteSettings();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Routes>
         <Route path="/" element={
           <Layout>
             <div>
               {/* Hero Section */}
-              <div className="relative bg-gray-900 text-white overflow-hidden h-96">
-                <div className="absolute inset-0 z-0">
-                  <img 
-                    src="/images/hero-bg.jpg" 
-                    alt="CDT Jamaica Performance" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black opacity-60"></div>
-                </div>
-                
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-                  <div className="text-center">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                      CDT Jamaica Repertoire
-                    </h1>
-                    <p className="max-w-3xl mx-auto text-lg md:text-xl text-blue-100 mb-8">
-                      Explore our diverse collection of classical, contemporary, and traditional Jamaican dance pieces.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              {siteSettings?.heroImage && (
+                <Hero 
+                  image={siteSettings.heroImage}
+                  title="Repertoire"
+                />
+              )}
 
               <div className="container mx-auto px-4 py-8">
                 <RepertoireControls 

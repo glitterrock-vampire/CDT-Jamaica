@@ -3,6 +3,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import repertoireItem from './schemaTypes/repertoireItem.jsx'
+import siteSettings from './schemaTypes/siteSettings'
 
 export default defineConfig({
   name: 'default',
@@ -18,7 +19,7 @@ export default defineConfig({
   ],
 
   schema: {
-    types: [repertoireItem as any],
+    types: [repertoireItem, siteSettings],
   },
 
   // CORS settings
