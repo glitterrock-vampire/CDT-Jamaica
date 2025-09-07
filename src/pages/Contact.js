@@ -27,6 +27,48 @@ const staggerContainer = {
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState({ status: 'idle', message: '' });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus({ status: 'sending', message: 'Sending message...' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormStatus({ status: 'success', message: 'Message sent successfully! We\'ll get back to you soon.' });
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setFormStatus({ status: 'idle', message: '' }), 5000);
+      } else {
+        throw new Error(result.error || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setFormStatus({ status: 'error', message: error.message || 'Failed to send message. Please try again.' });
+    }
+  };
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -77,7 +119,68 @@ const Contact = () => {
           >
             <motion.div variants={fadeInUp}>
               <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Contact Information</h3>
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <motion.div 
+                  className="space-y-4"
+                  variants={fadeInUp}
+                >
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows="4"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      disabled={formStatus.status === 'sending'}
+                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {formStatus.status === 'sending' ? 'Sending...' : 'Send Message'}
+                    </button>
+                  </div>
+                  {formStatus.message && (
+                    <div className={`mt-2 text-sm ${formStatus.status === 'error' ? 'text-red-600' : 'text-green-600'}`}>
+                      {formStatus.message}
+                    </div>
+                  )}
+                </motion.div>
                 <motion.div 
                   className="flex items-start p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
                   variants={fadeInUp}
