@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Using test API key for now - replace with process.env.RESEND_API_KEY in production
+const resend = new Resend('re_UbmA7WFd_3ZpriUhxLGFna5naLs3XVwX7');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -11,8 +12,8 @@ export default async function handler(req, res) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'CDT Jamaica <onboarding@resend.dev>', // You can change this to your domain after setup
-      to: 'thecompany@cdtjamaica.org',
+      from: 'CDT Jamaica <onboarding@resend.dev>',
+      to: 'andrewalters1997@gmail.com', // Using test email for now
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
