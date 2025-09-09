@@ -51,6 +51,28 @@ export const getRepertoireItems = async () => {
             aspectRatio
           }
         }
+      },
+      "heroImage": heroImage.asset->{
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height,
+            aspectRatio
+          }
+        }
+      },
+      "image": image.asset->{
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height,
+            aspectRatio
+          }
+        }
       }
     }`;
     
@@ -95,19 +117,49 @@ export const getRepertoireItemById = async (id) => {
       instruments,
       style,
       "category": category,
-      "thumbnail": thumbnail.asset->{
-        _id,
-        url,
-        metadata {
-          dimensions {
-            width,
-            height,
-            aspectRatio
+      thumbnail {
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height,
+              aspectRatio
+            }
           }
-        }
+        },
+        alt
       },
-      notableRecordings,
-      "fullImage": image.asset->url
+      heroImage {
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height,
+              aspectRatio
+            }
+          }
+        },
+        alt
+      },
+      image {
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height,
+              aspectRatio
+            }
+          }
+        },
+        alt
+      },
+      notableRecordings
     }`;
     
     console.log(`Fetching repertoire item with ID: ${id} (also checking ${docId})`);
@@ -120,7 +172,17 @@ export const getRepertoireItemById = async (id) => {
       throw new Error(`Repertoire item with ID ${id} not found`);
     }
     
-    console.log('Fetched item:', item);
+    console.log('Fetched item with heroImage:', {
+      _id: item._id,
+      title: item.title,
+      hasHeroImage: !!item.heroImage,
+      heroImage: item.heroImage,
+      hasImage: !!item.image,
+      image: item.image,
+      hasThumbnail: !!item.thumbnail,
+      thumbnail: item.thumbnail
+    });
+    
     return item;
   } catch (error) {
     console.error('Error in getRepertoireItemById:', error);

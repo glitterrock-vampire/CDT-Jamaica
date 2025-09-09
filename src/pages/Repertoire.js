@@ -84,39 +84,43 @@ const Repertoire = () => {
             {repertoire.map((item, index) => (
               <motion.div
                 key={item._id}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden"
                 variants={fadeInUp}
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
-                <div className="h-48 overflow-hidden">
-                  {item.image && (
-                    <img 
-                      src={item.image.asset.url} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    {item.title}
-                  </h3>
-                  {item.choreographer && (
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                      Choreographer: {item.choreographer}
-                    </p>
-                  )}
-                  {item.composer && (
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                      Composer: {item.composer}
-                    </p>
-                  )}
-                  {item.description && (
-                    <p className="text-gray-700 dark:text-gray-300 text-sm">
-                      {item.description}
-                    </p>
-                  )}
-                </div>
+                <Link 
+                  to={`/repertoire/${item.slug?.current || item._id}`}
+                  className="block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden h-full hover:shadow-lg transition-shadow duration-200"
+                >
+                  <div className="h-48 overflow-hidden">
+                    {item.image && (
+                      <img 
+                        src={item.image.asset.url} 
+                        alt={item.title} 
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                      {item.title}
+                    </h3>
+                    {item.choreographer && (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                        Choreographer: {item.choreographer}
+                      </p>
+                    )}
+                    {item.composer && (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                        Composer: {item.composer}
+                      </p>
+                    )}
+                    {item.description && (
+                      <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>

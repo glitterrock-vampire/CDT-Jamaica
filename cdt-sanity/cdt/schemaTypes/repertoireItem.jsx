@@ -72,6 +72,26 @@ export default {
       ]
     },
     {
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      description: 'Large hero image for the dance detail page',
+      options: {
+        hotspot: true
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessibility',
+          options: {
+            isHighlighted: true
+          }
+        }
+      ]
+    },
+    {
       name: 'composer',
       title: 'Composer',
       type: 'string',

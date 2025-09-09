@@ -89,12 +89,41 @@ const DanceDetail = () => {
       {/* Hero Section */}
       <div className="relative bg-gray-900 text-white overflow-hidden h-96">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/images/hero-bg.jpg" 
-            alt="CDT Jamaica Performance" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black opacity-60"></div>
+          {dance.heroImage?.asset?.url ? (
+            <>
+              <img 
+                src={dance.heroImage.asset.url} 
+                alt={dance.heroImage.alt || `${dance.title} performance`}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black opacity-40"></div>
+            </>
+          ) : dance.thumbnail?.asset?.url ? (
+            // Fallback to thumbnail if heroImage is not available
+            <>
+              <img 
+                src={dance.thumbnail.asset.url} 
+                alt={dance.thumbnail.alt || dance.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black opacity-40"></div>
+            </>
+          ) : dance.image?.asset?.url ? (
+            // Fallback to main image if neither heroImage nor thumbnail is available
+            <>
+              <img 
+                src={dance.image.asset.url} 
+                alt={dance.image.alt || dance.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black opacity-40"></div>
+            </>
+          ) : (
+            // Fallback to gradient background if no images are available
+            <div className="w-full h-full bg-gradient-to-r from-blue-900 to-purple-900">
+              <div className="absolute inset-0 bg-black opacity-60"></div>
+            </div>
+          )}
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
