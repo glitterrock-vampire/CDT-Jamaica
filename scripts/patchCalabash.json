@@ -1,0 +1,43 @@
+{
+  "mutations": [
+    {
+      "patch": {
+        "id": "7gNGK9M49tqCuJRrasQYQR",
+        "set": {
+          "title": "Calabash",
+          "slug": {
+            "_type": "slug",
+            "current": "calabash"
+          },
+          "choreographer": "Tony Wilson",
+          "composer": "Various Artists",
+          "description": "Replanted and renewed: bursting forth resplendently the kaleidoscopic seeds of Beauty, Passion and Power.",
+          "companyPremiere": "1999",
+          "worldPremiere": "1999",
+          "music": [
+            "Babatunde Olatunji",
+            "Diana Ross",
+            "Elton John",
+            "Grub Cooper",
+            "Tim Rice",
+            "Tongo Santamaria"
+          ],
+          "costumes": "Tony Wilson",
+          "lighting": "Tony Wilson",
+          "duration": "26:48",
+          "genre": ["modern", "contemporary", "folk"],
+          "mediaReviews": [
+            {
+              "quote": "My favourite dance, 'Wilson's Calabash', ended the show with the prettiest costumes, which were designed by Wilson.",
+              "source": "Jamaica Gleaner, 2025"
+            },
+            {
+              "quote": "It was a joyful piece, best described as a montage of dance movements depicting what appeared to be different genres of praise movements.",
+              "source": "Jamaica Gleaner, 2018"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

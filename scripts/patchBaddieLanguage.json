@@ -1,0 +1,33 @@
+{
+  "mutations": [
+    {
+      "createOrReplace": {
+        "_type": "repertoireItem",
+        "_id": "baddie-language-2025",
+        "title": "Baddie Language",
+        "slug": {
+          "_type": "slug",
+          "current": "baddie-language"
+        },
+        "choreographer": "Steve Cornwall",
+        "composer": "Various Artists",
+        "companyPremiere": "Little Theatre (CDT 2023 Season)",
+        "worldPremiere": "Little Theatre (CDT 2023 Season)",
+        "music": [
+          "Buju Banton",
+          "Lisa Hype",
+          "Stalk Ashley",
+          "SQUASH",
+          "Vybz Kartel"
+        ],
+        "costumes": "Steve Cornwall and Kaye-Ann Green",
+        "lighting": "Kareen McLean",
+        "duration": "7:00",
+        "description": "Baddie Language is a mixture of old and current dance styles and movement derived from Jamaica's culture, characterized by quick, flowing movements, body isolations, and expressive, often exaggerated, moves that incorporate African and Caribbean dance influences.",
+        "genre": ["dancehall", "contemporary"],
+        "stylePeriod": ["Contemporary"],
+        "category": "Contemporary Works"
+      }
+    }
+  ]
+}

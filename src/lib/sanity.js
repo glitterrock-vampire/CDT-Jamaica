@@ -3,12 +3,18 @@ import imageUrlBuilder from '@sanity/image-url';
 
 // Configuration
 const config = {
-  projectId: process.env.REACT_APP_SANITY_PROJECT_ID || 'sbvvl9vs', // Fallback to hardcoded value for now
+  projectId: process.env.REACT_APP_SANITY_PROJECT_ID || 'sbvvl9vs',
   dataset: process.env.REACT_APP_SANITY_DATASET || 'production',
-  apiVersion: process.env.REACT_APP_SANITY_API_VERSION || '2023-05-03',
-  useCdn: process.env.NODE_ENV === 'production', // Only use CDN in production
+  apiVersion: '2023-05-03',
+  useCdn: process.env.NODE_ENV === 'production',
   ignoreBrowserTokenWarning: true,
-  withCredentials: false, // Important: Disable credentials for public access
+  withCredentials: false,
+  // Add CORS headers
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET',
+    'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type, Authorization'
+  }
 };
 
 // Create a Sanity client
@@ -37,10 +43,15 @@ export const getRepertoireItems = async () => {
     const query = `*[_type == "repertoireItem"] | order(title asc) {
       _id,
       title,
+      slug,
       composer,
       duration,
       year,
       youtubeId,
+      description,
+      genre,
+      stylePeriod,
+      choreographer,
       "thumbnail": thumbnail.asset->{
         _id,
         url,
@@ -108,18 +119,42 @@ export const getRepertoireItemById = async (id) => {
     const query = `*[_type == "repertoireItem" && (_id == $id || _id == $draftId)][0]{
       _id,
       _type,
+      _updatedAt,
       title,
+      slug,
       composer,
       duration,
       year,
       youtubeId,
+      youtubeUrl,
       description,
       instruments,
       style,
       "category": category,
+      choreographer,
+      companyPremiere,
+      worldPremiere,
+      music,
+      costumeDesign,
+      lightingDesign,
+      genre,
+      stylePeriod,
+      premieredBy,
+      dedicatedTo,
+      movements,
+      durations,
+      mediaReviews[] {
+        _key,
+        _type,
+        quote,
+        source,
+        year,
+        url
+      },
       thumbnail {
         asset->{
           _id,
+          _updatedAt,
           url,
           metadata {
             dimensions {
@@ -129,11 +164,14 @@ export const getRepertoireItemById = async (id) => {
             }
           }
         },
-        alt
+        alt,
+        crop,
+        hotspot
       },
       heroImage {
         asset->{
           _id,
+          _updatedAt,
           url,
           metadata {
             dimensions {
@@ -143,11 +181,14 @@ export const getRepertoireItemById = async (id) => {
             }
           }
         },
-        alt
+        alt,
+        crop,
+        hotspot
       },
       image {
         asset->{
           _id,
+          _updatedAt,
           url,
           metadata {
             dimensions {
@@ -157,9 +198,12 @@ export const getRepertoireItemById = async (id) => {
             }
           }
         },
-        alt
+        alt,
+        crop,
+        hotspot
       },
-      notableRecordings
+      notableRecordings,
+      status
     }`;
     
     console.log(`Fetching repertoire item with ID: ${id} (also checking ${docId})`);

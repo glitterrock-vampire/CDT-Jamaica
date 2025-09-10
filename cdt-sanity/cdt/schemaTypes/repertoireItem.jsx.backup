@@ -1,12 +1,6 @@
 // @ts-nocheck
 import YouTubeDurationInput from '../components/YouTubeDurationInput.jsx';
 
-// Common validation rules
-const requiredField = Rule => Rule.required();
-const urlValidation = Rule => Rule.uri({
-  scheme: ['http', 'https', 'mailto', 'tel']
-});
-
 // Function to fetch duration from YouTube API
 async function fetchYoutubeDuration(youtubeId) {
   if (!youtubeId) return null;
@@ -150,13 +144,13 @@ export default {
       options: { layout: 'tags' }
     },
     {
-      name: 'costumeDesign',
+      name: 'costumes',
       title: 'Costume Design',
       type: 'string',
       description: 'Costume designer(s) for the piece'
     },
     {
-      name: 'lightingDesign',
+      name: 'lighting',
       title: 'Lighting Design',
       type: 'string',
       description: 'Lighting designer(s) for the piece'
@@ -168,17 +162,14 @@ export default {
       title: 'Genre',
       type: 'array',
       of: [{type: 'string'}],
-      validation: requiredField,
       options: {
         list: [
           {title: 'Modern', value: 'modern'},
           {title: 'Contemporary', value: 'contemporary'},
           {title: 'Folk', value: 'folk'},
-          {title: 'Dancehall', value: 'dancehall'},
-          {title: 'Afro-Caribbean', value: 'afro-caribbean'},
           {title: 'Ballet', value: 'ballet'},
           {title: 'Jazz', value: 'jazz'},
-          {title: 'Traditional', value: 'traditional'},
+          {title: 'Afro-Caribbean', value: 'afro-caribbean'},
           {title: 'Experimental', value: 'experimental'}
         ],
         layout: 'tags'
@@ -191,50 +182,28 @@ export default {
       of: [{type: 'string'}],
       options: {
         list: [
-          {title: 'Renaissance', value: 'renaissance'},
           {title: 'Baroque', value: 'baroque'},
           {title: 'Classical', value: 'classical'},
           {title: 'Romantic', value: 'romantic'},
           {title: '20th Century', value: '20th-century'},
           {title: 'Contemporary', value: 'contemporary'},
-          {title: 'Postmodern', value: 'postmodern'},
-          {title: 'Traditional', value: 'traditional'}
+          {title: 'Jamaican', value: 'jamaican'}
         ],
         layout: 'tags'
-      },
-      description: 'Artistic style or period of the piece'
+      }
     },
     {
       name: 'category',
       title: 'Category',
       type: 'string',
-      validation: requiredField,
       options: {
         list: [
           {title: 'Classical Masterpieces', value: 'classical'},
           {title: 'Contemporary Works', value: 'contemporary'},
-          {title: 'Jamaican Compositions', value: 'jamaican'},
-          {title: 'Folk Dances', value: 'folk'},
-          {title: 'Experimental Works', value: 'experimental'},
-          {title: 'Collaborative Pieces', value: 'collaborative'}
+          {title: 'Jamaican Compositions', value: 'jamaican'}
         ],
         layout: 'dropdown'
       }
-    },
-    {
-      name: 'status',
-      title: 'Status',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Active in Repertoire', value: 'active'},
-          {title: 'Archived', value: 'archived'},
-          {title: 'In Development', value: 'development'},
-          {title: 'Retired', value: 'retired'}
-        ],
-        layout: 'dropdown'
-      },
-      initialValue: 'active'
     },
     
     // Additional Information
@@ -273,49 +242,22 @@ export default {
             name: 'quote',
             title: 'Quote',
             type: 'text',
-            rows: 3,
-            validation: requiredField
+            rows: 3
           },
           {
             name: 'source',
             title: 'Source',
             type: 'string',
-            description: 'E.g., Jamaica Gleaner, 2023',
-            validation: requiredField
+            description: 'E.g., Jamaica Gleaner, 2023'
           },
           {
             name: 'year',
             title: 'Year',
-            type: 'number',
-            validation: Rule => Rule.required().min(1900).max(new Date().getFullYear() + 1)
-          },
-          {
-            name: 'url',
-            title: 'Article URL',
-            type: 'url',
-            description: 'Link to the full review (if available)',
-            validation: urlValidation
+            type: 'number'
           }
-        ],
-        preview: {
-          select: {
-            title: 'source',
-            subtitle: 'quote',
-            year: 'year'
-          },
-          prepare({title, subtitle, year}) {
-            const preview = subtitle ? `${subtitle.slice(0, 50)}...` : 'No quote';
-            return {
-              title: `${title} (${year || 'N/A'})`,
-              subtitle: preview
-            };
-          }
-        }
+        ]
       }],
-      description: 'Notable reviews or quotes about the piece',
-      options: {
-        sortable: true
-      }
+      description: 'Notable reviews or quotes about the piece'
     },
     
     // Video and Duration
@@ -323,24 +265,10 @@ export default {
       name: 'youtubeUrl',
       title: 'YouTube URL',
       type: 'url',
-      description: 'Full YouTube URL (alternative to YouTube ID)',
-      validation: urlValidation
-    },
-    {
-      name: 'status',
-      title: 'Status',
-      type: 'string',
-      description: 'Current status of the repertoire item',
-      options: {
-        list: [
-          { title: 'Active', value: 'active' },
-          { title: 'Archived', value: 'archived' },
-          { title: 'In Development', value: 'in-development' },
-          { title: 'Retired', value: 'retired' }
-        ],
-        layout: 'dropdown'
-      },
-      initialValue: 'active'
+      description: 'Link to YouTube video if available',
+      validation: Rule => Rule.uri({
+        scheme: ['http', 'https', 'mailto', 'tel']
+      })
     },
     {
       name: 'youtubeId',

@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
       } py-8 mt-16 transition-colors duration-300`}>
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm">
-            &copy; {new Date().getFullYear()} CDT Jamaica. All rights reserved. 
+            &copy; {new Date().getFullYear()} CDT Arts Ltd. All rights reserved.
             <span className="block sm:inline-block mt-1 sm:mt-0 sm:ml-2">
               Developed by Andre Walters
             </span>
