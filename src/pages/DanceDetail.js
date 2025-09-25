@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SlideGallery from '../components/SlideGallery';
 import { getRepertoireItemById } from '../lib/sanity';
 import { fetchVideoDuration, formatDuration } from '../lib/youtube';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -11,6 +12,8 @@ const DanceDetail = () => {
   const [dance, setDance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [videoDuration, setVideoDuration] = useState('');
 
   const fetchVideoDetails = useCallback(async (youtubeUrl) => {
@@ -86,8 +89,8 @@ const DanceDetail = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-      {/* Hero Section */}
-      <div className="dance-detail-hero h-96 lg:h-[500px]">
+      {/* Hero Section - Ailey Style */}
+      <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           {dance.heroImage?.asset?.url ? (
             <>
@@ -96,7 +99,7 @@ const DanceDetail = () => {
                 alt={dance.heroImage.alt || `${dance.title} performance`}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="absolute inset-0 ailey-gradient-overlay"></div>
             </>
           ) : dance.thumbnail?.asset?.url ? (
             <>
@@ -105,11 +108,11 @@ const DanceDetail = () => {
                 alt={dance.thumbnail.alt || dance.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="absolute inset-0 ailey-gradient-overlay"></div>
             </>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-              <div className="absolute inset-0 bg-black opacity-70"></div>
+              <div className="absolute inset-0 ailey-gradient-overlay"></div>
             </div>
           )}
         </div>
@@ -121,29 +124,29 @@ const DanceDetail = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-4 text-white">
+              <h1 className="ailey-hero-title text-white mb-4">
                 {dance.title}
               </h1>
               {dance.choreographer && (
-                <p className="text-xl md:text-2xl text-gray-200 font-light">
+                <p className="text-xl md:text-2xl text-gray-200 font-light tracking-wide">
                   Choreography by {dance.choreographer}
                 </p>
               )}
             </motion.div>
           </div>
         </div>
-      </div>
+      </section>
 
       <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <div className="ailey-two-column">
           {/* Main Content */}
-          <div className="lg:col-span-3 space-y-12">
-            {/* Video and Description Row */}
+          <div className="ailey-main-content">
+            {/* Video and Description Row - Stacked Layout */}
             {dance.youtubeId && dance.description && (
-              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                {/* Video - Takes 2 columns */}
+              <div className="space-y-8">
+                {/* Video - Full Width */}
                 <motion.div
-                  className="xl:col-span-2 w-full overflow-hidden rounded-lg shadow-sm"
+                  className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
@@ -158,14 +161,14 @@ const DanceDetail = () => {
                   </div>
                 </motion.div>
 
-                {/* Description Beside Video - Takes 1 column */}
+                {/* Description Below Video */}
                 <motion.div
                   className="prose prose-lg max-w-none"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
                 >
-                  <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                  <div className="text-gray-700 dark:text-gray-100 leading-relaxed whitespace-pre-line">
                     {dance.description}
                   </div>
                 </motion.div>
@@ -175,7 +178,7 @@ const DanceDetail = () => {
             {/* Video Only (when no description) */}
             {dance.youtubeId && !dance.description && (
               <motion.div
-                className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-sm"
+                className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -199,25 +202,25 @@ const DanceDetail = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                <div className="text-gray-700 dark:text-gray-100 leading-relaxed whitespace-pre-line">
                   {dance.description}
                 </div>
               </motion.div>
             )}
 
-            {/* Media Reviews */}
+            {/* Media Reviews - Ailey Style */}
             {(dance.mediaReviews && dance.mediaReviews.length > 0) && (
               <motion.div
-                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8"
+                className="ailey-section"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <h3 className="text-2xl font-light text-gray-900 dark:text-white mb-6">Media Reviews</h3>
+                <h3 className="ailey-subtitle mb-6">Media Reviews</h3>
                 <div className="space-y-8">
                   {dance.mediaReviews.map((review, index) => (
-                    <blockquote key={index} className="dance-detail-quote">
-                      <p className="text-lg text-gray-700 dark:text-gray-300 italic leading-relaxed mb-4">
+                    <blockquote key={index} className="ailey-quote">
+                      <p className="ailey-body dark:text-gray-100 italic mb-4">
                         "{review.quote}"
                       </p>
                       <footer className="flex items-center justify-between">
@@ -246,24 +249,24 @@ const DanceDetail = () => {
               </motion.div>
             )}
 
-            {/* Movements */}
+            {/* Movements - Ailey Style */}
             {dance.movements && dance.movements.length > 0 && (
               <motion.div
-                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8"
+                className="ailey-section"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <h3 className="text-2xl font-light text-gray-900 dark:text-white mb-6">
+                <h3 className="ailey-subtitle">
                   {dance.movements.length > 1 ? 'Movements' : 'Movement'}
                 </h3>
                 <ol className="space-y-4">
                   {dance.movements.map((movement, idx) => (
                     <li key={idx} className="flex items-start">
-                      <span className="dance-detail-movement-number">
+                      <span className="ailey-movement-number">
                         {idx + 1}
                       </span>
-                      <span className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                      <span className="text-gray-700 dark:text-gray-200 leading-relaxed">
                         {movement}
                       </span>
                     </li>
@@ -272,15 +275,15 @@ const DanceDetail = () => {
               </motion.div>
             )}
 
-            {/* Gallery Section */}
+            {/* Gallery Section - Ailey Style */}
             {(dance.galleryImages && dance.galleryImages.length > 0) && (
               <motion.div
-                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8"
+                className="ailey-section"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <h3 className="text-2xl font-light text-gray-900 dark:text-white mb-6">Gallery</h3>
+                <h3 className="ailey-subtitle mb-6">Gallery</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {dance.galleryImages.slice(0, 5).map((image, index) => (
                     <div key={index} className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
@@ -290,8 +293,8 @@ const DanceDetail = () => {
                           alt={image.alt || `${dance.title} - Gallery Image ${index + 1}`}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
                           onClick={() => {
-                            // Could open lightbox here in the future
-                            console.log('Open lightbox for image:', index);
+                            setSelectedImageIndex(index);
+                            setGalleryOpen(true);
                           }}
                         />
                       ) : (
@@ -305,137 +308,145 @@ const DanceDetail = () => {
                   ))}
                 </div>
                 {dance.galleryImages.length > 5 && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 text-center">
+                  <p className="text-sm text-gray-500 dark:text-gray-300 mt-4 text-center">
                     And {dance.galleryImages.length - 5} more images...
                   </p>
                 )}
               </motion.div>
             )}
+          </div>
 
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <motion.div
-                className="dance-detail-sidebar"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-              >
-                <h3 className="text-xl font-light text-gray-900 dark:text-white mb-6">Production Details</h3>
-                <div className="space-y-6">
-                  {dance.choreographer && (
-                    <div>
-                      <h4 className="dance-metadata-label">Choreographer</h4>
-                      <p className="dance-metadata-value">{dance.choreographer}</p>
-                    </div>
-                  )}
+          {/* Sidebar - Ailey Style */}
+          <div className="ailey-sidebar">
+            <motion.div
+              className="ailey-section sticky top-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <h3 className="ailey-subtitle mb-6">Production Details</h3>
+              <div className="space-y-6">
+                {dance.choreographer && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Choreographer</h4>
+                    <p className="ailey-metadata-value">{dance.choreographer}</p>
+                  </div>
+                )}
 
-                  {dance.composer && (
-                    <div>
-                      <h4 className="dance-metadata-label">Music</h4>
-                      <p className="dance-metadata-value">{dance.composer}</p>
-                    </div>
-                  )}
+                {dance.composer && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Music</h4>
+                    <p className="ailey-metadata-value">{dance.composer}</p>
+                  </div>
+                )}
 
-                  {dance.costumeDesign && (
-                    <div>
-                      <h4 className="dance-metadata-label">Costume Design</h4>
-                      <p className="dance-metadata-value">{dance.costumeDesign}</p>
-                    </div>
-                  )}
+                {dance.costumeDesign && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Costume Design</h4>
+                    <p className="ailey-metadata-value">{dance.costumeDesign}</p>
+                  </div>
+                )}
 
-                  {dance.lightingDesign && (
-                    <div>
-                      <h4 className="dance-metadata-label">Lighting Design</h4>
-                      <p className="dance-metadata-value">{dance.lightingDesign}</p>
-                    </div>
-                  )}
+                {dance.lightingDesign && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Lighting Design</h4>
+                    <p className="ailey-metadata-value">{dance.lightingDesign}</p>
+                  </div>
+                )}
 
-                  {displayDuration && (
-                    <div>
-                      <h4 className="dance-metadata-label">Duration</h4>
-                      <p className="dance-metadata-value">{displayDuration}</p>
-                    </div>
-                  )}
+                {displayDuration && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Duration</h4>
+                    <p className="ailey-metadata-value">{displayDuration}</p>
+                  </div>
+                )}
 
-                  {dance.year && (
-                    <div>
-                      <h4 className="dance-metadata-label">Year</h4>
-                      <p className="dance-metadata-value">{dance.year}</p>
-                    </div>
-                  )}
+                {dance.year && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Year</h4>
+                    <p className="ailey-metadata-value">{dance.year}</p>
+                  </div>
+                )}
 
-                  {dance.companyPremiere && (
-                    <div>
-                      <h4 className="dance-metadata-label">Company Premiere</h4>
-                      <p className="dance-metadata-value">{dance.companyPremiere}</p>
-                    </div>
-                  )}
+                {dance.companyPremiere && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Company Premiere</h4>
+                    <p className="ailey-metadata-value">{dance.companyPremiere}</p>
+                  </div>
+                )}
 
-                  {dance.worldPremiere && (
-                    <div>
-                      <h4 className="dance-metadata-label">World Premiere</h4>
-                      <p className="dance-metadata-value">{dance.worldPremiere}</p>
-                    </div>
-                  )}
+                {dance.worldPremiere && (
+                  <div>
+                    <h4 className="ailey-metadata-label">World Premiere</h4>
+                    <p className="ailey-metadata-value">{dance.worldPremiere}</p>
+                  </div>
+                )}
 
-                  {dance.premieredBy && (
-                    <div>
-                      <h4 className="dance-metadata-label">Premiered By</h4>
-                      <p className="dance-metadata-value">{dance.premieredBy}</p>
-                    </div>
-                  )}
+                {dance.premieredBy && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Premiered By</h4>
+                    <p className="ailey-metadata-value">{dance.premieredBy}</p>
+                  </div>
+                )}
 
-                  {dance.dedicatedTo && (
-                    <div>
-                      <h4 className="dance-metadata-label">Dedicated To</h4>
-                      <p className="dance-metadata-value">{dance.dedicatedTo}</p>
-                    </div>
-                  )}
+                {dance.dedicatedTo && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Dedicated To</h4>
+                    <p className="ailey-metadata-value">{dance.dedicatedTo}</p>
+                  </div>
+                )}
 
-                  {dance.category && (
-                    <div>
-                      <h4 className="dance-metadata-label">Category</h4>
-                      <p className="dance-metadata-value capitalize">{dance.category}</p>
-                    </div>
-                  )}
+                {dance.category && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Category</h4>
+                    <p className="ailey-metadata-value capitalize">{dance.category}</p>
+                  </div>
+                )}
 
-                  {dance.genre && dance.genre.length > 0 && (
-                    <div>
-                      <h4 className="dance-metadata-label">Genres</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {dance.genre.map((g, idx) => (
-                          <span
-                            key={idx}
-                            className="dance-tag"
-                          >
-                            {g.charAt(0).toUpperCase() + g.slice(1)}
-                          </span>
-                        ))}
-                      </div>
+                {dance.genre && dance.genre.length > 0 && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Genres</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {dance.genre.map((g, idx) => (
+                        <span
+                          key={idx}
+                          className="ailey-tag"
+                        >
+                          {g.charAt(0).toUpperCase() + g.slice(1)}
+                        </span>
+                      ))}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {dance.stylePeriod && dance.stylePeriod.length > 0 && (
-                    <div>
-                      <h4 className="dance-metadata-label">Style Periods</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {dance.stylePeriod.map((period, idx) => (
-                          <span
-                            key={idx}
-                            className="dance-tag"
-                          >
-                            {period.charAt(0).toUpperCase() + period.slice(1)}
-                          </span>
-                        ))}
-                      </div>
+                {dance.stylePeriod && dance.stylePeriod.length > 0 && (
+                  <div>
+                    <h4 className="ailey-metadata-label">Style Periods</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {dance.stylePeriod.map((period, idx) => (
+                        <span
+                          key={idx}
+                          className="ailey-tag"
+                        >
+                          {period.charAt(0).toUpperCase() + period.slice(1)}
+                        </span>
+                      ))}
                     </div>
-                  )}
-                </div>
-              </motion.div>
-            </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
           </div>
         </div>
       </main>
+
+      {/* Slide Gallery */}
+      <SlideGallery
+        images={dance?.galleryImages || []}
+        title={dance?.title || ''}
+        isOpen={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+      />
     </div>
   );
 }

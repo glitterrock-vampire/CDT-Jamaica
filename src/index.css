@@ -25,35 +25,35 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
+    @apply font-bold tracking-tight text-gray-900 dark:text-gray-50;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl font-black;
+    @apply text-4xl md:text-5xl font-black text-gray-900 dark:text-gray-50;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl font-extrabold;
+    @apply text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-gray-50;
   }
 
   h3 {
-    @apply text-2xl md:text-3xl font-bold;
+    @apply text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-50;
   }
 
   h4 {
-    @apply text-xl md:text-2xl font-semibold;
+    @apply text-xl md:text-2xl font-semibold text-gray-900 dark:text-gray-50;
   }
 
   p, li, a, span {
-    @apply text-base font-normal leading-relaxed;
+    @apply text-base font-normal leading-relaxed text-gray-700 dark:text-gray-100;
   }
 
   .prose {
-    @apply text-gray-700;
+    @apply text-gray-700 dark:text-gray-100;
   }
 
   .prose h2, .prose h3, .prose h4 {
-    @apply text-gray-900 mt-8 mb-4;
+    @apply text-gray-900 dark:text-gray-50 mt-8 mb-4;
   }
 }
 
@@ -151,4 +151,129 @@ blockquote footer span {
 /* Tag styling */
 .dance-tag {
   @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200;
+}
+
+/* ============================================
+   ALVIN AILEY DANCE THEATER STYLES
+   ============================================ */
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Ailey Typography */
+.ailey-hero-title {
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.85;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+}
+
+.ailey-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Hero Section Gradient */
+.ailey-gradient-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+/* Card Hover Effects */
+.ailey-hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ailey-hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Ailey Navigation */
+.ailey-nav {
+  @apply bg-white/95 backdrop-blur-sm border-b border-gray-100;
+}
+
+.ailey-nav-link {
+  @apply text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors duration-200 tracking-wide;
+}
+
+/* Ailey Footer */
+.ailey-footer {
+  @apply bg-black text-white;
+}
+
+/* Ailey Grid */
+.ailey-grid {
+  @apply grid gap-8;
+}
+
+/* Ailey Card */
+.ailey-card {
+  @apply bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300;
+}
+
+/* Ailey Two-Column Layout */
+.ailey-two-column {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-12;
+}
+
+.ailey-sidebar {
+  @apply lg:col-span-1 space-y-8;
+}
+
+.ailey-main-content {
+  @apply lg:col-span-2 space-y-8;
+}
+
+/* Ailey Section */
+.ailey-section {
+  @apply bg-gray-50 dark:bg-gray-800 rounded-lg p-8;
+}
+
+/* Ailey Quote */
+.ailey-quote {
+  @apply border-l-2 border-gray-300 dark:border-gray-500 pl-6;
+}
+
+/* Ailey Movement Number */
+.ailey-movement-number {
+  @apply flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 text-sm font-medium mr-4 flex-shrink-0 mt-0.5;
+}
+
+/* Ailey Metadata */
+.ailey-metadata-label {
+  @apply text-sm text-gray-500 dark:text-gray-300 font-medium uppercase tracking-wide mb-1;
+}
+
+.ailey-metadata-value {
+  @apply text-gray-900 dark:text-gray-50 font-light;
+}
+
+/* Ailey Tags */
+.ailey-tag {
+  @apply bg-black text-white text-xs px-3 py-1 rounded-full;
+}
+
+/* Ailey Brand Typography */
+.ailey-brand {
+  @apply text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-50;
+}
+
+/* Ailey Body Text */
+.ailey-body {
+  @apply text-gray-700 dark:text-gray-100 leading-relaxed text-lg;
+}
+
+/* Ailey Subtitle */
+.ailey-subtitle {
+  @apply text-2xl font-semibold text-gray-900 dark:text-gray-50 leading-relaxed mb-6;
 }

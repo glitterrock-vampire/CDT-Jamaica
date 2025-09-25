@@ -445,14 +445,37 @@ export default {
       description: 'Full YouTube URL for the piece'
     },
     
-    // Additional Notes
+    // Gallery Images
     {
-      name: 'notes',
-      title: 'Additional Notes',
-      type: 'text',
-      rows: 3,
-      description: 'Any additional notes about this piece'
-    }
+      name: 'galleryImages',
+      title: 'Gallery Images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+            metadata: ['blurhash', 'lqip', 'palette', 'exif', 'location']
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+              description: 'Alternative text for the image (important for accessibility)'
+            },
+            {
+              name: 'caption',
+              title: 'Caption',
+              type: 'string',
+              description: 'Optional caption for the image'
+            }
+          ]
+        }
+      ],
+      description: 'Additional images for the gallery section (up to 10 images recommended)',
+      validation: Rule => Rule.max(10).warning('Consider limiting to 10 images for optimal performance')
+    },
   ],
   
   // Preview configuration

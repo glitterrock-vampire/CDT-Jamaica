@@ -56,66 +56,73 @@ const Repertoire = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 pt-20">
-      {/* Hero Section */}
+      {/* Hero Section - Ailey Style */}
       {siteSettings?.heroImage &&
-        <div className="relative w-full h-96 overflow-hidden">
+        <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
           <img
             src={siteSettings.heroImage.asset.url}
             alt={siteSettings.heroImage.alt || 'CDT Jamaica Hero'}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-center px-4">
-            <div>
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Our Repertoire</h1>
-              <p className="text-xl md:text-2xl text-gray-200">Explore our collection of performances and productions</p>
+          <div className="absolute inset-0 ailey-gradient-overlay" />
+
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center px-4 sm:px-6 lg:px-8">
+              <h1 className="ailey-hero-title text-white mb-8">
+                OUR REPERTOIRE
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-200 font-light tracking-wide">
+                Explore our collection of performances and productions
+              </p>
             </div>
           </div>
-        </div>
+        </section>
       }
-  
+
       <main className="container mx-auto px-6 sm:px-8 lg:px-12 py-20 max-w-7xl">
-        {/* Section Header */}
+        {/* Section Header - Ailey Style */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
         >
-          <h2 className="text-4xl md:text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+          <h2 className="ailey-subtitle">
             Our Repertoire
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="ailey-body max-w-2xl mx-auto">
             Discover our collection of innovative dance works
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
         >
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+          <div className="ailey-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {repertoire.map((item) => (
               <motion.div
                 key={item._id}
                 variants={fadeInUp}
               >
-                <Link 
+                <Link
                   to={`/repertoire/${item.slug?.current || item._id}`}
-                  className="repertoire-card group"
+                  className="ailey-card ailey-hover-lift group"
                 >
-                  <div className="h-72 w-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+                  {/* Image Container */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     {item.heroImage?.asset?.url ? (
                       <img
                         src={item.heroImage.asset.url}
                         alt={item.title}
-                        className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : item.thumbnail?.asset?.url ? (
                       <img
                         src={item.thumbnail.asset.url}
                         alt={item.title}
-                        className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-gray-600">
@@ -124,30 +131,52 @@ const Repertoire = () => {
                         </svg>
                       </div>
                     )}
-                  </div>
-                  <div className="p-6 flex flex-col gap-3 bg-white dark:bg-gray-800">
-                    <div className="flex items-center justify-between mb-2">
-                      {item.year && (
-                        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wide">{item.year}</span>
-                      )}
-                      {item.companyPremiere && (
-                        <span className="bg-gray-900 text-white text-xs px-2 py-1 rounded font-medium">{item.companyPremiere}</span>
-                      )}
+
+                    {/* Year Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-white/90 text-black font-medium px-3 py-1 rounded-full text-sm">
+                        {item.year}
+                      </span>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white leading-tight mb-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200">
+
+                    {/* Company Premiere Badge */}
+                    {item.companyPremiere && (
+                      <div className="absolute top-4 right-4">
+                        <span className="bg-black text-white font-medium px-3 py-1 rounded-full text-xs">
+                          Company Premiere
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 space-y-4">
+                    <h3 className="ailey-card-title text-gray-900 group-hover:text-gray-700 transition-colors duration-200">
                       {item.title}
                     </h3>
+
                     {item.choreographer && (
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">Choreography by {item.choreographer}</p>
+                      <p className="text-gray-600 font-medium">{item.choreographer}</p>
                     )}
+
                     {item.description && (
-                      <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3 leading-relaxed">
+                      <p className="text-gray-700 dark:text-gray-200 text-sm leading-relaxed line-clamp-3">
                         {item.description}
                       </p>
                     )}
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {item.genre && item.genre.slice(0, 2).map((g, idx) => (
+                        <span key={idx} className="ailey-tag">
+                          {g.charAt(0).toUpperCase() + g.slice(1)}
+                        </span>
+                      ))}
+                    </div>
+
                     {item.duration && (
-                      <div className="mt-auto pt-3 border-t border-gray-100 dark:border-gray-700">
-                        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Duration: {item.duration}</span>
+                      <div className="pt-3 border-t border-gray-100">
+                        <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">Duration: {item.duration}</span>
                       </div>
                     )}
                   </div>
