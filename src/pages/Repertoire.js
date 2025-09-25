@@ -73,29 +73,28 @@ const Repertoire = () => {
         </div>
       }
   
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="container mx-auto px-6 sm:px-8 lg:px-12 py-20 max-w-7xl">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
             Our Repertoire
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Discover our collection of innovative dance works, from contemporary pieces to traditional Jamaican expressions
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-light">
+            Discover our collection of innovative dance works
           </p>
         </motion.div>
 
         <motion.div 
-          className="max-w-7xl mx-auto"
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
         >
-          <div className="repertoire-grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
             {repertoire.map((item) => (
               <motion.div
                 key={item._id}
@@ -105,48 +104,50 @@ const Repertoire = () => {
                   to={`/repertoire/${item.slug?.current || item._id}`}
                   className="repertoire-card group"
                 >
-                  <div className="h-64 w-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden rounded-t-lg">
+                  <div className="h-72 w-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
                     {item.heroImage?.asset?.url ? (
-                      <img 
+                      <img
                         src={item.heroImage.asset.url}
                         alt={item.title}
-                        className="repertoire-image"
-                        style={{ aspectRatio: '4/3', maxHeight: '224px' }}
+                        className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : item.thumbnail?.asset?.url ? (
-                      <img 
+                      <img
                         src={item.thumbnail.asset.url}
                         alt={item.title}
-                        className="repertoire-image"
-                        style={{ aspectRatio: '4/3', maxHeight: '224px' }}
+                        className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+                      <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-gray-600">
+                        <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
                     )}
                   </div>
-                  <div className="p-6 flex flex-col gap-3">
+                  <div className="p-6 flex flex-col gap-3 bg-white dark:bg-gray-800">
                     <div className="flex items-center justify-between mb-2">
                       {item.year && (
-                        <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 tracking-wide uppercase">{item.year}</span>
+                        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wide">{item.year}</span>
                       )}
                       {item.companyPremiere && (
-                        <span className="bg-gradient-to-r from-gray-900 to-black text-white text-xs px-3 py-1 rounded-full font-medium shadow-sm">{item.companyPremiere}</span>
+                        <span className="bg-gray-900 text-white text-xs px-2 py-1 rounded font-medium">{item.companyPremiere}</span>
                       )}
                     </div>
-                    <h3 className="repertoire-title">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white leading-tight mb-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200">
                       {item.title}
                     </h3>
                     {item.choreographer && (
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 font-medium">by {item.choreographer}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">Choreography by {item.choreographer}</p>
                     )}
                     {item.description && (
-                      <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3 mb-1 leading-relaxed">
+                      <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3 leading-relaxed">
                         {item.description}
                       </p>
                     )}
                     {item.duration && (
-                      <div className="mt-auto pt-2 border-t border-gray-100 dark:border-gray-700">
-                        <span className="text-xs text-gray-500 dark:text-gray-400">Duration: {item.duration}</span>
+                      <div className="mt-auto pt-3 border-t border-gray-100 dark:border-gray-700">
+                        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Duration: {item.duration}</span>
                       </div>
                     )}
                   </div>

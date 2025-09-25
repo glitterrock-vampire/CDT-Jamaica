@@ -71,33 +71,30 @@
   @apply bg-blue-600 rounded-full;
 }
 
-/* Repertoire Grid Enhancements */
+/* Repertoire Grid - Ailey.org Style */
 .repertoire-grid {
-  @apply grid gap-8;
+  @apply grid gap-6;
 }
 
 .repertoire-card {
-  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden h-full hover:shadow-xl transition-all duration-300 cursor-pointer;
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden h-full transition-all duration-300 cursor-pointer;
 }
 
 .repertoire-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.repertoire-image {
-  @apply w-full h-full object-cover object-center transition-transform duration-500;
+.repertoire-card:hover .group-hover\:scale-105 {
+  transform: scale(1.05);
 }
 
-.repertoire-image:hover {
-  transform: scale(1.1);
+.repertoire-card:hover h3 {
+  color: #374151;
 }
 
-.repertoire-title {
-  @apply text-xl font-bold text-gray-900 dark:text-white leading-tight transition-colors duration-200;
-}
-
-.repertoire-title:hover {
-  @apply text-blue-600 dark:text-blue-400;
+.dark .repertoire-card:hover h3 {
+  color: #d1d5db;
 }
 
 /* Line clamp fallback for older browsers */
