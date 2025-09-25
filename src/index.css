@@ -71,6 +71,39 @@
   @apply bg-blue-600 rounded-full;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-blue-700;
+/* Repertoire Grid Enhancements */
+.repertoire-grid {
+  @apply grid gap-8;
+}
+
+.repertoire-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden h-full hover:shadow-xl transition-all duration-300 cursor-pointer;
+}
+
+.repertoire-card:hover {
+  transform: translateY(-4px);
+}
+
+.repertoire-image {
+  @apply w-full h-full object-cover object-center transition-transform duration-500;
+}
+
+.repertoire-image:hover {
+  transform: scale(1.1);
+}
+
+.repertoire-title {
+  @apply text-xl font-bold text-gray-900 dark:text-white leading-tight transition-colors duration-200;
+}
+
+.repertoire-title:hover {
+  @apply text-blue-600 dark:text-blue-400;
+}
+
+/* Line clamp fallback for older browsers */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

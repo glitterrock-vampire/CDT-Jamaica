@@ -2,16 +2,22 @@
 const { createClient } = require('@sanity/client');
 require('dotenv').config({ path: '../.env.local' });
 
+// Initialize the Sanity client
 const client = createClient({
   projectId: 'sbvvl9vs',
   dataset: 'production',
-  token: process.env.SANITY_AUTH_TOKEN,
+  token: process.env.SANITY_AUTH_TOKEN, // Make sure to set this in your .env.local file
   apiVersion: '2023-05-03',
   useCdn: false,
 });
 
 async function updateBaddieLanguage() {
   try {
+    // First, try to find an existing document with the same title
+    const existingDocs = await client.fetch(
+      `*[_type == "repertoireItem" && title == "Baddie Language"]`
+    );
+
     const doc = {
       _type: 'repertoireItem',
       title: 'Baddie Language',
@@ -40,14 +46,26 @@ async function updateBaddieLanguage() {
       status: 'active',
     };
 
-    // Always create a new document with a unique ID
-    console.log('Creating new document for Baddie Language');
-    const result = await client.create({
-      ...doc,
-      _id: `baddie-language-${Date.now()}`
-    });
-    
-    console.log('Successfully created Baddie Language with ID:', result._id);
+    if (existingDocs && existingDocs.length > 0) {
+      // Update existing document
+      console.log('Updating existing Baddie Language document');
+      const docId = existingDocs[0]._id;
+      const result = await client
+        .patch(docId)
+        .set(doc)
+        .commit();
+      
+      console.log('Successfully updated Baddie Language with ID:', result._id);
+    } else {
+      // Create new document
+      console.log('Creating new document for Baddie Language');
+      const result = await client.create({
+        ...doc,
+        _id: `baddie-language-${Date.now()}`
+      });
+      
+      console.log('Successfully created Baddie Language with ID:', result._id);
+    }
   } catch (error) {
     console.error('Error updating Baddie Language:', error);
   }

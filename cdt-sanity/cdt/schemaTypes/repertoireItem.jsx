@@ -55,7 +55,16 @@ export default {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: Rule => Rule.required()
+      validation: requiredField,
+      description: 'The title of the piece'
+    },
+    {
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      initialValue: 'jamaican',
+      hidden: true,
+      readOnly: true
     },
     {
       name: 'slug',
@@ -63,205 +72,322 @@ export default {
       type: 'slug',
       options: {
         source: 'title',
-        maxLength: 96,
+        maxLength: 96
       },
-      validation: Rule => Rule.required()
+      validation: requiredField,
+      description: 'The URL-friendly version of the title (auto-generated from title)'
     },
-    {
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-      rows: 4,
-      description: 'A brief description of the repertoire item'
-    },
-    
-    // Media
-    {
-      name: 'thumbnail',
-      title: 'Thumbnail',
-      type: 'image',
-      options: { hotspot: true },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-          description: 'Important for SEO and accessibility'
-        }
-      ]
-    },
-    {
-      name: 'heroImage',
-      title: 'Hero Image',
-      type: 'image',
-      description: 'Large hero image for the dance detail page',
-      options: { hotspot: true },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-          description: 'Important for SEO and accessibility'
-        }
-      ]
-    },
-    
-    // Details
     {
       name: 'choreographer',
       title: 'Choreographer',
       type: 'string',
-      validation: Rule => Rule.required()
+      validation: requiredField,
+      description: 'The name of the choreographer'
     },
     {
       name: 'composer',
       title: 'Composer',
       type: 'string',
-      validation: Rule => Rule.required()
+      description: 'The composer of the music'
+    },
+    {
+      name: 'music',
+      title: 'Music Credits',
+      type: 'array',
+      of: [{type: 'string'}],
+      description: 'List of music credits'
+    },
+    {
+      name: 'isFeatured',
+      title: 'Featured',
+      type: 'boolean',
+      description: 'Whether this piece should be featured prominently',
+      initialValue: false
+    },
+    {
+      name: 'difficulty',
+      title: 'Difficulty Level',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Beginner', value: 'beginner'},
+          {title: 'Intermediate', value: 'intermediate'},
+          {title: 'Advanced', value: 'advanced'},
+          {title: 'Professional', value: 'professional'}
+        ]
+      },
+      description: 'Technical difficulty level of the piece'
+    },
+    {
+      name: 'performanceNotes',
+      title: 'Performance Notes',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'H1', value: 'h1'},
+            {title: 'H2', value: 'h2'},
+            {title: 'H3', value: 'h3'},
+            {title: 'Quote', value: 'blockquote'}
+          ]
+        }
+      ],
+      description: 'Detailed performance notes and cast information',
+      // Ensure the field can handle both array and single block formats
+      validation: Rule => Rule.custom(field => {
+        // If the field is already an array or undefined, it's valid
+        if (Array.isArray(field) || field === undefined) return true;
+        
+        // If it's a single block, wrap it in an array
+        if (field && field._type === 'block') return true;
+        
+        return 'Performance notes must be a block of text or an array of blocks';
+      }),
+      // Normalize the data to always be an array
+      prepare: value => {
+        if (!value) return { value: [] };
+        if (Array.isArray(value)) return { value };
+        if (value._type === 'block') return { value: [value] };
+        return { value: [] };
+      }
+    },
+    // SEO and technical requirements are defined later in the schema
+    {
+      name: 'year',
+      title: 'Year',
+      type: 'number',
+      validation: requiredField,
+      description: 'The year the piece was created'
+    },
+    {
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+      description: 'A brief description of the piece',
+      validation: Rule => Rule.max(300).warning('Description should be less than 300 characters')
     },
     
-    // Performance Information
+    // Media (mainImage removed; using heroImage and thumbnail only)
     {
-      name: 'companyPremiere',
-      title: 'Company Premiere',
-      type: 'string',
-      description: 'When and where the piece was first performed by the company'
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      options: {
+        hotspot: true
+      },
+      description: 'A larger hero image for the piece',
     },
-    {
-      name: 'worldPremiere',
-      title: 'World Premiere',
-      type: 'string',
-      description: 'When and where the piece was first performed anywhere'
-    },
+    
+    // Performance Details
     {
       name: 'premieredBy',
       title: 'Premiered By',
       type: 'string',
-      description: 'Who premiered this piece (if known)'
+      description: 'The company or group that premiered this piece'
+    },
+    {
+      name: 'thumbnail',
+      title: 'Thumbnail Image',
+      type: 'image',
+      options: {
+        hotspot: true
+      },
+      description: 'A thumbnail image for the piece'
+    },
+    {
+      name: 'youtubeId',
+      title: 'YouTube Video ID',
+      type: 'string',
+      description: 'The YouTube video ID (the part after v= in the URL)'
     },
     
-    // Music and Design
+    // Duration
     {
-      name: 'music',
-      title: 'Music',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'List of music/composers used in the piece',
-      options: { layout: 'tags' }
-    },
-    {
-      name: 'costumeDesign',
-      title: 'Costume Design',
+      name: 'duration',
+      title: 'Duration',
       type: 'string',
-      description: 'Costume designer(s) for the piece'
-    },
-    {
-      name: 'lightingDesign',
-      title: 'Lighting Design',
-      type: 'string',
-      description: 'Lighting designer(s) for the piece'
+      inputComponent: YouTubeDurationInput,
+      description: 'Duration in MM:SS format (e.g., 03:45)',
+      validation: Rule => Rule.custom(field => {
+        if (!field) return true;
+        if (typeof field === 'object') return 'Invalid duration format. Please enter as MM:SS (e.g., 3:45)';
+        const durationStr = String(field).trim();
+        
+        // Check if the duration matches MM:SS or H:MM:SS format
+        if (!/^\d{1,2}:\d{2}(?::\d{2})?$/.test(durationStr)) {
+          return 'Invalid duration format. Please enter as MM:SS or H:MM:SS (e.g., 3:45 or 1:23:45)';
+        }
+        
+        const parts = durationStr.split(':');
+        const minutes = parseInt(parts[parts.length - 2], 10);
+        const seconds = parseInt(parts[parts.length - 1], 10);
+        
+        if (minutes > 59) return 'Minutes cannot be more than 59';
+        if (seconds > 59) return 'Seconds cannot be more than 59';
+        
+        return true;
+      })
     },
     
-    // Classification
+    // Additional Information
+    {
+      name: 'dancers',
+      title: 'Number of Dancers',
+      type: 'number',
+      description: 'The number of dancers required for this piece',
+      validation: Rule => Rule.min(1).integer().positive()
+    },
+    {
+      name: 'style',
+      title: 'Dance Style',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Contemporary', value: 'contemporary'},
+          {title: 'Dancehall', value: 'dancehall'},
+          {title: 'Modern', value: 'modern'},
+          {title: 'Jazz', value: 'jazz'},
+          {title: 'Hip Hop', value: 'hiphop'},
+          {title: 'Ballet', value: 'ballet'},
+          {title: 'Fusion', value: 'fusion'},
+          {title: 'Other', value: 'other'}
+        ]
+      },
+      description: 'The primary dance style of the piece'
+    },
     {
       name: 'genre',
-      title: 'Genre',
+      title: 'Genres',
       type: 'array',
       of: [{type: 'string'}],
-      validation: requiredField,
       options: {
         list: [
-          {title: 'Modern', value: 'modern'},
           {title: 'Contemporary', value: 'contemporary'},
-          {title: 'Folk', value: 'folk'},
           {title: 'Dancehall', value: 'dancehall'},
-          {title: 'Afro-Caribbean', value: 'afro-caribbean'},
-          {title: 'Ballet', value: 'ballet'},
+          {title: 'Modern', value: 'modern'},
           {title: 'Jazz', value: 'jazz'},
-          {title: 'Traditional', value: 'traditional'},
-          {title: 'Experimental', value: 'experimental'}
-        ],
-        layout: 'tags'
-      }
+          {title: 'Hip Hop', value: 'hiphop'},
+          {title: 'Ballet', value: 'ballet'},
+          {title: 'Fusion', value: 'fusion'},
+          {title: 'Folk', value: 'folk'},
+          {title: 'Afro-Modern', value: 'afro-modern'}
+        ]
+      },
+      description: 'List of genres that describe this piece'
     },
+    // Style Periods
     {
       name: 'stylePeriod',
-      title: 'Style/Period',
+      title: 'Style Periods',
       type: 'array',
       of: [{type: 'string'}],
       options: {
         list: [
-          {title: 'Renaissance', value: 'renaissance'},
-          {title: 'Baroque', value: 'baroque'},
-          {title: 'Classical', value: 'classical'},
-          {title: 'Romantic', value: 'romantic'},
-          {title: '20th Century', value: '20th-century'},
           {title: 'Contemporary', value: 'contemporary'},
-          {title: 'Postmodern', value: 'postmodern'},
+          {title: 'Modern', value: 'modern'},
           {title: 'Traditional', value: 'traditional'}
-        ],
-        layout: 'tags'
+        ]
       },
-      description: 'Artistic style or period of the piece'
+      description: 'Style periods that influence this piece'
     },
-    {
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      validation: requiredField,
-      options: {
-        list: [
-          {title: 'Classical Masterpieces', value: 'classical'},
-          {title: 'Contemporary Works', value: 'contemporary'},
-          {title: 'Jamaican Compositions', value: 'jamaican'},
-          {title: 'Folk Dances', value: 'folk'},
-          {title: 'Experimental Works', value: 'experimental'},
-          {title: 'Collaborative Pieces', value: 'collaborative'}
-        ],
-        layout: 'dropdown'
-      }
-    },
+    
+    // Status
     {
       name: 'status',
       title: 'Status',
       type: 'string',
       options: {
         list: [
-          {title: 'Active in Repertoire', value: 'active'},
+          {title: 'Active', value: 'active'},
           {title: 'Archived', value: 'archived'},
-          {title: 'In Development', value: 'development'},
-          {title: 'Retired', value: 'retired'}
-        ],
-        layout: 'dropdown'
+          {title: 'In Development', value: 'in-development'}
+        ]
       },
-      initialValue: 'active'
+      initialValue: 'active',
+      description: 'The current status of this piece in the repertoire'
     },
     
-    // Additional Information
+    // SEO Metadata
+    {
+      name: 'seo',
+      title: 'SEO',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'SEO Title',
+          type: 'string',
+          description: 'Title for search engines (defaults to the piece title)'
+        },
+        {
+          name: 'description',
+          title: 'SEO Description',
+          type: 'text',
+          rows: 2,
+          description: 'Description for search engines (defaults to the piece description)'
+        }
+      ]
+    },
+    
+    // Technical Requirements
+    {
+      name: 'technicalRequirements',
+      title: 'Technical Requirements',
+      type: 'array',
+      of: [{type: 'string'}],
+      description: 'List of technical requirements for this piece'
+    },
+    {
+      name: 'costumeDesign',
+      title: 'Costume Design',
+      type: 'string',
+      description: 'Name of the costume designer'
+    },
+    {
+      name: 'lightingDesign',
+      title: 'Lighting Design',
+      type: 'string',
+      description: 'Name of the lighting designer'
+    },
+    {
+      name: 'lighting',
+      title: 'Lighting',
+      type: 'string',
+      description: 'Lighting information',
+      hidden: true
+    },
+    {
+      name: 'costumes',
+      title: 'Costumes',
+      type: 'string',
+      description: 'Costume information',
+      hidden: true
+    },
+    
+    // Performance Information
+    {
+      name: 'worldPremiere',
+      title: 'World Premiere',
+      type: 'string',
+      description: 'Location and year of world premiere'
+    },
+    {
+      name: 'companyPremiere',
+      title: 'Company Premiere',
+      type: 'string',
+      description: 'Location and year of company premiere'
+    },
     {
       name: 'dedicatedTo',
       title: 'Dedicated To',
       type: 'string',
-      description: 'If the piece was dedicated to someone'
-    },
-    {
-      name: 'movements',
-      title: 'Movements',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'List of movements (if applicable)',
-      options: { layout: 'tags' }
-    },
-    {
-      name: 'notableRecordings',
-      title: 'Notable Recordings',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'List of notable recordings or performances',
-      options: { layout: 'tags' }
+      description: 'Dedication information'
     },
     
-    // Media Reviews
+    // Media and Reviews
     {
       name: 'mediaReviews',
       title: 'Media Reviews',
@@ -273,148 +399,79 @@ export default {
             name: 'quote',
             title: 'Quote',
             type: 'text',
-            rows: 3,
-            validation: requiredField
+            rows: 3
           },
           {
             name: 'source',
             title: 'Source',
-            type: 'string',
-            description: 'E.g., Jamaica Gleaner, 2023',
-            validation: requiredField
+            type: 'string'
           },
           {
             name: 'year',
             title: 'Year',
-            type: 'number',
-            validation: Rule => Rule.required().min(1900).max(new Date().getFullYear() + 1)
+            type: 'string'
           },
           {
             name: 'url',
-            title: 'Article URL',
-            type: 'url',
-            description: 'Link to the full review (if available)',
-            validation: urlValidation
+            title: 'URL',
+            type: 'url'
           }
-        ],
-        preview: {
-          select: {
-            title: 'source',
-            subtitle: 'quote',
-            year: 'year'
-          },
-          prepare({title, subtitle, year}) {
-            const preview = subtitle ? `${subtitle.slice(0, 50)}...` : 'No quote';
-            return {
-              title: `${title} (${year || 'N/A'})`,
-              subtitle: preview
-            };
-          }
-        }
+        ]
       }],
-      description: 'Notable reviews or quotes about the piece',
-      options: {
-        sortable: true
-      }
+      description: 'Notable reviews or quotes about the piece'
     },
     
-    // Video and Duration
+    // Structure
     {
-      name: 'youtubeUrl',
-      title: 'YouTube URL',
-      type: 'url',
-      description: 'Full YouTube URL (alternative to YouTube ID)',
-      validation: urlValidation
-    },
-    {
-      name: 'status',
-      title: 'Status',
-      type: 'string',
-      description: 'Current status of the repertoire item',
-      options: {
-        list: [
-          { title: 'Active', value: 'active' },
-          { title: 'Archived', value: 'archived' },
-          { title: 'In Development', value: 'in-development' },
-          { title: 'Retired', value: 'retired' }
-        ],
-        layout: 'dropdown'
-      },
-      initialValue: 'active'
-    },
-    {
-      name: 'youtubeId',
-      title: 'YouTube Video ID',
-      type: 'string',
-      description: 'The ID of the YouTube video (the part after v= in the URL)',
-      options: {
-        isHighlighted: true
-      },
-      validation: Rule => Rule.custom(async (youtubeId, context) => {
-        if (context.document?.youtubeId === youtubeId) return true;
-        if (!youtubeId) return true;
-        
-        const { getClient } = context;
-        const client = getClient({ apiVersion: '2023-05-03' });
-        
-        try {
-          const duration = await fetchYoutubeDuration(youtubeId);
-          if (duration) {
-            await client
-              .patch(context.document?._id || '')
-              .set({ duration })
-              .commit();
-          }
-        } catch (error) {
-          console.error('Error updating YouTube duration:', error);
-        }
-        
-        return true;
-      })
-    },
-    {
-      name: 'duration',
-      title: 'Duration',
-      type: 'string',
-      description: 'Video duration (auto-filled from YouTube when YouTube ID is provided)',
-      components: {
-        input: (props) => (
-          <YouTubeDurationInput
-            value={props.value}
-            onChange={props.onChange}
-            youtubeId={props.document?.youtubeId}
-          />
-        )
-      },
-      validation: Rule => Rule.custom(field => {
-        if (!field) return true;
-        if (typeof field === 'object') return 'Invalid duration format. Please enter as MM:SS (e.g., 3:45)';
-        const durationStr = String(field).trim();
-        const timeFormat = /^([0-9]+:)?[0-5]?[0-9]:[0-5][0-9]$/;
-        return timeFormat.test(durationStr) || 'Please enter duration as MM:SS (e.g., 3:45) or H:MM:SS (e.g., 1:23:45)';
-      })
-    },
-    {
-      name: 'year',
-      title: 'Year',
-      type: 'string',
-      description: 'Year of composition or premiere'
+      name: 'movements',
+      title: 'Movements',
+      type: 'array',
+      of: [{type: 'string'}],
+      description: 'List of movements or sections in the piece'
     },
     
-    // Quote
+    // Additional Information
     {
       name: 'quote',
       title: 'Quote',
       type: 'text',
-      description: 'An inspirational or descriptive quote related to the piece'
+      rows: 2,
+      description: 'A notable quote about the piece'
+    },
+    {
+      name: 'youtubeUrl',
+      title: 'YouTube URL',
+      type: 'url',
+      description: 'Full YouTube URL for the piece'
+    },
+    
+    // Additional Notes
+    {
+      name: 'notes',
+      title: 'Additional Notes',
+      type: 'text',
+      rows: 3,
+      description: 'Any additional notes about this piece'
     }
   ],
   
+  // Preview configuration
   preview: {
     select: {
       title: 'title',
-      composer: 'composer',
-      media: 'thumbnail'
+      subtitle: 'choreographer',
+      media: 'thumbnail',
+      altMedia: 'heroImage',
+      year: 'year'
+    },
+    prepare(selection) {
+      const {title, subtitle, year} = selection;
+      const media = selection.media || selection.altMedia;
+      return {
+        title: title,
+        subtitle: `${subtitle} (${year})`,
+        media
+      };
     }
   }
 };

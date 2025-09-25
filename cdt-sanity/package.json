@@ -4,16 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "sanity start",
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
-    "@sanity/client": "^7.10.0",
+    "@sanity/client": "^6.15.0",
+    "@sanity/vision": "^4.10.0",
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",
-    "fs-extra": "^11.3.1"
+    "fs-extra": "^11.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sanity": "^4.10.0",
+    "styled-components": "^6.1.19",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^3.0.1",
+    "@types/node": "^24.5.2",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.9.2"
   }
 }

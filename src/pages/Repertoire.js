@@ -57,7 +57,7 @@ const Repertoire = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 pt-20">
       {/* Hero Section */}
-      {siteSettings?.heroImage && (
+      {siteSettings?.heroImage &&
         <div className="relative w-full h-96 overflow-hidden">
           <img
             src={siteSettings.heroImage.asset.url}
@@ -71,53 +71,83 @@ const Repertoire = () => {
             </div>
           </div>
         </div>
-      )}
-
+      }
+  
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Section Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Our Repertoire
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Discover our collection of innovative dance works, from contemporary pieces to traditional Jamaican expressions
+          </p>
+        </motion.div>
+
         <motion.div 
           className="max-w-7xl mx-auto"
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
         >
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {repertoire.map((item, index) => (
+          <div className="repertoire-grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            {repertoire.map((item) => (
               <motion.div
                 key={item._id}
                 variants={fadeInUp}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
                 <Link 
                   to={`/repertoire/${item.slug?.current || item._id}`}
-                  className="block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden h-full hover:shadow-lg transition-shadow duration-200"
+                  className="repertoire-card group"
                 >
-                  <div className="h-48 overflow-hidden">
-                    {item.image && (
+                  <div className="h-64 w-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden rounded-t-lg">
+                    {item.heroImage?.asset?.url ? (
                       <img 
-                        src={item.image.asset.url} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover"
+                        src={item.heroImage.asset.url}
+                        alt={item.title}
+                        className="repertoire-image"
+                        style={{ aspectRatio: '4/3', maxHeight: '224px' }}
                       />
+                    ) : item.thumbnail?.asset?.url ? (
+                      <img 
+                        src={item.thumbnail.asset.url}
+                        alt={item.title}
+                        className="repertoire-image"
+                        style={{ aspectRatio: '4/3', maxHeight: '224px' }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
                     )}
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  <div className="p-6 flex flex-col gap-3">
+                    <div className="flex items-center justify-between mb-2">
+                      {item.year && (
+                        <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 tracking-wide uppercase">{item.year}</span>
+                      )}
+                      {item.companyPremiere && (
+                        <span className="bg-gradient-to-r from-gray-900 to-black text-white text-xs px-3 py-1 rounded-full font-medium shadow-sm">{item.companyPremiere}</span>
+                      )}
+                    </div>
+                    <h3 className="repertoire-title">
                       {item.title}
                     </h3>
                     {item.choreographer && (
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                        Choreographer: {item.choreographer}
-                      </p>
-                    )}
-                    {item.composer && (
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                        Composer: {item.composer}
-                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 font-medium">by {item.choreographer}</p>
                     )}
                     {item.description && (
-                      <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3">
+                      <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3 mb-1 leading-relaxed">
                         {item.description}
                       </p>
+                    )}
+                    {item.duration && (
+                      <div className="mt-auto pt-2 border-t border-gray-100 dark:border-gray-700">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">Duration: {item.duration}</span>
+                      </div>
                     )}
                   </div>
                 </Link>
@@ -129,5 +159,3 @@ const Repertoire = () => {
     </div>
   );
 };
-
-export default Repertoire;

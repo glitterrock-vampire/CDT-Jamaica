@@ -147,11 +147,6 @@ const DanceDetail = () => {
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-white dark:text-gray-100">
                 {dance.title}
               </h1>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-blue-100 dark:text-blue-200">
-                <p className="text-xl text-gray-100 dark:text-gray-300">{dance.composer}</p>
-                {dance.year && <span className="text-xl text-gray-100">•</span>}
-                {dance.year && <p className="text-xl text-gray-100 dark:text-gray-300">{dance.year}</p>}
-              </div>
             </div>
           </div>
         </div>

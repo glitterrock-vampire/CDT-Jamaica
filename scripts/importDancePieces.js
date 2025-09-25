@@ -12,7 +12,6 @@ const client = createClient({
   token: process.env.SANITY_AUTH_TOKEN, // Using the token from .env.local
   useCdn: process.env.REACT_APP_SANITY_USE_CDN === 'true' || false // Use CDN setting from .env
 });
-
 // Dance pieces data with their existing document IDs
 const dancePieces = [
   {
@@ -39,12 +38,12 @@ const dancePieces = [
       {
         quote: 'My favourite dance, "Wilson\'s Calabash", ended the show with the prettiest costumes, which were designed by Wilson.',
         source: 'Jamaica Gleaner',
-        year: 2025
+        year: '2025'
       },
       {
         quote: 'It was a joyful piece, best described as a montage of dance movements depicting what appeared to be different genres of praise movements.',
         source: 'Jamaica Gleaner',
-        year: 2018
+        year: '2018'
       }
     ]
   },
@@ -65,17 +64,17 @@ const dancePieces = [
       {
         quote: 'It was more than a dance. In a declaration of self, the all-female cast, dressed in full black, hair loose, and at times moving in rapid pace, entered and exited the stage while exploring various levels, in mainly straight-line formations. After charging towards the audience in a frightening manner, they fall on to the stage dramatically, thus ending what appeared to be a psycho dance.',
         source: 'Gleaner',
-        year: 2014
+        year: '2014'
       },
       {
         quote: 'In 2014, McDonald delivered metaphysics of presence through dance when she choreographed "Divulgence". The remount on Saturday was just as engrossing, from the interplay between light and darkness, the black long dresses worn by the dancers to their screams towards the end.',
         source: 'Gleaner',
-        year: 2017
+        year: '2017'
       },
       {
         quote: 'Renowned all-female powerhouse piece',
         source: 'Gleaner',
-        year: 2022
+        year: '2022'
       }
     ]
   },
@@ -114,7 +113,6 @@ const dancePieces = [
       'Bill Evans'
     ],
     costumes: 'Dr. Sade Bully-Bell',
-    lighting: 'Dr. Sade Bully-Bell and Nadia Roxburgh',
     worldPremiere: 'Little Theatre (CDT 2022 Jamaica Season)',
     genre: ['modern', 'contemporary', 'afro-caribbean']
   }

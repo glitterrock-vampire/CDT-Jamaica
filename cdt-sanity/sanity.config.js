@@ -1,9 +1,9 @@
-// @ts-nocheck
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import repertoireItem from './schemaTypes/repertoireItem.jsx'
-import siteSettings from './schemaTypes/siteSettings'
+// @ts-check
+import { defineConfig } from 'sanity';
+import { structureTool } from 'sanity/structure';
+import { visionTool } from '@sanity/vision';
+import repertoireItem from './cdt/schemaTypes/repertoireItem.jsx';
+import siteSettings from './cdt/schemaTypes/siteSettings';
 
 export default defineConfig({
   name: 'default',
@@ -34,4 +34,4 @@ export default defineConfig({
       credentials: true,
     },
   },
-})
+});
