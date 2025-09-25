@@ -140,10 +140,10 @@ const DanceDetail = () => {
           <div className="lg:col-span-3 space-y-12">
             {/* Video and Description Row */}
             {dance.youtubeId && dance.description && (
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                {/* Video */}
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                {/* Video - Takes 2 columns */}
                 <motion.div
-                  className="w-full overflow-hidden rounded-lg shadow-sm"
+                  className="xl:col-span-2 w-full overflow-hidden rounded-lg shadow-sm"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
@@ -158,7 +158,7 @@ const DanceDetail = () => {
                   </div>
                 </motion.div>
 
-                {/* Description Beside Video */}
+                {/* Description Beside Video - Takes 1 column */}
                 <motion.div
                   className="prose prose-lg max-w-none"
                   initial={{ opacity: 0, y: 20 }}
@@ -175,7 +175,7 @@ const DanceDetail = () => {
             {/* Video Only (when no description) */}
             {dance.youtubeId && !dance.description && (
               <motion.div
-                className="w-full overflow-hidden rounded-lg shadow-sm"
+                className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
