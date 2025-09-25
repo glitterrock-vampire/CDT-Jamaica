@@ -85,143 +85,128 @@ const DanceDetail = () => {
   const displayDuration = videoDuration || dance?.duration || '';
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
       {/* Hero Section */}
-      <div className="relative bg-gray-900 text-white overflow-hidden h-96">
+      <div className="dance-detail-hero h-96 lg:h-[500px]">
         <div className="absolute inset-0 z-0">
           {dance.heroImage?.asset?.url ? (
             <>
-              <img 
-                src={`${dance.heroImage.asset.url}?auto=format&fit=crop&t=${dance.heroImage.asset._updatedAt || Date.now()}${dance.heroImage.hotspot ? `&rect=${Math.round(dance.heroImage.crop.left * dance.heroImage.asset.metadata.dimensions.width)},${Math.round(dance.heroImage.crop.top * dance.heroImage.asset.metadata.dimensions.height)},${Math.round((dance.heroImage.crop.right - dance.heroImage.crop.left) * dance.heroImage.asset.metadata.dimensions.width)},${Math.round((dance.heroImage.crop.bottom - dance.heroImage.crop.top) * dance.heroImage.asset.metadata.dimensions.height)}` : ''}`}
+              <img
+                src={`${dance.heroImage.asset.url}?auto=format&fit=crop&w=1920&h=1080&q=80`}
                 alt={dance.heroImage.alt || `${dance.title} performance`}
                 className="w-full h-full object-cover"
-                style={{
-                  objectPosition: dance.heroImage.hotspot 
-                    ? `${dance.heroImage.hotspot.x * 100}% ${dance.heroImage.hotspot.y * 100}%`
-                    : 'center'
-                }}
               />
-              <div className="absolute inset-0 bg-black opacity-40"></div>
+              <div className="absolute inset-0 bg-black opacity-50"></div>
             </>
           ) : dance.thumbnail?.asset?.url ? (
-            // Fallback to thumbnail if heroImage is not available
             <>
-              <img 
-                src={`${dance.thumbnail.asset.url}?auto=format&fit=crop&t=${dance.thumbnail.asset._updatedAt || Date.now()}${dance.thumbnail.hotspot ? `&rect=${Math.round(dance.thumbnail.crop.left * dance.thumbnail.asset.metadata.dimensions.width)},${Math.round(dance.thumbnail.crop.top * dance.thumbnail.asset.metadata.dimensions.height)},${Math.round((dance.thumbnail.crop.right - dance.thumbnail.crop.left) * dance.thumbnail.asset.metadata.dimensions.width)},${Math.round((dance.thumbnail.crop.bottom - dance.thumbnail.crop.top) * dance.thumbnail.asset.metadata.dimensions.height)}` : ''}`}
+              <img
+                src={`${dance.thumbnail.asset.url}?auto=format&fit=crop&w=1920&h=1080&q=80`}
                 alt={dance.thumbnail.alt || dance.title}
                 className="w-full h-full object-cover"
-                style={{
-                  objectPosition: dance.thumbnail.hotspot 
-                    ? `${dance.thumbnail.hotspot.x * 100}% ${dance.thumbnail.hotspot.y * 100}%`
-                    : 'center'
-                }}
               />
-              <div className="absolute inset-0 bg-black opacity-40"></div>
-            </>
-          ) : dance.image?.asset?.url ? (
-            // Fallback to main image if neither heroImage nor thumbnail is available
-            <>
-              <img 
-                src={`${dance.image.asset.url}?auto=format&fit=crop&t=${dance.image.asset._updatedAt || Date.now()}${dance.image.hotspot ? `&rect=${Math.round(dance.image.crop.left * dance.image.asset.metadata.dimensions.width)},${Math.round(dance.image.crop.top * dance.image.asset.metadata.dimensions.height)},${Math.round((dance.image.crop.right - dance.image.crop.left) * dance.image.asset.metadata.dimensions.width)},${Math.round((dance.image.crop.bottom - dance.image.crop.top) * dance.image.asset.metadata.dimensions.height)}` : ''}`}
-                alt={dance.image.alt || dance.title}
-                className="w-full h-full object-cover"
-                style={{
-                  objectPosition: dance.image.hotspot 
-                    ? `${dance.image.hotspot.x * 100}% ${dance.image.hotspot.y * 100}%`
-                    : 'center'
-                }}
-              />
-              <div className="absolute inset-0 bg-black opacity-40"></div>
+              <div className="absolute inset-0 bg-black opacity-50"></div>
             </>
           ) : (
-            // Fallback to gradient background if no images are available
-            <div className="w-full h-full bg-gradient-to-r from-blue-900 to-purple-900">
-              <div className="absolute inset-0 bg-black opacity-60"></div>
+            <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+              <div className="absolute inset-0 bg-black opacity-70"></div>
             </div>
           )}
         </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-          <div>
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-white dark:text-gray-100">
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex items-end pb-12">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-4 text-white">
                 {dance.title}
               </h1>
-            </div>
+              {dance.choreographer && (
+                <p className="text-xl md:text-2xl text-gray-200 font-light">
+                  Choreography by {dance.choreographer}
+                </p>
+              )}
+            </motion.div>
           </div>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white dark:bg-gray-900 transition-colors duration-300">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Video and Description */}
-          <div className="lg:col-span-2 space-y-8">
+      <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+          {/* Main Content */}
+          <div className="lg:col-span-3 space-y-12">
             {/* Video */}
             {dance.youtubeId && (
-              <motion.div 
-                className="w-full overflow-hidden rounded-lg"
+              <motion.div
+                className="w-full overflow-hidden rounded-lg shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.6 }}
               >
-                <iframe 
-                  src={`https://www.youtube.com/embed/${dance.youtubeId}`} 
-                  className="w-full h-96" 
-                  allowFullScreen 
-                  title={dance.title}
-                />
+                <div className="aspect-video">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${dance.youtubeId}`}
+                    className="w-full h-full"
+                    allowFullScreen
+                    title={dance.title}
+                  />
+                </div>
               </motion.div>
             )}
 
             {/* Description */}
             {dance.description && (
-              <motion.div 
-                className="prose max-w-none bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm"
+              <motion.div
+                className="prose prose-lg max-w-none"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">About the Piece</h2>
-                <div className="whitespace-pre-line text-gray-700 dark:text-gray-300">{dance.description}</div>
+                <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                  {dance.description}
+                </div>
               </motion.div>
             )}
 
             {/* Media Reviews */}
             {(dance.mediaReviews && dance.mediaReviews.length > 0) && (
-              <motion.div 
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6"
+              <motion.div
+                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Media Reviews</h3>
-                <div className="space-y-6">
+                <h3 className="text-2xl font-light text-gray-900 dark:text-white mb-6">Media Reviews</h3>
+                <div className="space-y-8">
                   {dance.mediaReviews.map((review, index) => (
-                    <div key={index} className="border-l-4 border-blue-500 pl-4 py-1">
-                      <p className="text-gray-700 dark:text-gray-300 italic">"{review.quote}"</p>
-                      <div className="mt-2 flex items-center">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">{review.source}</span>
-                        {review.year && (
-                          <span className="mx-2 text-gray-400">•</span>
-                        )}
-                        {review.year && (
-                          <span className="text-sm text-gray-500 dark:text-gray-400">{review.year}</span>
-                        )}
+                    <blockquote key={index} className="dance-detail-quote">
+                      <p className="text-lg text-gray-700 dark:text-gray-300 italic leading-relaxed mb-4">
+                        "{review.quote}"
+                      </p>
+                      <footer className="flex items-center justify-between">
+                        <div>
+                          <cite className="text-gray-900 dark:text-gray-100 font-medium">{review.source}</cite>
+                          {review.year && (
+                            <span className="text-gray-500 dark:text-gray-400 ml-2">({review.year})</span>
+                          )}
+                        </div>
                         {review.url && (
-                          <a 
-                            href={review.url} 
-                            target="_blank" 
+                          <a
+                            href={review.url}
+                            target="_blank"
                             rel="noopener noreferrer"
-                            className="ml-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium inline-flex items-center"
+                            className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors duration-200"
                           >
-                            Read more
-                            <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
                           </a>
                         )}
-                      </div>
-                    </div>
+                      </footer>
+                    </blockquote>
                   ))}
                 </div>
               </motion.div>
@@ -229,28 +214,23 @@ const DanceDetail = () => {
 
             {/* Movements */}
             {dance.movements && dance.movements.length > 0 && (
-              <motion.div 
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6"
+              <motion.div
+                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                <h3 className="text-2xl font-light text-gray-900 dark:text-white mb-6">
                   {dance.movements.length > 1 ? 'Movements' : 'Movement'}
                 </h3>
-                <ol className="space-y-3">
+                <ol className="space-y-4">
                   {dance.movements.map((movement, idx) => (
                     <li key={idx} className="flex items-start">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100 text-sm font-medium mr-3 flex-shrink-0">
+                      <span className="dance-detail-movement-number">
                         {idx + 1}
                       </span>
-                      <span className="text-gray-700 dark:text-gray-300">
+                      <span className="text-gray-700 dark:text-gray-300 leading-relaxed">
                         {movement}
-                        {dance.durations && dance.durations[idx] && (
-                          <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
-                            ({dance.durations[idx]})
-                          </span>
-                        )}
                       </span>
                     </li>
                   ))}
@@ -259,60 +239,101 @@ const DanceDetail = () => {
             )}
           </div>
 
-          {/* Right Column - Metadata */}
-          <div className="space-y-6">
-            <motion.div 
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6"
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <motion.div
+              className="dance-detail-sidebar"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Production Details</h3>
-              <div className="space-y-4">
+              <h3 className="text-xl font-light text-gray-900 dark:text-white mb-6">Production Details</h3>
+              <div className="space-y-6">
                 {dance.choreographer && (
                   <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Choreographer</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.choreographer}</p>
+                    <h4 className="dance-metadata-label">Choreographer</h4>
+                    <p className="dance-metadata-value">{dance.choreographer}</p>
                   </div>
                 )}
 
-                {dance.music && dance.music.length > 0 && (
+                {dance.composer && (
                   <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Music</h4>
-                    <ul className="mt-1 space-y-1">
-                      {Array.isArray(dance.music) ? (
-                        dance.music.map((music, idx) => (
-                          <li key={idx} className="text-gray-900 dark:text-gray-200">{music}</li>
-                        ))
-                      ) : (
-                        <li className="text-gray-900 dark:text-gray-200">{dance.music}</li>
-                      )}
-                    </ul>
+                    <h4 className="dance-metadata-label">Music</h4>
+                    <p className="dance-metadata-value">{dance.composer}</p>
                   </div>
                 )}
 
                 {dance.costumeDesign && (
                   <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Costume Design</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.costumeDesign}</p>
+                    <h4 className="dance-metadata-label">Costume Design</h4>
+                    <p className="dance-metadata-value">{dance.costumeDesign}</p>
                   </div>
                 )}
 
                 {dance.lightingDesign && (
                   <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Lighting Design</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.lightingDesign}</p>
+                    <h4 className="dance-metadata-label">Lighting Design</h4>
+                    <p className="dance-metadata-value">{dance.lightingDesign}</p>
+                  </div>
+                )}
+
+                {displayDuration && (
+                  <div>
+                    <h4 className="dance-metadata-label">Duration</h4>
+                    <p className="dance-metadata-value">{displayDuration}</p>
+                  </div>
+                )}
+
+                {dance.year && (
+                  <div>
+                    <h4 className="dance-metadata-label">Year</h4>
+                    <p className="dance-metadata-value">{dance.year}</p>
+                  </div>
+                )}
+
+                {dance.companyPremiere && (
+                  <div>
+                    <h4 className="dance-metadata-label">Company Premiere</h4>
+                    <p className="dance-metadata-value">{dance.companyPremiere}</p>
+                  </div>
+                )}
+
+                {dance.worldPremiere && (
+                  <div>
+                    <h4 className="dance-metadata-label">World Premiere</h4>
+                    <p className="dance-metadata-value">{dance.worldPremiere}</p>
+                  </div>
+                )}
+
+                {dance.premieredBy && (
+                  <div>
+                    <h4 className="dance-metadata-label">Premiered By</h4>
+                    <p className="dance-metadata-value">{dance.premieredBy}</p>
+                  </div>
+                )}
+
+                {dance.dedicatedTo && (
+                  <div>
+                    <h4 className="dance-metadata-label">Dedicated To</h4>
+                    <p className="dance-metadata-value">{dance.dedicatedTo}</p>
+                  </div>
+                )}
+
+                {dance.category && (
+                  <div>
+                    <h4 className="dance-metadata-label">Category</h4>
+                    <p className="dance-metadata-value capitalize">{dance.category}</p>
                   </div>
                 )}
 
                 {dance.genre && dance.genre.length > 0 && (
                   <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Genre</h4>
-                    <div className="mt-1 flex flex-wrap gap-2">
+                    <h4 className="dance-metadata-label">Genres</h4>
+                    <div className="flex flex-wrap gap-2">
                       {dance.genre.map((g, idx) => (
-                        <span 
-                          key={idx} 
-                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+                        <span
+                          key={idx}
+                          className="dance-tag"
                         >
                           {g.charAt(0).toUpperCase() + g.slice(1)}
                         </span>
@@ -323,12 +344,12 @@ const DanceDetail = () => {
 
                 {dance.stylePeriod && dance.stylePeriod.length > 0 && (
                   <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Style Period</h4>
-                    <div className="mt-1 flex flex-wrap gap-2">
+                    <h4 className="dance-metadata-label">Style Periods</h4>
+                    <div className="flex flex-wrap gap-2">
                       {dance.stylePeriod.map((period, idx) => (
-                        <span 
-                          key={idx} 
-                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100"
+                        <span
+                          key={idx}
+                          className="dance-tag"
                         >
                           {period.charAt(0).toUpperCase() + period.slice(1)}
                         </span>
@@ -336,63 +357,8 @@ const DanceDetail = () => {
                     </div>
                   </div>
                 )}
-
-                {dance.premieredBy && (
-                  <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Premiered By</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.premieredBy}</p>
-                  </div>
-                )}
-
-                {dance.dedicatedTo && (
-                  <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Dedicated To</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.dedicatedTo}</p>
-                  </div>
-                )}
-
-                {dance.companyPremiere && (
-                  <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">Company Premiere</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.companyPremiere}</p>
-                  </div>
-                )}
-
-                {dance.worldPremiere && (
-                  <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400 font-medium">World Premiere</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.worldPremiere}</p>
-                  </div>
-                )}
-
-                {displayDuration && (
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Duration</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{displayDuration}</p>
-                  </div>
-                )}
-
-                {dance.category && (
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Category</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200 capitalize">{dance.category}</p>
-                  </div>
-                )}
-
-                {dance.instruments && dance.instruments.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Instruments</h4>
-                    <p className="mt-1 text-gray-900 dark:text-gray-200">{dance.instruments.join(', ')}</p>
-                    <ul className="mt-1 space-y-1">
-                      {dance.instruments.map((instrument, index) => (
-                        <li key={index} className="text-gray-900 dark:text-gray-300">{instrument}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
             </motion.div>
-
           </div>
         </div>
       </main>

@@ -97,10 +97,58 @@
   color: #d1d5db;
 }
 
-/* Line clamp fallback for older browsers */
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Dance Detail Page - Ailey.org Style */
+.dance-detail-hero {
+  @apply relative bg-gray-900 text-white overflow-hidden;
+}
+
+.dance-detail-hero h1 {
+  @apply text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-4 text-white;
+}
+
+.dance-detail-sidebar {
+  @apply bg-gray-50 dark:bg-gray-800 rounded-lg p-8 sticky top-8;
+}
+
+.dance-detail-section {
+  @apply bg-gray-50 dark:bg-gray-800 rounded-lg p-8;
+}
+
+.dance-detail-quote {
+  @apply border-l-2 border-gray-300 dark:border-gray-600 pl-6;
+}
+
+.dance-detail-movement-number {
+  @apply flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium mr-4 flex-shrink-0 mt-0.5;
+}
+
+/* Professional blockquote styling */
+blockquote {
+  @apply text-lg text-gray-700 dark:text-gray-300 italic leading-relaxed mb-4;
+}
+
+blockquote footer {
+  @apply flex items-center justify-between;
+}
+
+blockquote cite {
+  @apply text-gray-900 dark:text-gray-100 font-medium;
+}
+
+blockquote footer span {
+  @apply text-gray-500 dark:text-gray-400 ml-2;
+}
+
+/* Professional metadata styling */
+.dance-metadata-label {
+  @apply text-sm text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide mb-1;
+}
+
+.dance-metadata-value {
+  @apply text-gray-900 dark:text-gray-100 font-light;
+}
+
+/* Tag styling */
+.dance-tag {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200;
 }
