@@ -138,8 +138,42 @@ const DanceDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-12">
-            {/* Video */}
-            {dance.youtubeId && (
+            {/* Video and Description Row */}
+            {dance.youtubeId && dance.description && (
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                {/* Video */}
+                <motion.div
+                  className="w-full overflow-hidden rounded-lg shadow-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${dance.youtubeId}`}
+                      className="w-full h-full"
+                      allowFullScreen
+                      title={dance.title}
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Description Beside Video */}
+                <motion.div
+                  className="prose prose-lg max-w-none"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                  <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                    {dance.description}
+                  </div>
+                </motion.div>
+              </div>
+            )}
+
+            {/* Video Only (when no description) */}
+            {dance.youtubeId && !dance.description && (
               <motion.div
                 className="w-full overflow-hidden rounded-lg shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
@@ -157,13 +191,13 @@ const DanceDetail = () => {
               </motion.div>
             )}
 
-            {/* Description */}
-            {dance.description && (
+            {/* Description Only (when no video) */}
+            {dance.description && !dance.youtubeId && (
               <motion.div
                 className="prose prose-lg max-w-none"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                transition={{ duration: 0.6 }}
               >
                 <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                   {dance.description}
@@ -237,128 +271,168 @@ const DanceDetail = () => {
                 </ol>
               </motion.div>
             )}
-          </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <motion.div
-              className="dance-detail-sidebar"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h3 className="text-xl font-light text-gray-900 dark:text-white mb-6">Production Details</h3>
-              <div className="space-y-6">
-                {dance.choreographer && (
-                  <div>
-                    <h4 className="dance-metadata-label">Choreographer</h4>
-                    <p className="dance-metadata-value">{dance.choreographer}</p>
-                  </div>
-                )}
-
-                {dance.composer && (
-                  <div>
-                    <h4 className="dance-metadata-label">Music</h4>
-                    <p className="dance-metadata-value">{dance.composer}</p>
-                  </div>
-                )}
-
-                {dance.costumeDesign && (
-                  <div>
-                    <h4 className="dance-metadata-label">Costume Design</h4>
-                    <p className="dance-metadata-value">{dance.costumeDesign}</p>
-                  </div>
-                )}
-
-                {dance.lightingDesign && (
-                  <div>
-                    <h4 className="dance-metadata-label">Lighting Design</h4>
-                    <p className="dance-metadata-value">{dance.lightingDesign}</p>
-                  </div>
-                )}
-
-                {displayDuration && (
-                  <div>
-                    <h4 className="dance-metadata-label">Duration</h4>
-                    <p className="dance-metadata-value">{displayDuration}</p>
-                  </div>
-                )}
-
-                {dance.year && (
-                  <div>
-                    <h4 className="dance-metadata-label">Year</h4>
-                    <p className="dance-metadata-value">{dance.year}</p>
-                  </div>
-                )}
-
-                {dance.companyPremiere && (
-                  <div>
-                    <h4 className="dance-metadata-label">Company Premiere</h4>
-                    <p className="dance-metadata-value">{dance.companyPremiere}</p>
-                  </div>
-                )}
-
-                {dance.worldPremiere && (
-                  <div>
-                    <h4 className="dance-metadata-label">World Premiere</h4>
-                    <p className="dance-metadata-value">{dance.worldPremiere}</p>
-                  </div>
-                )}
-
-                {dance.premieredBy && (
-                  <div>
-                    <h4 className="dance-metadata-label">Premiered By</h4>
-                    <p className="dance-metadata-value">{dance.premieredBy}</p>
-                  </div>
-                )}
-
-                {dance.dedicatedTo && (
-                  <div>
-                    <h4 className="dance-metadata-label">Dedicated To</h4>
-                    <p className="dance-metadata-value">{dance.dedicatedTo}</p>
-                  </div>
-                )}
-
-                {dance.category && (
-                  <div>
-                    <h4 className="dance-metadata-label">Category</h4>
-                    <p className="dance-metadata-value capitalize">{dance.category}</p>
-                  </div>
-                )}
-
-                {dance.genre && dance.genre.length > 0 && (
-                  <div>
-                    <h4 className="dance-metadata-label">Genres</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {dance.genre.map((g, idx) => (
-                        <span
-                          key={idx}
-                          className="dance-tag"
-                        >
-                          {g.charAt(0).toUpperCase() + g.slice(1)}
-                        </span>
-                      ))}
+            {/* Gallery Section */}
+            {(dance.galleryImages && dance.galleryImages.length > 0) && (
+              <motion.div
+                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <h3 className="text-2xl font-light text-gray-900 dark:text-white mb-6">Gallery</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {dance.galleryImages.slice(0, 5).map((image, index) => (
+                    <div key={index} className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
+                      {image.asset?.url ? (
+                        <img
+                          src={`${image.asset.url}?auto=format&fit=crop&w=400&h=400&q=80`}
+                          alt={image.alt || `${dance.title} - Gallery Image ${index + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                          onClick={() => {
+                            // Could open lightbox here in the future
+                            console.log('Open lightbox for image:', index);
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
+                          <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 4z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  ))}
+                </div>
+                {dance.galleryImages.length > 5 && (
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 text-center">
+                    And {dance.galleryImages.length - 5} more images...
+                  </p>
                 )}
+              </motion.div>
+            )}
 
-                {dance.stylePeriod && dance.stylePeriod.length > 0 && (
-                  <div>
-                    <h4 className="dance-metadata-label">Style Periods</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {dance.stylePeriod.map((period, idx) => (
-                        <span
-                          key={idx}
-                          className="dance-tag"
-                        >
-                          {period.charAt(0).toUpperCase() + period.slice(1)}
-                        </span>
-                      ))}
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+              <motion.div
+                className="dance-detail-sidebar"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                <h3 className="text-xl font-light text-gray-900 dark:text-white mb-6">Production Details</h3>
+                <div className="space-y-6">
+                  {dance.choreographer && (
+                    <div>
+                      <h4 className="dance-metadata-label">Choreographer</h4>
+                      <p className="dance-metadata-value">{dance.choreographer}</p>
                     </div>
-                  </div>
-                )}
-              </div>
-            </motion.div>
+                  )}
+
+                  {dance.composer && (
+                    <div>
+                      <h4 className="dance-metadata-label">Music</h4>
+                      <p className="dance-metadata-value">{dance.composer}</p>
+                    </div>
+                  )}
+
+                  {dance.costumeDesign && (
+                    <div>
+                      <h4 className="dance-metadata-label">Costume Design</h4>
+                      <p className="dance-metadata-value">{dance.costumeDesign}</p>
+                    </div>
+                  )}
+
+                  {dance.lightingDesign && (
+                    <div>
+                      <h4 className="dance-metadata-label">Lighting Design</h4>
+                      <p className="dance-metadata-value">{dance.lightingDesign}</p>
+                    </div>
+                  )}
+
+                  {displayDuration && (
+                    <div>
+                      <h4 className="dance-metadata-label">Duration</h4>
+                      <p className="dance-metadata-value">{displayDuration}</p>
+                    </div>
+                  )}
+
+                  {dance.year && (
+                    <div>
+                      <h4 className="dance-metadata-label">Year</h4>
+                      <p className="dance-metadata-value">{dance.year}</p>
+                    </div>
+                  )}
+
+                  {dance.companyPremiere && (
+                    <div>
+                      <h4 className="dance-metadata-label">Company Premiere</h4>
+                      <p className="dance-metadata-value">{dance.companyPremiere}</p>
+                    </div>
+                  )}
+
+                  {dance.worldPremiere && (
+                    <div>
+                      <h4 className="dance-metadata-label">World Premiere</h4>
+                      <p className="dance-metadata-value">{dance.worldPremiere}</p>
+                    </div>
+                  )}
+
+                  {dance.premieredBy && (
+                    <div>
+                      <h4 className="dance-metadata-label">Premiered By</h4>
+                      <p className="dance-metadata-value">{dance.premieredBy}</p>
+                    </div>
+                  )}
+
+                  {dance.dedicatedTo && (
+                    <div>
+                      <h4 className="dance-metadata-label">Dedicated To</h4>
+                      <p className="dance-metadata-value">{dance.dedicatedTo}</p>
+                    </div>
+                  )}
+
+                  {dance.category && (
+                    <div>
+                      <h4 className="dance-metadata-label">Category</h4>
+                      <p className="dance-metadata-value capitalize">{dance.category}</p>
+                    </div>
+                  )}
+
+                  {dance.genre && dance.genre.length > 0 && (
+                    <div>
+                      <h4 className="dance-metadata-label">Genres</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {dance.genre.map((g, idx) => (
+                          <span
+                            key={idx}
+                            className="dance-tag"
+                          >
+                            {g.charAt(0).toUpperCase() + g.slice(1)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {dance.stylePeriod && dance.stylePeriod.length > 0 && (
+                    <div>
+                      <h4 className="dance-metadata-label">Style Periods</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {dance.stylePeriod.map((period, idx) => (
+                          <span
+                            key={idx}
+                            className="dance-tag"
+                          >
+                            {period.charAt(0).toUpperCase() + period.slice(1)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </main>
