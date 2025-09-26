@@ -79,7 +79,7 @@ const Repertoire = () => {
         </section>
       }
 
-      <main className="container mx-auto px-6 sm:px-8 lg:px-12 py-20 max-w-7xl">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 max-w-8xl">
         {/* Section Header - Ailey Style */}
         <motion.div
           className="text-center mb-16"

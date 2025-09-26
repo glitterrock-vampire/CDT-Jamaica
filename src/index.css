@@ -215,7 +215,7 @@ blockquote footer span {
 
 /* Ailey Grid */
 .ailey-grid {
-  @apply grid gap-8;
+  @apply grid gap-12;
 }
 
 /* Ailey Card */
