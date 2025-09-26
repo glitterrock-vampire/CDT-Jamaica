@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm">
             &copy; {new Date().getFullYear()} CDT Arts Ltd. All rights reserved.
-            <span className="block sm:inline-block mt-1 sm:mt-0 sm:ml-2">
+            <span className="block sm:inline-block mt-1 sm:mt-0 sm:ml-2 text-sm">
               Developed by Andre Walters
             </span>
           </p>
