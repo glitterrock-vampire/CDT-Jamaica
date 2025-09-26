@@ -13,8 +13,7 @@ import { parseDuration } from './utils/duration';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('title-asc');
-  const [choreographer, setChoreographer] = useState('all');
+  const [sortBy, setSortBy] = useState('title');
   const [repertoire, setRepertoire] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -58,24 +57,14 @@ function App() {
   const filteredRepertoire = repertoire
     .filter(item => {
       if (!item || !item.title || !item.composer) return false;
-      
-      // Search filter
       const searchLower = searchTerm.toLowerCase();
-      const matchesSearch = searchTerm === '' || (
+      return (
         item.title.toLowerCase().includes(searchLower) ||
         item.composer.toLowerCase().includes(searchLower) ||
         (item.instruments && item.instruments.some(instrument => 
           instrument.toLowerCase().includes(searchLower)
         ))
       );
-      
-      // Choreographer filter
-      const matchesChoreographer = choreographer === 'all' || 
-        (item.choreographer && item.choreographer.toLowerCase().includes(
-          choreographer === 'tony-wilson' ? 'tony' : choreographer
-        ));
-      
-      return matchesSearch && matchesChoreographer;
     })
     .sort((a, b) => {
       const [field, order] = sortBy.split('-');
@@ -90,13 +79,53 @@ function App() {
             });
             break;
             
+          case 'composer':
+            comparison = (a.composer || '').localeCompare(b.composer || '', 'en', { 
+              numeric: true, 
+              sensitivity: 'base' 
+            });
+            break;
+            
           case 'year':
             const yearA = parseInt(a.year) || 0;
             const yearB = parseInt(b.year) || 0;
             comparison = yearA - yearB;
             break;
             
+          case 'category':
+            comparison = (a.category || '').localeCompare(b.category || '', 'en', { 
+              numeric: true, 
+              sensitivity: 'base' 
+            });
+            break;
+            
+          case 'duration':
+            const durationA = parseDuration(a.duration);
+            const durationB = parseDuration(b.duration);
+            comparison = durationA - durationB;
+            
+            // Debug logging for duration comparisons (only for meaningful values)
+            if (process.env.NODE_ENV === 'development' && 
+                (durationA > 0 || durationB > 0) &&
+                a.duration !== "null" && b.duration !== "null" &&
+                a.duration !== null && b.duration !== null) {
+              console.log(`Duration comparison: "${a.duration}" (${durationA}s) vs "${b.duration}" (${durationB}s)`);
+            }
+            break;
+            
+          case 'instruments':
+            const aInstruments = (a.instruments || []).join(', ');
+            const bInstruments = (b.instruments || []).join(', ');
+            comparison = aInstruments.localeCompare(bInstruments, 'en', { 
+              numeric: true, 
+              sensitivity: 'base' 
+            });
+            break;
+            
           default:
+            if (process.env.NODE_ENV === 'development') {
+              console.warn(`Unknown sort field: ${field}`);
+            }
             comparison = 0;
         }
       } catch (error) {
@@ -151,8 +180,6 @@ function App() {
                   setSearchTerm={setSearchTerm}
                   sortBy={sortBy}
                   setSortBy={setSortBy}
-                  choreographer={choreographer}
-                  setChoreographer={setChoreographer}
                 />
                 
                 {loading ? (
