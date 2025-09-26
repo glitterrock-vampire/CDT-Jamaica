@@ -2,18 +2,34 @@ import React from 'react';
 import { urlFor } from '../lib/sanity';
 
 export const Hero = ({ image, title, subtitle, children }) => {
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+  
   return (
     <div className="relative w-full h-auto min-h-[60vh] overflow-hidden">
       {image && (
         <div className="relative w-full h-full">
           <div className="w-full h-[60vh] overflow-y-auto">
+            {/* Loading placeholder */}
+            {!imageLoaded && (
+              <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
+                <div className="text-gray-400 dark:text-gray-500">Loading image...</div>
+              </div>
+            )}
             <img
-              src={urlFor(image).width(1920).url()}
+              src={urlFor(image).width(1200).url()}
+              srcSet={`
+                ${urlFor(image).width(800).url()} 800w,
+                ${urlFor(image).width(1200).url()} 1200w,
+                ${urlFor(image).width(1920).url()} 1920w
+              `}
+              sizes="100vw"
               alt={image.alt || 'Hero Image'}
-              className="w-full min-h-full object-contain"
+              className={`w-full min-h-full object-contain transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={() => setImageLoaded(true)}
               onError={(e) => {
                 console.error('Error loading hero image:', image);
                 e.target.style.display = 'none';
+                setImageLoaded(true);
               }}
             />
           </div>
