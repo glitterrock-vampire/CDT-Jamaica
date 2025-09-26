@@ -133,20 +133,19 @@ const Contact = () => {
         <Hero 
           image={siteSettings.heroImage}
           title="Contact Us"
-        />
+        ></Hero>
       )}
 
       <main className="relative z-10 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.h2 
-            className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-gray-900 dark:text-white"
+            className="text-xl md:text-2xl font-light tracking-wide text-gray-900 dark:text-white mb-8 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             Get In Touch
           </motion.h2>
-          {/* Contact Section */}
           <motion.div 
             initial="hidden"
             animate="visible"

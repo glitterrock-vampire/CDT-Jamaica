@@ -17,10 +17,10 @@ export const Hero = ({ image, title, subtitle, children }) => {
               }}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent flex flex-col items-start justify-center text-white px-8 md:px-16 lg:px-24">
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20 flex flex-col items-start justify-center text-white px-8 md:px-16 lg:px-24">
             <div className="max-w-2xl">
-              <h1 className="text-4xl md:text-6xl font-bold mb-2 md:mb-4 text-left">{title}</h1>
-              {subtitle && <p className="text-lg md:text-xl text-left">{subtitle}</p>}
+              <h1 className="ailey-hero-title">{title}</h1>
+              {subtitle && <p className="text-lg md:text-xl text-left text-white" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>{subtitle}</p>}
               {children}
             </div>
           </div>

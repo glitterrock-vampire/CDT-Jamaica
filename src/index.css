@@ -168,6 +168,8 @@ blockquote footer span {
   letter-spacing: -0.05em;
   text-transform: uppercase;
   font-family: 'Inter', sans-serif;
+  color: white !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .ailey-card-title {
@@ -183,7 +185,7 @@ blockquote footer span {
     to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.7) 100%
+    rgba(0, 0, 0, 0.8) 100%
   );
 }
 
