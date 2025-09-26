@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
         {children}
       </main>
       <footer className={`${
-        isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-900 text-gray-300'
+        isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-900'
       } py-8 mt-16 transition-colors duration-300`}>
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm">
