@@ -1,15 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
 const RepertoireItem = ({ item }) => {
   const navigate = useNavigate();
   
   if (!item) return null;
   
-  const { _id, title, composer, year, image, thumbnail } = item;
+  const { _id, title, choreographer, year, image, thumbnail } = item;
   const imageUrl = thumbnail?.url || image?.url;
-  console.log('Rendering item:', { title, image, thumbnail, imageUrl });
+  console.log('Rendering item:', { title, choreographer, image, thumbnail, imageUrl });
   
   // Duration display has been removed as per requirements
   
@@ -77,7 +76,7 @@ const RepertoireItem = ({ item }) => {
           )}
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-          {composer}
+          {choreographer}
         </p>
       </motion.div>
     </motion.div>

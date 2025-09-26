@@ -37,7 +37,7 @@ const RepertoireSection = ({ title, items, isLoading = false }) => {
     return (
       <section className="mb-12">
         <div className="h-8 bg-gray-100 dark:bg-gray-700 rounded w-1/3 mb-6"></div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9">
           {[...Array(6)].map((_, index) => (
             <div 
               key={index} 
@@ -69,7 +69,7 @@ const RepertoireSection = ({ title, items, isLoading = false }) => {
           variants={container}
           initial="hidden"
           animate={isMounted ? "show" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9"
         >
           {items.map((item, index) => (
             <motion.div
