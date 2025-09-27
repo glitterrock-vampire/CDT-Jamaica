@@ -47,9 +47,8 @@ const DanceDetail = () => {
         if (data) {
           setDance(data);
           
-          // If there's a YouTube URL, extract the video ID
           if (data.youtubeUrl) {
-            fetchVideoDetails();
+            fetchVideoDetails(data.youtubeUrl);
           }
         }
       } catch (err) {
@@ -75,7 +74,7 @@ const DanceDetail = () => {
           <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
           <button
             onClick={() => navigate(-1)}
-            className="w-full mt-6 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+            className="w-full mt-6 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200"
           >
             Back to Repertoire
           </button>
@@ -84,12 +83,10 @@ const DanceDetail = () => {
     );
   }
 
-  // Get the display duration (from YouTube or fallback to stored duration)
   const displayDuration = videoDuration || dance?.duration || '';
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-      {/* Hero Section - Ailey Style */}
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           {dance.heroImage?.asset?.url ? (
@@ -137,14 +134,11 @@ const DanceDetail = () => {
         </div>
       </section>
 
-      <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
         <div className="ailey-two-column">
-          {/* Main Content */}
-          <div className="ailey-main-content">
-            {/* Video and Description Row - Stacked Layout */}
+          <div className="ailey-main-content text-gray-900 dark:text-gray-100">
             {dance.youtubeId && dance.description && (
               <div className="space-y-8">
-                {/* Video - Full Width */}
                 <motion.div
                   className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
                   initial={{ opacity: 0, y: 20 }}
@@ -161,7 +155,6 @@ const DanceDetail = () => {
                   </div>
                 </motion.div>
 
-                {/* Description Below Video */}
                 <motion.div
                   className="prose prose-lg max-w-none"
                   initial={{ opacity: 0, y: 20 }}
@@ -175,7 +168,6 @@ const DanceDetail = () => {
               </div>
             )}
 
-            {/* Video Only (when no description) */}
             {dance.youtubeId && !dance.description && (
               <motion.div
                 className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
@@ -194,7 +186,6 @@ const DanceDetail = () => {
               </motion.div>
             )}
 
-            {/* Description Only (when no video) */}
             {dance.description && !dance.youtubeId && (
               <motion.div
                 className="prose prose-lg max-w-none"
@@ -208,7 +199,6 @@ const DanceDetail = () => {
               </motion.div>
             )}
 
-            {/* Media Reviews - Ailey Style */}
             {(dance.mediaReviews && dance.mediaReviews.length > 0) && (
               <motion.div
                 className="ailey-section"
@@ -249,7 +239,6 @@ const DanceDetail = () => {
               </motion.div>
             )}
 
-            {/* Movements - Ailey Style */}
             {dance.movements && dance.movements.length > 0 && (
               <motion.div
                 className="ailey-section"
@@ -275,7 +264,6 @@ const DanceDetail = () => {
               </motion.div>
             )}
 
-            {/* Gallery Section - Ailey Style */}
             {(dance.galleryImages && dance.galleryImages.length > 0) && (
               <motion.div
                 className="ailey-section"
@@ -316,7 +304,6 @@ const DanceDetail = () => {
             )}
           </div>
 
-          {/* Sidebar - Ailey Style */}
           <div className="ailey-sidebar">
             <motion.div
               className="ailey-section sticky top-8"
@@ -438,17 +425,16 @@ const DanceDetail = () => {
             </motion.div>
           </div>
         </div>
-      </main>
 
-      {/* Slide Gallery */}
-      <SlideGallery
-        images={dance?.galleryImages || []}
-        title={dance?.title || ''}
-        isOpen={galleryOpen}
-        onClose={() => setGalleryOpen(false)}
-      />
+        <SlideGallery
+          images={dance?.galleryImages || []}
+          title={dance?.title || ''}
+          isOpen={galleryOpen}
+          onClose={() => setGalleryOpen(false)}
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default DanceDetail;

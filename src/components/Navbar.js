@@ -43,8 +43,8 @@ const Navbar = () => {
       to={to}
       className={`text-base font-medium ${
         location.pathname === to
-          ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
-          : 'text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+          ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
+          : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
       } transition-colors`}
     >
       {children}
@@ -57,7 +57,7 @@ const Navbar = () => {
       to={to}
       className={`block px-3 py-2 rounded-md text-base font-medium ${
         location.pathname === to
-          ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200'
+          ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
           : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
       }`}
     >
@@ -105,7 +105,7 @@ const Navbar = () => {
             <NavLink to="/contact">Contact</NavLink>
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm"
+              className="p-2 rounded-full text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-all duration-200 shadow-sm"
               aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {isDarkMode ? (

@@ -55,7 +55,7 @@ h2 {
 
 .custom-audio-player .rhap_progress-filled,
 .custom-audio-player .rhap_volume-filled {
-  background-color: #3b82f6; /* blue-500 */
+  background-color: #6b7280; /* gray-500 */
 }
 
 .custom-audio-player .rhap_progress-indicator,
@@ -71,7 +71,7 @@ h2 {
 }
 
 .custom-audio-player .rhap_button-clear:hover {
-  color: #3b82f6; /* blue-500 */
+  color: #6b7280; /* gray-500 */
 }
 
 .custom-audio-player .rhap_time {
@@ -110,9 +110,9 @@ h2 {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-blue-600 rounded-full;
+  @apply bg-gray-500 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-blue-700;
+  @apply bg-gray-600;
 }

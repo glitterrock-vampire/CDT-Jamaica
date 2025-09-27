@@ -48,7 +48,7 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
         <input
           type="text"
           placeholder="Search repertoire by title, composer, or instruments..."
-          className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -67,7 +67,7 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
       <div className="relative">
         <button
           onClick={() => setShowSort(!showSort)}
-          className="flex items-center space-x-2 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+          className="flex items-center space-x-2 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-colors duration-200"
           aria-haspopup="true"
           aria-expanded={showSort}
         >
@@ -100,14 +100,14 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
                     }}
                     className={`block w-full text-left px-4 py-2 text-sm ${
                       isSelected 
-                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100' 
+                        ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100' 
                         : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                     }`}
                   >
                     {option.icon}
                     <span className="flex-1">{option.label}</span>
                     {isSelected && (
-                      <span className="text-blue-500">
+                      <span className="text-gray-500 dark:text-gray-400">
                         {order === 'asc' ? <FiTrendingUp /> : <FiTrendingDown />}
                       </span>
                     )}

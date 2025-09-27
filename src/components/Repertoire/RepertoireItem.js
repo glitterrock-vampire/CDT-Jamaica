@@ -66,7 +66,7 @@ const RepertoireItem = ({ item }) => {
         className="p-4 flex-1 flex flex-col"
       >
         <div className="flex items-baseline gap-2">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
             {title}
           </h3>
           {year && (

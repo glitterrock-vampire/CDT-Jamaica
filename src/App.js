@@ -161,7 +161,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       <Routes>
         <Route path="/" element={
           <Layout>
@@ -183,9 +183,11 @@ function App() {
                 />
                 
                 {loading ? (
-                  <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading repertoire...</p>
+                  <div className="text-center py-12 bg-black text-white min-h-screen flex items-center justify-center">
+                    <div>
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+                      <p className="mt-4 text-white">Loading Repertoire...</p>
+                    </div>
                   </div>
                 ) : error ? (
                   <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
@@ -252,9 +254,11 @@ function App() {
                 />
                 
                 {loading ? (
-                  <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading repertoire...</p>
+                  <div className="text-center py-12 bg-black text-white min-h-screen flex items-center justify-center">
+                    <div>
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+                      <p className="mt-4 text-white">Loading Repertoire...</p>
+                    </div>
                   </div>
                 ) : error ? (
                   <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">

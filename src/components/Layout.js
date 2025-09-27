@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
-      isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
+      isDarkMode ? 'bg-black text-gray-100' : 'bg-white text-gray-900'
     }`}>
       <div className="fixed top-0 left-0 right-0 z-50">
         <Navbar />

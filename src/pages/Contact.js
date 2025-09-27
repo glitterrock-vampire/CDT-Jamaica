@@ -127,19 +127,19 @@ const Contact = () => {
     return <LoadingSpinner text="Loading contact information..." />;
   }
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">
       {/* Hero Section */}
       {siteSettings?.heroImage && (
         <Hero 
           image={siteSettings.heroImage}
           title="Contact Us"
-        ></Hero>
+        />
       )}
 
-      <main className="relative z-10 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+      <main className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
         <div className="max-w-7xl mx-auto">
           <motion.h2 
-            className="text-xl md:text-2xl font-light tracking-wide text-gray-900 dark:text-white mb-8 md:mb-12"
+            className="text-xl md:text-2xl font-light tracking-wide mb-8 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -167,7 +167,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-gray-400 focus:border-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                     placeholder="Your name"
                   />
                 </div>
@@ -183,7 +183,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-gray-400 focus:border-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -199,7 +199,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-gray-400 focus:border-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                     placeholder="Your message here..."
                   />
                 </div>

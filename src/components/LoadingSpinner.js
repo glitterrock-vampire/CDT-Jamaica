@@ -2,8 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const LoadingSpinner = ({ text = 'Loading...' }) => {
+  // Capitalize the first letter of each word in the loading text
+  const formattedText = text
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-black transition-colors duration-300">
       <motion.div 
         className="text-center p-8 max-w-md w-full"
         initial={{ opacity: 0, y: 20 }}
@@ -11,7 +17,7 @@ const LoadingSpinner = ({ text = 'Loading...' }) => {
         transition={{ duration: 0.4 }}
       >
         <motion.div
-          className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"
+          className="w-16 h-16 border-4 border-white border-t-transparent rounded-full mx-auto"
           animate={{ 
             rotate: 360,
             scale: [1, 1.1, 1]
@@ -22,12 +28,12 @@ const LoadingSpinner = ({ text = 'Loading...' }) => {
           }}
         />
         <motion.p 
-          className="mt-6 text-gray-600 dark:text-gray-300 text-lg font-medium transition-colors duration-300"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
+          className="mt-6 text-white text-lg font-medium tracking-wide"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
         >
-          {text}
+          {formattedText}
         </motion.p>
       </motion.div>
     </div>
