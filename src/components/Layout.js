@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
+import Footer from './Footer';
 import { useTheme } from '../context/ThemeContext';
 
 const Layout = ({ children }) => {
@@ -15,18 +16,7 @@ const Layout = ({ children }) => {
       <main className="flex-grow pt-20">
         {children}
       </main>
-      <footer className={`${
-        isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-900'
-      } py-8 mt-16 transition-colors duration-300`}>
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} CDT Arts Ltd. All rights reserved.
-            <span className="block sm:inline-block mt-1 sm:mt-0 sm:ml-2 text-sm">
-              Developed by Andre Walters
-            </span>
-          </p>
-        </div>
-      </footer>
+      <Footer isDarkMode={isDarkMode} />
     </div>
   );
 };

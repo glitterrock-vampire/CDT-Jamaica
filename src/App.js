@@ -233,6 +233,60 @@ function App() {
             <Contact />
           </Layout>
         } />
+        <Route path="/repertoire" element={
+          <Layout>
+            <div>
+              {/* Hero Section */}
+              {siteSettings?.heroImage && (
+                <Hero 
+                  image={siteSettings.heroImage}
+                  title="Repertoire"
+                />
+              )}
+              <div className="container mx-auto px-4 py-8">
+                <RepertoireControls 
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                />
+                
+                {loading ? (
+                  <div className="text-center py-12">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Loading repertoire...</p>
+                  </div>
+                ) : error ? (
+                  <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+                    <div className="flex">
+                      <div className="ml-3">
+                        <p className="text-sm text-red-700">{error}</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {filteredRepertoire.map((item) => (
+                      <RepertoireItem key={item._id || item.id} item={item} />
+                    ))}
+                  </div>
+                )}
+
+                {filteredRepertoire.length === 0 && !loading && !error && (
+                  <div className="text-center py-12">
+                    <div className="text-gray-400 mb-4">
+                      <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12 7-12 7z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900">No repertoire items found</h3>
+                    <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Layout>
+        } />
       </Routes>
     </div>
   );
