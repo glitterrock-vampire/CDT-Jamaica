@@ -33,16 +33,40 @@ const Repertoire = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('🔄 Fetching repertoire data...');
         const [settings, items] = await Promise.all([
           getSiteSettings(),
           getRepertoireItems()
         ]);
         
-        if (settings) setSiteSettings(settings);
-        if (items) setRepertoire(items);
+        console.log('📥 Received data:', {
+          hasSettings: !!settings,
+          itemsCount: items?.length || 0,
+          sampleItem: items?.[0] ? {
+            id: items[0]._id,
+            title: items[0].title,
+            hasThumbnail: !!items[0]?.thumbnail?.asset?.url,
+            hasHeroImage: !!items[0]?.heroImage?.asset?.url,
+            thumbnail: items[0]?.thumbnail?.asset?.url,
+            heroImage: items[0]?.heroImage?.asset?.url
+          } : null
+        });
+        
+        if (settings) {
+          console.log('⚙️ Site settings loaded');
+          setSiteSettings(settings);
+        }
+        
+        if (items && items.length > 0) {
+          console.log(`🎭 Loaded ${items.length} repertoire items`);
+          setRepertoire(items);
+        } else {
+          console.warn('⚠️ No repertoire items found');
+        }
+        
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('❌ Error fetching data:', error);
         setIsLoading(false);
       }
     };
@@ -51,7 +75,34 @@ const Repertoire = () => {
   }, []);
 
   if (isLoading) {
-    return <LoadingSpinner text="Loading repertoire..." />;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+        <LoadingSpinner text="Loading repertoire..." />
+      </div>
+    );
+  }
+  
+  console.log('🎬 Rendering Repertoire component with', repertoire.length, 'items');
+  
+  if (repertoire.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+            No Repertoire Items Found
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            We couldn't find any repertoire items. Please check back later.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
