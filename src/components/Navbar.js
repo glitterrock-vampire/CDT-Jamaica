@@ -68,8 +68,8 @@ const Navbar = () => {
   return (
     <nav className={`w-full transition-all duration-300 ${
       scrolled 
-        ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg dark:shadow-black/30' 
-        : 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-md dark:shadow-black/20'
+        ? 'bg-white/95 dark:bg-black backdrop-blur-md shadow-lg dark:shadow-black/30' 
+        : 'bg-white/80 dark:bg-black backdrop-blur-sm shadow-md dark:shadow-black/20'
     }`}>
       <div className="w-full px-6 lg:px-12 xl:px-16 2xl:px-24">
         <div className="flex items-center justify-between h-20">

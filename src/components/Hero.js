@@ -8,7 +8,7 @@ export const Hero = ({ image, title, subtitle, children }) => {
     <div className="relative w-full h-auto min-h-[60vh] overflow-hidden">
       {image && (
         <div className="relative w-full h-full">
-          <div className="w-full h-[60vh] overflow-y-auto">
+          <div className="w-full h-[60vh] overflow-hidden">
             {/* Loading placeholder */}
             {!imageLoaded && (
               <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
@@ -24,7 +24,7 @@ export const Hero = ({ image, title, subtitle, children }) => {
               `}
               sizes="100vw"
               alt={image.alt || 'Hero Image'}
-              className={`w-full min-h-full object-contain transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setImageLoaded(true)}
               onError={(e) => {
                 console.error('Error loading hero image:', image);
