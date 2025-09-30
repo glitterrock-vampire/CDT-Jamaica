@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['Raleway', 'sans-serif'],
+        'display': ['Nova Slim', 'system-ui', 'sans-serif'],
+      },
       colors: {
         primary: {
           DEFAULT: '#1e40af',

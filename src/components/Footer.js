@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { getSiteSettings } from '../lib/siteSettings';
-import { urlFor } from '../lib/sanity';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';

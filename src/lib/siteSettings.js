@@ -27,64 +27,45 @@ export async function getSiteSettings() {
     }
   }`;
   
-  const settings = await client.fetch(query);
-  return settings;
-}
-export async function getRepertoireItems() {
   try {
-    const query = `*[_type == "repertoireItem"] | order(year desc) {
-      _id,
-      title,
-      "slug": slug.current,
-      choreographer,
-      composer,
-      description,
-      year,
-      duration,
-      genre,
-      "thumbnail": thumbnail.asset->{
-        _id,
-        url,
-        alt,
-        "dimensions": metadata.dimensions
-      },
-      "heroImage": heroImage.asset->{
-        _id,
-        url,
-        alt,
-        "dimensions": metadata.dimensions
-      },
-      companyPremiere
-    }`;
-    
-    console.log('🔍 Executing Sanity query...');
+    const settings = await client.fetch(query);
+    console.log('Fetched site settings:', settings ? '✅' : '❌ Not found');
+    return settings;
+  } catch (error) {
+    console.error('❌ Error fetching site settings:', error);
+    return null;
+  }
+}
+
+export async function getRepertoireItems() {
+  const query = `*[_type == "repertoireItem"] | order(year desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    choreographer,
+    // year,
+    description,
+    "thumbnail": thumbnail { asset->{ url }, alt },
+    "heroImage": heroImage { asset->{ url }, alt },
+    duration
+  }`;
+  
+  try {
     const items = await client.fetch(query);
-    
-    // Log detailed information about the fetched items
-    console.group('📦 Sanity Response');
-    console.log('Total items:', items?.length || 0);
-    
-    if (items && items.length > 0) {
-      console.log('First item structure:', JSON.stringify(items[0], null, 2));
-      
-      // Check if thumbnails and hero images are properly loaded
-      items.forEach((item, index) => {
-        console.group(`Item ${index + 1}: ${item.title || 'Untitled'}`);
-        console.log('ID:', item._id);
-        console.log('Has thumbnail:', !!item.thumbnail?.asset?.url);
-        console.log('Has heroImage:', !!item.heroImage?.asset?.url);
-        console.log('Thumbnail URL:', item.thumbnail?.asset?.url);
-        console.log('Hero Image URL:', item.heroImage?.asset?.url);
-        console.groupEnd();
-      });
-    } else {
-      console.log('No items found in Sanity');
-    }
-    console.groupEnd();
-    
+    console.log('Fetched items:', items); // Check the structure here
     return items || [];
   } catch (error) {
-    console.error('❌ Error in getRepertoireItems:', error);
+    console.error('Error fetching repertoire items:', error);
     return [];
   }
+}
+
+// Helper function to get image URL
+export function getImageUrl(source, width = 800) {
+  if (!source?.asset?.url) return null;
+  const url = new URL(source.asset.url);
+  url.searchParams.set('w', width);
+  url.searchParams.set('auto', 'format');
+  url.searchParams.set('q', 75);
+  return url.toString();
 }
