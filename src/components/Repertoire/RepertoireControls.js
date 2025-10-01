@@ -7,27 +7,16 @@ import {
   FiChevronUp,
   FiList,
   FiUser,
-  FiCalendar,
-  FiTag,
-  FiClock,
-  FiMusic,
-  FiTrendingUp,
-  FiTrendingDown
+  FiCalendar
 } from 'react-icons/fi';
 
 const sortOptions = [
   { id: 'title-asc', label: 'Title (A-Z)', icon: <FiList className="mr-2" /> },
   { id: 'title-desc', label: 'Title (Z-A)', icon: <FiList className="mr-2" /> },
-  { id: 'composer-asc', label: 'Composer (A-Z)', icon: <FiUser className="mr-2" /> },
-  { id: 'composer-desc', label: 'Composer (Z-A)', icon: <FiUser className="mr-2" /> },
+  { id: 'choreographer-asc', label: 'Choreographer (A-Z)', icon: <FiUser className="mr-2" /> },
+  { id: 'choreographer-desc', label: 'Choreographer (Z-A)', icon: <FiUser className="mr-2" /> },
   { id: 'year-desc', label: 'Year (Newest first)', icon: <FiCalendar className="mr-2" /> },
-  { id: 'year-asc', label: 'Year (Oldest first)', icon: <FiCalendar className="mr-2" /> },
-  { id: 'category-asc', label: 'Category (A-Z)', icon: <FiTag className="mr-2" /> },
-  { id: 'category-desc', label: 'Category (Z-A)', icon: <FiTag className="mr-2" /> },
-  { id: 'duration-asc', label: 'Duration (Shortest first)', icon: <FiClock className="mr-2" /> },
-  { id: 'duration-desc', label: 'Duration (Longest first)', icon: <FiClock className="mr-2" /> },
-  { id: 'instruments-asc', label: 'Instruments (A-Z)', icon: <FiMusic className="mr-2" /> },
-  { id: 'instruments-desc', label: 'Instruments (Z-A)', icon: <FiMusic className="mr-2" /> },
+  { id: 'year-asc', label: 'Year (Oldest first)', icon: <FiCalendar className="mr-2" /> }
 ];
 
 const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) => {
@@ -47,7 +36,7 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
         </div>
         <input
           type="text"
-          placeholder="Search repertoire by title, composer, or instruments..."
+          placeholder="Search by title, choreographer, or year..."
           className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -89,8 +78,6 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
               </div>
               {sortOptions.map((option) => {
                 const isSelected = sortBy === option.id;
-                const order = sortBy.endsWith('-asc') ? 'asc' : 'desc';
-                
                 return (
                   <button
                     key={option.id}
@@ -98,19 +85,14 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
                       setSortBy(option.id);
                       setShowSort(false);
                     }}
-                    className={`block w-full text-left px-4 py-2 text-sm ${
-                      isSelected 
-                        ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100' 
-                        : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    className={`w-full text-left px-4 py-2 text-sm flex items-center ${
+                      isSelected
+                        ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
                     {option.icon}
-                    <span className="flex-1">{option.label}</span>
-                    {isSelected && (
-                      <span className="text-gray-500 dark:text-gray-400">
-                        {order === 'asc' ? <FiTrendingUp /> : <FiTrendingDown />}
-                      </span>
-                    )}
+                    {option.label}
                   </button>
                 );
               })}

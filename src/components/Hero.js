@@ -33,13 +33,13 @@ export const Hero = ({ image, title, subtitle, children }) => {
               }}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20 flex flex-col items-start justify-center text-white px-8 md:px-16 lg:px-24">
-            <div className="max-w-4xl">
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-normal tracking-wide mb-6 text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end pb-20 px-8 md:px-16 lg:px-24">
+            <div className="max-w-4xl w-full">
+              <h1 className="font-nova-slim text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
                 {title}
               </h1>
               {subtitle && (
-                <p className="font-sans text-xl md:text-2xl lg:text-3xl text-left text-white font-light leading-relaxed" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
+                <p className="font-raleway text-3xl md:text-4xl lg:text-5xl text-left text-white font-light leading-tight tracking-wide" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
                   {subtitle}
                 </p>
               )}

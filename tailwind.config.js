@@ -8,8 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Raleway', 'sans-serif'],
-        'display': ['Nova Slim', 'system-ui', 'sans-serif'],
+        'nova-slim': ['"Nova Slim"', 'system-ui', 'sans-serif'],
+        'raleway': ['Raleway', 'sans-serif'],
+        'amarante': ['Amarante', 'serif']
       },
       colors: {
         primary: {

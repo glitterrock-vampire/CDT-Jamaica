@@ -116,8 +116,102 @@ const DanceDetail = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
         <div className="ailey-two-column">
           <div className="ailey-main-content text-gray-900 dark:text-gray-100">
-            {dance.youtubeId && dance.description && (
-              <div className="space-y-8">
+            {/* Mobile: Cast info at top */}
+            <div className="md:hidden space-y-6 mb-8">
+              {dance.choreographer && (
+                <div>
+                  <h4 className="ailey-metadata-label">Choreographer</h4>
+                  <p className="ailey-metadata-value">{dance.choreographer}</p>
+                </div>
+              )}
+              {dance.music && dance.music.length > 0 && (
+                <div>
+                  <h4 className="ailey-metadata-label">Music</h4>
+                  <p className="ailey-metadata-value">
+                    {Array.isArray(dance.music) 
+                      ? dance.music.join(', ') 
+                      : dance.music}
+                  </p>
+                </div>
+              )}
+              {dance.costumeDesign && (
+                <div>
+                  <h4 className="ailey-metadata-label">Costume Design</h4>
+                  <p className="ailey-metadata-value">{dance.costumeDesign}</p>
+                </div>
+              )}
+              {dance.lighting && (
+                <div>
+                  <h4 className="ailey-metadata-label">Lighting Design</h4>
+                  <p className="ailey-metadata-value">{dance.lighting}</p>
+                </div>
+              )}
+              {displayDuration && (
+                <div>
+                  <h4 className="ailey-metadata-label">Run Time</h4>
+                  <p className="ailey-metadata-value">{displayDuration}</p>
+                </div>
+              )}
+              {dance.worldPremiere && (
+                <div>
+                  <h4 className="ailey-metadata-label">World Premiere</h4>
+                  <p className="ailey-metadata-value">{dance.worldPremiere}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile: Description */}
+            <div className="md:hidden">
+              {dance.description && (
+                <motion.div
+                  className="w-full max-w-7xl mx-auto mb-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                  <div className="prose prose-lg max-w-none">
+                    <div className="text-gray-700 dark:text-gray-100 leading-relaxed prose dark:prose-invert max-w-none">
+                      <PortableText value={dance.description} />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            {/* Desktop: Original sidebar layout */}
+            <div className="hidden md:block">
+              {dance.youtubeId && dance.description && (
+                <div className="space-y-8">
+                  <motion.div
+                    className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <div className="aspect-video">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${dance.youtubeId}`}
+                        className="w-full h-full"
+                        allowFullScreen
+                        title={dance.title}
+                      />
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className="prose prose-lg max-w-none"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                  >
+                    <div className="text-gray-700 dark:text-gray-100 leading-relaxed prose dark:prose-invert max-w-none">
+                      <PortableText value={dance.description} />
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+
+              {dance.youtubeId && !dance.description && (
                 <motion.div
                   className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
                   initial={{ opacity: 0, y: 20 }}
@@ -133,36 +227,28 @@ const DanceDetail = () => {
                     />
                   </div>
                 </motion.div>
+              )}
+            </div>
 
+            {/* Mobile: Video at bottom */}
+            {dance.youtubeId && (
+              <div className="md:hidden mt-8">
                 <motion.div
-                  className="prose prose-lg max-w-none"
+                  className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
+                  transition={{ duration: 0.6 }}
                 >
-                  <div className="text-gray-700 dark:text-gray-100 leading-relaxed prose dark:prose-invert max-w-none">
-                    <PortableText value={dance.description} />
+                  <div className="aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${dance.youtubeId}`}
+                      className="w-full h-full"
+                      allowFullScreen
+                      title={dance.title}
+                    />
                   </div>
                 </motion.div>
               </div>
-            )}
-
-            {dance.youtubeId && !dance.description && (
-              <motion.div
-                className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="aspect-video">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${dance.youtubeId}`}
-                    className="w-full h-full"
-                    allowFullScreen
-                    title={dance.title}
-                  />
-                </div>
-              </motion.div>
             )}
 
             {dance.description && !dance.youtubeId && (
@@ -283,7 +369,7 @@ const DanceDetail = () => {
             )}
           </div>
 
-          <div className="ailey-sidebar">
+          <div className="ailey-sidebar hidden md:block">
             <motion.div
               className="ailey-section sticky top-8"
               initial={{ opacity: 0, y: 20 }}

@@ -151,7 +151,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-60' : 'max-h-0'}`}>
-        <div className="px-6 py-4 space-y-4 bg-black bg-opacity-95">
+        <div className="px-6 py-4 space-y-4 bg-white dark:bg-gray-900 shadow-lg">
           <MobileNavLink to="/">Repertoire</MobileNavLink>
           <MobileNavLink to="/about">About</MobileNavLink>
           <MobileNavLink to="/contact">Contact</MobileNavLink>

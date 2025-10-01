@@ -2,7 +2,7 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
-import repertoireItem from './cdt/schemaTypes/repertoireItem.jsx';
+import repertoireItem from './cdt/schemaTypes/repertoireItem.js';
 import siteSettings from './cdt/schemaTypes/siteSettings';
 
 export default defineConfig({

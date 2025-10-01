@@ -43,7 +43,7 @@ export async function getRepertoireItems() {
     title,
     "slug": slug.current,
     choreographer,
-    // year,
+    year,
     description,
     "thumbnail": thumbnail { asset->{ url }, alt },
     "heroImage": heroImage { asset->{ url }, alt },
