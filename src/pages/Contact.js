@@ -245,7 +245,12 @@ const Contact = () => {
                   </svg>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p className="font-medium">Email</p>
-                    <p>thecompany@cdtjamaica.org</p>
+                    <a
+                      href="mailto:thecompany@cdtjamaica.org"
+                      className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 underline transition-colors duration-200"
+                    >
+                      thecompany@cdtjamaica.org
+                    </a>
                   </div>
                 </motion.div>
                 
@@ -258,7 +263,12 @@ const Contact = () => {
                   </svg>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p className="font-medium">Phone</p>
-                    <p>876-463-7395</p>
+                    <a
+                      href="tel:+18764637395"
+                      className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 underline transition-colors duration-200"
+                    >
+                      876-463-7395
+                    </a>
                   </div>
                 </motion.div>
                 
@@ -272,7 +282,14 @@ const Contact = () => {
                   </svg>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p className="font-medium">Address</p>
-                    <p>AISK, 2 College Green Avenue,<br />Kingston 6, Jamaica W.I.</p>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=AISK%2C%202%20College%20Green%20Avenue%2C%20Kingston%206%2C%20Jamaica%20W.I."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 underline transition-colors duration-200"
+                    >
+                      AISK, 2 College Green Avenue,<br />Kingston 6, Jamaica W.I.
+                    </a>
                   </div>
                 </motion.div>
               </div>
