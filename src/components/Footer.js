@@ -44,7 +44,7 @@ const Footer = () => {
           {/* CDT Navigation - Visit, About Us, Contact Us (stacked) */}
           <div className="text-left">
             <ul className="space-y-1">
-              <li><a href="/repertoire" className="font-bold text-lg ml-4">VISIT</a></li>
+              <li><a href="/" className="font-bold text-lg ml-4">HOME</a></li>
               <li><a href="/about" className="font-bold text-lg ml-4">ABOUT US</a></li>
               <li><a href="/contact" className="font-bold text-lg ml-4">CONTACT US</a></li>
             </ul>
