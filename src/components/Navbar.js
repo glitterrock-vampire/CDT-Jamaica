@@ -100,7 +100,8 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
-            <NavLink to="/">Repertoire</NavLink>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/repertoire">Repertoire</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>
             <button
@@ -152,7 +153,8 @@ const Navbar = () => {
       {/* Mobile menu */}
       <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-60' : 'max-h-0'}`}>
         <div className="px-6 py-4 space-y-4 bg-white dark:bg-gray-900 shadow-lg">
-          <MobileNavLink to="/">Repertoire</MobileNavLink>
+          <MobileNavLink to="/">Home</MobileNavLink>
+          <MobileNavLink to="/repertoire">Repertoire</MobileNavLink>
           <MobileNavLink to="/about">About</MobileNavLink>
           <MobileNavLink to="/contact">Contact</MobileNavLink>
         </div>

@@ -1,0 +1,543 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The title of the piece",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "description": "Optional subtitle for the piece",
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The URL-friendly version of the title (auto-generated from title)",
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The name of the choreographer",
+        "name": "choreographer",
+        "type": "string"
+      },
+      {
+        "description": "When and where the company first performed this piece",
+        "name": "companyPremiere",
+        "type": "string"
+      },
+      {
+        "description": "List of music credits",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "music",
+        "type": "array",
+        "title": "Music Credits"
+      },
+      {
+        "description": "Name of the costume designer",
+        "name": "costumeDesign",
+        "type": "string"
+      },
+      {
+        "description": "Name of the lighting designer",
+        "name": "lighting",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Run time in MM:SS format (e.g., 03:45)",
+        "name": "runTime",
+        "type": "string"
+      },
+      {
+        "description": "When and where the piece was first performed",
+        "name": "worldPremiere",
+        "type": "string"
+      },
+      {
+        "description": "Detailed description of the piece",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "H1"
+              },
+              {
+                "value": "h2",
+                "title": "H2"
+              },
+              {
+                "value": "h3",
+                "title": "H3"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "description",
+        "type": "array"
+      },
+      {
+        "description": "Notable reviews or quotes about the piece",
+        "of": [
+          {
+            "fields": [
+              {
+                "rows": 3,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "quote",
+                "type": "text"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "source",
+                "type": "string"
+              },
+              {
+                "name": "author",
+                "type": "string"
+              },
+              {
+                "name": "year",
+                "type": "string"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/",
+                              "/^mailto$/",
+                              "/^tel$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "url",
+                "type": "url",
+                "title": "URL"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "mediaReviews",
+        "type": "array"
+      },
+      {
+        "description": "Year of the world premiere",
+        "name": "year",
+        "type": "number"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Thumbnail image for the piece (square format)",
+        "name": "thumbnail",
+        "type": "image",
+        "title": "Thumbnail Image"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Hero image for the piece (landscape format)",
+        "name": "heroImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 10
+              }
+            ],
+            "level": "warning",
+            "message": "Consider limiting to 10 images for optimal performance"
+          }
+        ],
+        "description": "Additional images for the gallery section (up to 10 images recommended)",
+        "of": [
+          {
+            "options": {
+              "hotspot": true,
+              "metadata": [
+                "blurhash",
+                "lqip",
+                "palette",
+                "exif",
+                "location"
+              ]
+            },
+            "fields": [
+              {
+                "description": "Alternative text for accessibility",
+                "name": "alt",
+                "type": "string",
+                "title": "Alt Text"
+              },
+              {
+                "description": "Optional caption for the image",
+                "name": "caption",
+                "type": "string"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "galleryImages",
+        "type": "array"
+      },
+      {
+        "description": "The YouTube video ID (e.g., 4QnwZ0OlmUk)",
+        "name": "youtubeId",
+        "type": "string",
+        "title": "YouTube ID"
+      },
+      {
+        "fields": [
+          {
+            "description": "Title for search engines",
+            "name": "title",
+            "type": "string",
+            "title": "SEO Title"
+          },
+          {
+            "rows": 2,
+            "description": "Description for search engines",
+            "name": "description",
+            "type": "text",
+            "title": "SEO Description"
+          }
+        ],
+        "name": "seo",
+        "type": "object",
+        "title": "SEO"
+      }
+    ],
+    "name": "repertoireItem",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Site Title"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Logo to be displayed in light mode",
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Important for SEO and accessibility",
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative text"
+          }
+        ],
+        "name": "lightLogo",
+        "type": "image",
+        "title": "Light Mode Logo"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Logo to be displayed in dark mode",
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Important for SEO and accessibility",
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative text"
+          }
+        ],
+        "name": "darkLogo",
+        "type": "image",
+        "title": "Dark Mode Logo"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "This image will be used as the hero image in the navigation bar",
+        "fields": [
+          {
+            "options": {
+              "isHighlighted": true
+            },
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Important for SEO and accessibility",
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative text"
+          }
+        ],
+        "name": "heroImage",
+        "type": "image"
+      },
+      {
+        "description": "Description of the website for SEO purposes",
+        "name": "description",
+        "type": "text",
+        "title": "Site Description"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  }
+]
