@@ -1,7 +1,7 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
-  "private": true,
+  "name": "cdt-jamaica-arts",
+  "version": "1.0.0",
+  "description": "CDT Jamaica Arts - Premier Jamaican cultural dance theatre company website",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",

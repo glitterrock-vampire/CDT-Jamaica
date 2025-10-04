@@ -18,6 +18,20 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <!-- Hide React DevTools indicators -->
+    <script>
+      // Hide React DevTools overlay and indicators
+      if (window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+        window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
+      }
+
+      // Remove any existing React indicators
+      setTimeout(() => {
+        const reactIndicators = document.querySelectorAll('[data-reactroot], .react-devtools-overlay, [data-react-devtools-overlay]');
+        reactIndicators.forEach(el => el.style.display = 'none');
+      }, 1000);
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
