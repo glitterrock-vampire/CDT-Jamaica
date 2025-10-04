@@ -97,7 +97,7 @@ const Contact = () => {
     };
 
     fetchSettings();
-  }, []);
+  }, []); // Empty dependency array - only run once
 
   if (isLoading) {
     return <LoadingSpinner text="Loading contact information..." />;
@@ -133,8 +133,7 @@ const Contact = () => {
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">Join Our Community</h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Stay updated with our latest performances, events, and cultural celebrations. Join our community of dance enthusiasts and be the first to know about upcoming shows and workshops.
-                </p>
+                  Stay updated with our latest performances, events, and cultural celebrations.</p>
               </div>
 
               <form onSubmit={handleSubscription} className="space-y-4 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
@@ -181,17 +180,7 @@ const Contact = () => {
                     {subscriptionStatus.message}
                   </div>
                 )}
-              </form>
-
-              <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-                <p>By joining, you'll receive:</p>
-                <ul className="mt-2 space-y-1">
-                  <li>• Updates on upcoming performances</li>
-                  <li>• Information about cultural events</li>
-                  <li>• Exclusive content and behind-the-scenes</li>
-                  <li>• Workshop and class announcements</li>
-                </ul>
-              </div>
+              </form> 
             </motion.div>
             
             {/* Contact Information */}
