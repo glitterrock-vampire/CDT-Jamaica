@@ -89,8 +89,8 @@ app.post('/api/subscribe', async (req, res) => {
     }
 
     // Get Mailchimp credentials
-    const MAILCHIMP_API_KEY = process.env.REACT_APP_MAILCHIMP_API_KEY;
-    const MAILCHIMP_LIST_ID = process.env.REACT_APP_MAILCHIMP_LIST_ID;
+    const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
+    const MAILCHIMP_LIST_ID = process.env.MAILCHIMP_LIST_ID;
 
     if (!MAILCHIMP_API_KEY || !MAILCHIMP_LIST_ID) {
       console.error('Missing Mailchimp configuration');
