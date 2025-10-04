@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { getSiteSettings } from '../lib/siteSettings';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -8,6 +8,45 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 const Footer = () => {
   const { isDarkMode } = useTheme();
   const [siteSettings, setSiteSettings] = React.useState(null);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      setStatus({ type: 'error', message: 'Please enter your email address' });
+      return;
+    }
+
+    setIsLoading(true);
+    setStatus(null);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus({ type: 'success', message: 'Thank you for subscribing!' });
+        setEmail('');
+      } else {
+        setStatus({ type: 'error', message: data.error || 'Subscription failed. Please try again.' });
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      setStatus({ type: 'error', message: 'Network error. Please check if the server is running.' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   React.useEffect(() => {
     const fetchSettings = async () => {
@@ -55,27 +94,37 @@ const Footer = () => {
           {/* Newsletter */}
           <div>
             <label htmlFor="newsletter" className="block text-xs mb-2">Sign up for our newsletter</label>
-            <div className="flex">
+            <form onSubmit={handleSubmit} className="flex">
               <input
                 id="newsletter"
                 type="email"
                 placeholder="E-MAIL ADDRESS"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
                 className={`flex-1 px-3 py-2 rounded-l text-xs focus:outline-none ${
-                  isDarkMode 
-                    ? 'bg-black border border-gray-600 text-white placeholder-gray-400' 
+                  isDarkMode
+                    ? 'bg-black border border-gray-600 text-white placeholder-gray-400'
                     : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500'
-                }`}
+                } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
               />
-              <button 
+              <button
+                type="submit"
+                disabled={isLoading}
                 className={`px-6 py-2 rounded-r text-xs font-semibold transition ${
-                  isDarkMode 
-                    ? 'bg-white text-black hover:bg-gray-100' 
-                    : 'bg-black text-white hover:bg-gray-800'
-                }`}
+                  isDarkMode
+                    ? 'bg-white text-black hover:bg-gray-100 disabled:bg-gray-300'
+                    : 'bg-black text-white hover:bg-gray-800 disabled:bg-gray-500'
+                } ${isLoading ? 'cursor-not-allowed' : ''}`}
               >
-                SIGN UP
+                {isLoading ? '...' : 'SIGN UP'}
               </button>
-            </div>
+            </form>
+            {status && (
+              <p className={`text-xs mt-2 ${status.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+                {status.message}
+              </p>
+            )}
           </div>
           {/* Social Icons - Inline with Follow us */}
           <div className="flex items-center gap-4">

@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const mailchimp = require('@mailchimp/mailchimp_marketing');
 dotenv.config({ path: ['.env.local', '.env'] });
 
 const app = express();
@@ -70,6 +71,83 @@ app.post('/api/contact', async (req, res) => {
       success: false,
       error: 'Failed to send message',
       details: error.message 
+    });
+  }
+});
+
+// Mailchimp subscription endpoint
+app.post('/api/subscribe', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Validate email
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Please enter a valid email address'
+      });
+    }
+
+    // Get Mailchimp credentials
+    const MAILCHIMP_API_KEY = process.env.REACT_APP_MAILCHIMP_API_KEY;
+    const MAILCHIMP_LIST_ID = process.env.REACT_APP_MAILCHIMP_LIST_ID;
+
+    if (!MAILCHIMP_API_KEY || !MAILCHIMP_LIST_ID) {
+      console.error('Missing Mailchimp configuration');
+      return res.status(500).json({
+        success: false,
+        error: 'Server configuration error. Please try again later.'
+      });
+    }
+
+    // Extract datacenter from API key (e.g., 'us1' from 'c68a952c4c309eabf46bc8e2af1d033d-us1')
+    const DATACENTER = MAILCHIMP_API_KEY.split('-').pop();
+
+    // Configure Mailchimp
+    mailchimp.setConfig({
+      apiKey: MAILCHIMP_API_KEY,
+      server: DATACENTER,
+    });
+
+    console.log('Attempting to subscribe:', { email, listId: MAILCHIMP_LIST_ID });
+
+    // Add subscriber to Mailchimp list
+    const response = await mailchimp.lists.addListMember(MAILCHIMP_LIST_ID, {
+      email_address: email,
+      status: 'subscribed',
+    });
+
+    console.log('Mailchimp response:', response);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Successfully subscribed to newsletter!'
+    });
+
+  } catch (error) {
+    console.error('Mailchimp API error:', error);
+
+    // Handle specific Mailchimp errors
+    if (error.status === 400) {
+      const errorTitle = error.response?.body?.title;
+
+      if (errorTitle === 'Member Exists') {
+        return res.status(400).json({
+          success: false,
+          error: 'This email is already subscribed to our newsletter.'
+        });
+      }
+
+      return res.status(400).json({
+        success: false,
+        error: error.response?.body?.detail || 'Invalid email address or subscription failed.'
+      });
+    }
+
+    // Generic error response
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to subscribe. Please try again later.'
     });
   }
 });
