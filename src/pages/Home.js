@@ -54,7 +54,7 @@ const Home = () => {
               Buy Tickets
             </a>
           </div>
-          <style jsx global>{`
+          <style>{`
             .button-85 {
               padding: 0.8em 2em;
               border: none;
@@ -73,7 +73,7 @@ const Home = () => {
               display: block;
               transition: all 0.3s ease;
             }
-            
+
             .button-85.light {
               color: #000;
             }
@@ -124,7 +124,7 @@ const Home = () => {
               border-radius: 10px;
               transition: background-color 0.3s ease;
             }
-            
+
             .light:after {
               background: #f3f4f6;
             }
