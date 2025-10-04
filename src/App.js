@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
+import PageBounce from './components/PageBounce';
 import Home from './pages/Home';
 import Repertoire from './pages/Repertoire';
 import About from './pages/About';
@@ -30,27 +31,37 @@ function App() {
       <Routes>
         <Route path="/" element={
           <Layout>
-            <Home />
+            <PageBounce>
+              <Home />
+            </PageBounce>
           </Layout>
         } />
         <Route path="/repertoire" element={
           <Layout>
-            <Repertoire />
+            <PageBounce>
+              <Repertoire />
+            </PageBounce>
           </Layout>
         } />
         <Route path="/dance/:id" element={
           <Layout>
-            <DanceDetail />
+            <PageBounce>
+              <DanceDetail />
+            </PageBounce>
           </Layout>
         } />
         <Route path="/about" element={
           <Layout>
-            <About />
+            <PageBounce>
+              <About />
+            </PageBounce>
           </Layout>
         } />
         <Route path="/contact" element={
           <Layout>
-            <Contact />
+            <PageBounce>
+              <Contact />
+            </PageBounce>
           </Layout>
         } />
       </Routes>
