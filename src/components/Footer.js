@@ -43,7 +43,6 @@ const Footer = () => {
             {/* Navigation */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div>
-                <h3 className="font-bold text-lg mb-4">Navigation</h3>
                 <ul className="space-y-2">
                   <li><a href="/" className="hover:underline">Home</a></li>
                   <li><a href="/repertoire" className="hover:underline">Repertoire</a></li>
