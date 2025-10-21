@@ -129,7 +129,7 @@ const Repertoire = () => {
             </div>
           </div>
         ) : (
-          <div className="grid gap-8 md:gap-10 lg:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 mt-6">
+          <div className="grid gap-8 md:gap-10 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6">
             {filteredRepertoire.map((item) => (
               <RepertoireItem key={item._id || item.id} item={item} />
             ))}
