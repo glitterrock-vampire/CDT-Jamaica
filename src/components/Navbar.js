@@ -30,12 +30,27 @@ const Navbar = () => {
     setIsMenuOpen(false);
   }, [location]);
 
-  // Add scroll effect for navbar
+  // Close mobile menu on Escape key
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+    if (isMenuOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMenuOpen]);
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   // NavLink component for desktop
   const NavLink = ({ to, children }) => (
@@ -130,33 +145,59 @@ const Navbar = () => {
                 <FiMoon className="w-5 h-5 text-gray-800" />
               )}
             </button>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-current hover:bg-gray-700 focus:outline-none"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              {!isMenuOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              )}
-            </button>
+            <div className="hamburger-menu" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <div className="hamburger-lines">
+                <span className={`line line-1 ${isMenuOpen ? 'active' : ''}`}></span>
+                <span className={`line line-2 ${isMenuOpen ? 'active' : ''}`}></span>
+                <span className={`line line-3 ${isMenuOpen ? 'active' : ''}`}></span>
+              </div>
+              <div className="notes">
+                <div className="note note-1"></div>
+                <div className="note note-2"></div>
+                <div className="note note-3"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Mobile menu */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-60' : 'max-h-0'}`}>
-        <div className="px-6 py-4 space-y-4 bg-white dark:bg-gray-900 shadow-lg">
-          <MobileNavLink to="/">Home</MobileNavLink>
-          <MobileNavLink to="/repertoire">Repertoire</MobileNavLink>
-          <MobileNavLink to="/about">About</MobileNavLink>
-          <MobileNavLink to="/contact">Contact</MobileNavLink>
+      <div className={`nav-overlay ${isMenuOpen ? 'open' : ''}`}>
+        <div className="menu-content">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="absolute top-4 right-4 p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 dark:focus:ring-offset-gray-900"
+            aria-label="Close menu"
+          >
+            <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <ul className="menu-items">
+            <li className="menu-item"><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
+            <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
+            <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link></li>
+            <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
+          </ul>
+          <div className="mt-8">
+            <button
+              onClick={toggleDarkMode}
+              className="w-full flex items-center justify-center gap-2 rounded-lg bg-gray-100 dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 dark:focus:ring-offset-gray-900"
+              aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDarkMode ? (
+                <>
+                  <FiSun className="w-5 h-5 text-yellow-400" />
+                  <span>Light mode</span>
+                </>
+              ) : (
+                <>
+                  <FiMoon className="w-5 h-5 text-gray-800" />
+                  <span>Dark mode</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </nav>
