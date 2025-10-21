@@ -25,23 +25,23 @@ const Footer = () => {
   return (
     <footer className={`${isDarkMode ? 'bg-black text-white' : 'bg-gray-100 text-gray-900'} pt-10 pb-4 px-4 border-t border-gray-200 dark:border-gray-800`}>
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 lg:gap-8">
+        <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:items-start gap-12 lg:gap-8 text-center lg:text-left">
           {/* Logo & Navigation */}
-          <div className="flex flex-col sm:flex-row gap-12 lg:gap-24 items-start">
+          <div className="flex flex-col items-center sm:flex-row sm:items-start gap-12 lg:gap-24">
             {/* Logo */}
-            <div className="flex-shrink-0 flex flex-col items-center sm:items-start">
+            <div className="flex-shrink-0 flex flex-col items-center">
               {siteSettings && (
                 <img
                   src={isDarkMode ? siteSettings?.darkLogo?.asset?.url : siteSettings?.lightLogo?.asset?.url}
                   alt={siteSettings?.title + ' logo'}
-                  className="h-24 w-auto mb-2"
+                  className="h-16 sm:h-20 lg:h-24 w-auto mb-2"
                   style={{ maxHeight: '96px' }}
                 />
               )}
             </div>
 
             {/* Navigation */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-center sm:text-left">
               <div>
                 <ul className="space-y-2">
                   <li><a href="/" className="hover:underline">Home</a></li>
@@ -54,7 +54,7 @@ const Footer = () => {
           </div>
 
           {/* Newsletter & Social Media */}
-          <div className="w-full lg:w-96 mt-8 lg:mt-0">
+          <div className="w-full max-w-md lg:w-96 mt-8 lg:mt-0 text-center lg:text-left">
             <h3 className="text-lg font-semibold mb-4">Stay Connected</h3>
             
             {/* Newsletter Subscription */}
@@ -63,7 +63,7 @@ const Footer = () => {
             </div>
 
             {/* Social Media Icons */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
               <span className="text-sm whitespace-nowrap">Follow us</span>
               <div className="flex gap-3">
                 <a
@@ -100,7 +100,7 @@ const Footer = () => {
 
         {/* Bottom Row: CDT copyright and developer credit */}
         <div className="mt-12 border-t border-gray-800 pt-4 flex flex-col items-center text-xs text-gray-400">
-          <p className="text-sm">
+          <p className="text-sm text-center">
             &copy; {new Date().getFullYear()} CDT Arts Ltd. All rights reserved.
             <span className="block sm:inline-block mt-1 sm:mt-0 sm:ml-2 text-sm">
               Developed by Andre Walters
