@@ -1,136 +1,689 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { getUpcomingPerformances } from '../lib/performances';
 
 const Home = () => {
   const { isDarkMode } = useTheme();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [upcomingPerformances, setUpcomingPerformances] = useState([]);
 
-  // Simulate loading delay for demo purposes
+  const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
+  const secondaryBg = isDarkMode ? 'bg-neutral-900' : 'bg-gray-50';
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+    const fetchUpcoming = async () => {
+      try {
+        const data = await getUpcomingPerformances();
+        setUpcomingPerformances(data || []);
+      } catch (error) {
+        console.error('Error fetching upcoming performances:', error);
+      }
+    };
+    fetchUpcoming();
   }, []);
 
-  const handleImageLoad = () => {
-    setIsImageLoaded(true);
-  };
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <div className={`min-h-screen flex flex-col items-center p-4 ${isDarkMode ? 'bg-black' : 'bg-gray-50'}`}>
-      <div className="max-w-4xl w-full">
-        <div className="bg-black overflow-hidden">
-          {/* Image */}
-          <div className={`transition-all duration-1000 ease-in-out ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}>
-            <img
-              src="/images/CDT Streams 2025- Main Flyer copy.jpg"
-              alt="CDT Jamaica 2025 Main Flyer"
-              className="w-full h-auto"
-              style={{ maxHeight: '80vh', objectFit: 'contain' }}
-              onLoad={handleImageLoad}
-            />
-          </div>
-          
-          {/* Buy Tickets Button */}
-          <div className="p-4 text-center">
-            <a
-              href="https://www.linktr.ee/cdtjamaica"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`button-85 w-full text-center block py-4 px-8 ${isDarkMode ? 'dark' : 'light'}`}
-              style={{
-                fontSize: '1.25rem',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
+    <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'} flex justify-center px-4 md:px-8`}>
+      <motion.div
+        className="w-full max-w-6xl py-10 md:py-14"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* HERO */}
+        <header className={`border-b ${borderColor} pb-10 md:pb-14`}>
+          <div className="grid gap-10 md:gap-12 md:grid-cols-[2fr,1.4fr] items-stretch">
+            {/* Left column */}
+            <div className="flex flex-col justify-between gap-8">
+              <div className="space-y-6">
+                <motion.div
+                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                >
+                  Season 2025 · Kingston, Jamaica
+                </motion.div>
+                <motion.h1
+                  className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight uppercase leading-[0.95]"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  Celebrating
+                  <br />
+                  dance in
+                  <br />
+                  Jamaica.
+                </motion.h1>
+                <motion.p
+                  className={`text-sm md:text-base max-w-xl leading-relaxed ${mutedText}`}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  Contemporary Dance Theatre Jamaica presents a season of new and classic works in conversation with
+                  Caribbean sound, space, and history.
+                </motion.p>
+                <motion.div
+                  className="flex flex-wrap gap-3"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                  <a
+                    href="https://www.linktr.ee/cdtjamaica"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                  >
+                    Buy Tickets
+                  </a>
+                  <button
+                    type="button"
+                    className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                      isDarkMode ? 'bg-transparent text-white hover:bg-white/5' : 'bg-transparent text-black hover:bg-gray-100'
+                    } transition-colors`}
+                  >
+                    Play trailer
+                  </button>
+                </motion.div>
+              </div>
+
+              <motion.div
+                className="grid gap-4 md:grid-cols-2 text-[11px] mt-4 md:mt-0"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <div className={`border-t ${borderColor} pt-2 flex items-center justify-between ${mutedText}`}>
+                  <span className="tracking-[0.12em] uppercase">Next performance</span>
+                  <span className="tracking-[0.12em] uppercase text-xs text-inherit">Oct 14 · 8:00 PM</span>
+                </div>
+                <div className={`border-t ${borderColor} pt-2 flex items-center justify-between ${mutedText}`}>
+                  <span className="tracking-[0.12em] uppercase">Venue</span>
+                  <span className="tracking-[0.12em] uppercase text-xs text-inherit">Little Theatre</span>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Hero Poster */}
+            <motion.div
+              className={`border ${borderColor} ${secondaryBg} h-[380px] md:h-[420px] grid grid-rows-[auto,1fr,auto]`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
             >
-              Buy Tickets
-            </a>
+              <div className={`px-3 py-2 text-[10px] tracking-[0.12em] uppercase flex items-center justify-between border-b ${borderColor}`}>
+                <span>CDT Jamaica</span>
+                <span>Prog 01</span>
+              </div>
+              <div className="relative overflow-hidden">
+                <img
+                  src="https://storage.googleapis.com/banani-generated-images/generated-images/c9b454d4-22d2-4eb5-a7b7-87d8e868760e.jpg"
+                  alt="Season poster"
+                  className="w-full h-full object-cover grayscale contrast-110"
+                />
+              </div>
+              <div className={`px-3 py-2 text-[10px] tracking-[0.12em] uppercase flex items-center justify-between border-t ${borderColor}`}>
+                <span>2025 / 2026</span>
+                <span>Kingston · Montego Bay</span>
+              </div>
+            </motion.div>
           </div>
-          <style>{`
-            .button-85 {
-              padding: 0.8em 2em;
-              border: none;
-              outline: none;
-              color: rgb(255, 255, 255);
-              background: #111;
-              cursor: pointer;
-              position: relative;
-              z-index: 0;
-              border-radius: 10px;
-              user-select: none;
-              -webkit-user-select: none;
-              touch-action: manipulation;
-              font-weight: bold;
-              text-decoration: none;
-              display: block;
-              transition: all 0.3s ease;
-            }
+        </header>
 
-            .button-85.light {
-              color: #000;
-            }
+        {/* ABOUT / MISSION */}
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+        >
+          <div className="grid gap-10 md:grid-cols-2 items-start">
+            <div className="space-y-3">
+              <motion.div
+                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+              >
+                About Us
+              </motion.div>
+              <motion.div
+                className="text-2xl md:text-3xl uppercase leading-tight"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+              >
+                Moving the Caribbean forward through the language of dance.
+              </motion.div>
+            </div>
+            <div className="space-y-4">
+              <motion.p
+                className={`text-sm md:text-base leading-relaxed ${mutedText}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                Founded in 1995, CDT Jamaica has grown into the region&apos;s premier contemporary dance company. We are
+                dedicated to creating works that reflect the complexity, beauty, and resilience of our culture.
+              </motion.p>
+              <motion.div
+                className={`flex flex-wrap gap-6 pt-4 mt-2 border-t ${borderColor}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
+              >
+                <div className="space-y-1">
+                  <div className="text-xl md:text-2xl">30+</div>
+                  <div className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Years Active</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xl md:text-2xl">120</div>
+                  <div className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Original Works</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xl md:text-2xl">15k</div>
+                  <div className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Students Taught</div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.section>
 
-            .button-85:before {
-              content: "";
-              background: linear-gradient(
-                45deg,
-                #ff0000,
-                #ff7300,
-                #fffb00,
-                #48ff00,
-                #00ffd5,
-                #002bff,
-                #7a00ff,
-                #ff00c8,
-                #ff0000
-              );
-              position: absolute;
-              top: -2px;
-              left: -2px;
-              background-size: 400%;
-              z-index: -1;
-              filter: blur(5px);
-              -webkit-filter: blur(5px);
-              width: calc(100% + 4px);
-              height: calc(100% + 4px);
-              animation: glowing-button-85 20s linear infinite;
-              transition: opacity 0.3s ease-in-out;
-              border-radius: 10px;
-            }
+        {/* ON STAGE / EVENTS */}
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="flex flex-col gap-8">
+            <motion.div
+              className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.32 }}
+            >
+              <div>
+                <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>On stage</div>
+                <div className="text-xl md:text-2xl uppercase">Upcoming Performances</div>
+              </div>
+              <motion.button
+                type="button"
+                className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.36 }}
+              >
+                Full calendar →
+              </motion.button>
+            </motion.div>
 
-            @keyframes glowing-button-85 {
-              0% { background-position: 0 0; }
-              50% { background-position: 400% 0; }
-              100% { background-position: 0 0; }
-            }
+            <div className="grid gap-5 md:grid-cols-3">
+              {upcomingPerformances.map((perf, index) => {
+                const dateObj = new Date(perf.date);
+                const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
+                const day = dateObj.getDate();
+                return (
+                  <motion.div
+                    key={perf._id}
+                    className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg}`}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.38 + index * 0.04 }}
+                  >
+                    <motion.div
+                      className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.4 + index * 0.04 }}
+                    >
+                      <span>{perf.category}</span>
+                      <span>{month} {day}</span>
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
+                    >
+                      <div className="text-sm font-semibold uppercase mb-1">{perf.title}</div>
+                      <div className={`text-[11px] ${mutedText}`}>{perf.venue} · {perf.location}</div>
+                      <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
+                        <img
+                          src={perf.image?.url}
+                          alt={perf.image?.alt || perf.title}
+                          className="w-full h-full object-cover grayscale"
+                        />
+                      </div>
+                    </motion.div>
+                    <motion.p
+                      className={`text-xs leading-snug ${mutedText}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
+                    >
+                      {perf.description}
+                    </motion.p>
+                    <motion.button
+                      type="button"
+                      className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
+                        isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                      } transition-colors`}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
+                    >
+                      Get Tickets
+                    </motion.button>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </motion.section>
 
-            .button-85:after {
-              z-index: -1;
-              content: "";
-              position: absolute;
-              width: 100%;
-              height: 100%;
-              background: #111;
-              left: 0;
-              top: 0;
-              border-radius: 10px;
-              transition: background-color 0.3s ease;
-            }
+        {/* THE COMPANY / DANCERS */}
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+        >
+          <div className="flex flex-col gap-8">
+            <motion.div
+              className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.37 }}
+            >
+              <div>
+                <motion.div
+                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.39 }}
+                >
+                  The Company
+                </motion.div>
+                <motion.div
+                  className="text-xl md:text-2xl uppercase"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.41 }}
+                >
+                  Meet the Artists
+                </motion.div>
+              </div>
+              <motion.button
+                type="button"
+                className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.43 }}
+              >
+                Full roster →
+              </motion.button>
+            </motion.div>
 
-            .light:after {
-              background: #f3f4f6;
-            }
-          `}</style>
-        </div>
-      </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+              {[
+                { name: 'Sarah M.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FAfrican%2F3' },
+                { name: 'David C.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F25-35%2FAfrican%2F1' },
+                { name: 'Elaine T.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F18-25%2FAfrican%2F5' },
+                { name: 'Marcus G.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F18-25%2FAfrican%2F2' },
+                { name: 'Lisa B.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FAfrican%2F8' },
+                { name: 'Robert H.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F25-35%2FAfrican%2F4' }
+              ].map((dancer, index) => (
+                <motion.div
+                  key={dancer.name}
+                  className={`flex flex-col gap-2 border ${borderColor} ${cardBg} p-3`}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.36 + index * 0.04 }}
+                >
+                  <div className={`relative w-full pb-[120%] overflow-hidden ${secondaryBg}`}>
+                    <img
+                      src={dancer.src}
+                      alt={dancer.name}
+                      className="absolute inset-0 w-full h-full object-cover grayscale"
+                    />
+                  </div>
+                  <div className="text-[11px] tracking-[0.05em] uppercase mt-2">{dancer.name}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* SUPPORT TEASER */}
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Philanthropy / Patron Programme */}
+            <motion.div
+              className={`flex flex-col items-center text-center gap-4 p-8 border ${borderColor} ${secondaryBg}`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.42 }}
+            >
+              <motion.div
+                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.44 }}
+              >
+                Philanthropy
+              </motion.div>
+              <motion.div
+                className="text-lg md:text-xl uppercase"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.46 }}
+              >
+                Patron Programme
+              </motion.div>
+              <motion.p
+                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.48 }}
+              >
+                Join a community of supporters who believe in the power of dance to transform lives. Benefits include
+                rehearsal access and priority booking.
+              </motion.p>
+              <motion.button
+                type="button"
+                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                  isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                } transition-colors`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+              >
+                Learn more
+              </motion.button>
+            </motion.div>
+
+            {/* Education / Scholarship Fund */}
+            <motion.div
+              className={`flex flex-col items-center text-center gap-4 p-8 border ${borderColor} ${
+                isDarkMode ? 'border-dashed bg-black' : 'border-dashed bg-white'
+              }`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.44 }}
+            >
+              <motion.div
+                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.46 }}
+              >
+                Education
+              </motion.div>
+              <motion.div
+                className="text-lg md:text-xl uppercase"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.48 }}
+              >
+                Scholarship Fund
+              </motion.div>
+              <motion.p
+                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+              >
+                Help us identify and train the next generation of Caribbean dance artists, regardless of their
+                financial background.
+              </motion.p>
+              <motion.button
+                type="button"
+                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                  isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                } transition-colors`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.52 }}
+              >
+                Donate now
+              </motion.button>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* SCHOOL / TRAINING */}
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.45 }}
+        >
+          <div className="grid gap-10 md:grid-cols-[1.2fr,1fr] items-center">
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.47 }}
+            >
+              <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>The school</div>
+              <h2 className="text-2xl md:text-3xl uppercase">Training for all ages.</h2>
+              <p className={`text-sm md:text-base max-w-md leading-relaxed ${mutedText}`}>
+                From first steps to pre-professional study, CDT Jamaica School offers programmes in contemporary, ballet,
+                and Jamaican folk forms led by working artists.
+              </p>
+              <div className="space-y-2 text-sm mt-4">
+                {[
+                  { label: 'Junior division', meta: 'Ages 4–10' },
+                  { label: 'Pre-professional', meta: 'Ages 11–18' },
+                  { label: 'Adult open', meta: 'Evenings + weekends' }
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className={`flex items-center justify-between pb-2 border-b ${borderColor}`}
+                  >
+                    <span>{item.label}</span>
+                    <span className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>{item.meta}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <button
+                  type="button"
+                  className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                    isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                  } transition-colors`}
+                >
+                  Class schedule
+                </button>
+                <button
+                  type="button"
+                  className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border border-transparent ${
+                    isDarkMode ? 'text-gray-200 hover:bg-white/5' : 'text-gray-700 hover:bg-gray-100'
+                  } transition-colors`}
+                >
+                  Faculty list
+                </button>
+              </div>
+            </motion.div>
+            <motion.div
+              className={`relative h-80 md:h-96 border ${borderColor} overflow-hidden ${secondaryBg}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <img
+                src="https://storage.googleapis.com/banani-generated-images/generated-images/5af85720-d5f2-47cd-ae66-b06199a02abb.jpg"
+                alt="School rehearsal"
+                className="w-full h-full object-cover grayscale"
+              />
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* NEWS / SIGNALS */}
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <div className="flex flex-col gap-8">
+            {/* Header */}
+            <motion.div
+              className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.52 }}
+            >
+              <div>
+                <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Signals</div>
+                <div className="text-xl md:text-2xl uppercase">News + archive</div>
+              </div>
+              <motion.button
+                type="button"
+                className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.56 }}
+              >
+                Open archive index →
+              </motion.button>
+            </motion.div>
+
+            <div className="grid gap-6 md:grid-cols-[2fr,1.2fr] items-start">
+              {/* Video log card */}
+              <motion.div
+                className={`grid grid-rows-[auto,1fr,auto] border ${borderColor} ${cardBg}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.58 }}
+              >
+                <motion.div
+                  className={`flex items-center justify-between px-3 py-2 text-[10px] tracking-[0.12em] uppercase border-b ${borderColor} ${mutedText}`}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.6 }}
+                >
+                  <span>Video log 07</span>
+                  <span>Play</span>
+                </motion.div>
+                <motion.div
+                  className="relative overflow-hidden min-h-[220px]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.62 }}
+                >
+                  <img
+                    src="https://storage.googleapis.com/banani-generated-images/generated-images/a462e780-9779-4d37-8f9b-2e99bbe0dc2b.jpg"
+                    alt="Studio log"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+                <motion.div
+                  className="px-3 py-3 space-y-1"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.64 }}
+                >
+                  <div className="text-sm font-medium">Studio notes: Island Pulse</div>
+                  <div className={`text-[11px] ${mutedText}`}>Rehearsal footage · 06 min</div>
+                </motion.div>
+              </motion.div>
+
+              {/* Side cards */}
+              <div className="flex flex-col gap-4">
+                {/* Press card */}
+                <motion.div
+                  className={`p-4 border ${borderColor} ${cardBg} flex flex-col gap-2`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.6 }}
+                >
+                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Press</div>
+                  <div className="text-sm leading-snug">
+                    "A bold reimagining of what Caribbean dance can be in the 21st century."
+                  </div>
+                  <div className="text-xs mt-1">— The Jamaica Gleaner</div>
+                </motion.div>
+
+                {/* Announcement card */}
+                <motion.div
+                  className={`p-4 border ${borderColor} ${cardBg} flex flex-col gap-2`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.64 }}
+                >
+                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>
+                    Announcement · Aug 12
+                  </div>
+                  <div className="text-sm font-medium">New artistic director appointed</div>
+                  <div className={`text-xs leading-relaxed ${mutedText}`}>
+                    Choreographer James Bennett joins CDT Jamaica to lead the 2025–2028 seasons.
+                  </div>
+                </motion.div>
+
+                {/* Download brochure button */}
+                <motion.button
+                  type="button"
+                  className={`flex items-center justify-between px-3 py-2 text-sm border ${borderColor} ${cardBg} ${
+                    isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                  } transition-colors`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.68 }}
+                >
+                  <span>Download 2025 Brochure</span>
+                  <span className="text-xs">⤓</span>
+                </motion.button>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* NEWSLETTER (kept simple because global Footer already exists) */}
+        <motion.section
+          className="py-10 md:py-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.55 }}
+        >
+          <div className="max-w-xl space-y-4">
+            <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Newsletter</div>
+            <div className="text-lg md:text-xl">
+              Signals from the studio and stage, once a month.
+            </div>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center max-w-md mt-2"
+            >
+              <input
+                type="email"
+                required
+                placeholder="email@address.com"
+                className={`flex-1 px-3 py-2 text-sm outline-none border ${borderColor} ${
+                  isDarkMode ? 'bg-neutral-900 text-white' : 'bg-gray-50 text-black'
+                }`}
+              />
+              <button
+                type="submit"
+                className="mt-2 sm:mt-0 sm:ml-0 px-5 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase bg-black text-white border border-black dark:bg-white dark:text-black dark:border-white"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </motion.section>
+      </motion.div>
     </div>
   );
 };

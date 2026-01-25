@@ -3,7 +3,7 @@ import Hero from '../components/Hero';
 import RepertoireItem from '../components/Repertoire/RepertoireItem';
 import RepertoireControls from '../components/Repertoire/RepertoireControls';
 import { getRepertoireItems, getSiteSettings } from '../lib/siteSettings';
-import LoadingSpinner from '../components/LoadingSpinner';
+// import LoadingSpinner from '../components/LoadingSpinner';
 
 const Repertoire = () => {
   const [repertoire, setRepertoire] = useState([]);
@@ -119,7 +119,8 @@ const Repertoire = () => {
         />
 
         {loading ? (
-          <LoadingSpinner />
+          // <LoadingSpinner />
+          null
         ) : error ? (
           <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
             <div className="flex">
@@ -129,7 +130,7 @@ const Repertoire = () => {
             </div>
           </div>
         ) : (
-          <div className="grid gap-8 md:gap-10 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6">
+          <div className="grid gap-5 md:grid-cols-3 mt-6">
             {filteredRepertoire.map((item) => (
               <RepertoireItem key={item._id || item.id} item={item} />
             ))}

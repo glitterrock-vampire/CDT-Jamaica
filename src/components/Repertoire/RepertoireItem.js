@@ -1,27 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
+import { useTheme } from '../../context/ThemeContext';
 
 const RepertoireItem = ({ item }) => {
   const navigate = useNavigate();
+  const { isDarkMode } = useTheme();
   
   if (!item) return null;
   
   const { _id, title, choreographer, year, thumbnail, heroImage } = item;
   
-  // Handle both thumbnail and heroImage with proper fallbacks
   const imageUrl = thumbnail?.asset?.url || heroImage?.asset?.url;
   const imageAlt = thumbnail?.alt || heroImage?.alt || title;
 
-  console.log('Rendering item:', { 
-    title, 
-    choreographer, 
-    year,
-    thumbnail: thumbnail?.asset?.url,
-    heroImage: heroImage?.asset?.url,
-    finalImageUrl: imageUrl
-  });
+  const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
   const handleClick = () => {
     if (_id) {
@@ -31,65 +26,53 @@ const RepertoireItem = ({ item }) => {
 
   return (
     <motion.div 
-      className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer group relative h-full flex flex-col border border-gray-100 dark:border-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-xl dark:shadow-gray-900/20"
+      className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
       onClick={handleClick}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-      whileHover={{ 
-        y: -5,
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-        transition: { duration: 0.2 }
-      }}
     >
-      <motion.div 
-        className="w-full aspect-video overflow-hidden"
-        whileHover={{ scale: 1.03 }}
-        transition={{ duration: 0.3 }}
+      <motion.div
+        className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.05 }}
       >
-        {imageUrl ? (
-          <div className="relative w-full h-full">
-            <motion.img
-              src={`${imageUrl}?w=600&h=${Math.floor(600 * (9/16))}&fit=crop&auto=format`}
-              alt={imageAlt}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              onError={(e) => {
-                console.error('Error loading image:', imageUrl);
-                e.target.style.display = 'none';
-                e.target.nextElementSibling.style.display = 'flex';
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 hidden items-center justify-center">
-              <span className="text-gray-400 dark:text-gray-500">Image not available</span>
-            </div>
-          </div>
-        ) : (
-          <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-            <span className="text-gray-400 dark:text-gray-500">No image available</span>
-          </div>
-        )}
+        <span>Repertoire</span>
+        <span>{year}</span>
       </motion.div>
-      
-      <motion.div className="p-6 flex-1 flex flex-col">
-        <div className="flex items-baseline gap-3 mb-2">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
-            {title}
-          </h3>
-          {year && (
-            <span className="text-base font-medium text-gray-600 dark:text-gray-400">
-              ({year})
-            </span>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <div className="text-sm font-semibold uppercase mb-1">{title}</div>
+        <div className={`text-[11px] ${mutedText}`}>{choreographer}</div>
+        <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
+          {imageUrl ? (
+            <img
+              src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
+              alt={imageAlt}
+              className="w-full h-full object-cover grayscale"
+              loading="lazy"
+            />
+          ) : (
+            <div className={`w-full h-full flex items-center justify-center ${mutedText} text-xs`}>
+              No Image
+            </div>
           )}
         </div>
-        {choreographer && (
-          <p className="text-base text-gray-700 dark:text-gray-300 mt-1 font-medium">
-          <span className="text-gray-900 dark:text-white font-semibold">{choreographer}</span>
-          </p>
-        )}
       </motion.div>
+      <motion.button
+        type="button"
+        className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
+          isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+        } transition-colors`}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.15 }}
+      >
+        View Details
+      </motion.button>
     </motion.div>
   );
 };

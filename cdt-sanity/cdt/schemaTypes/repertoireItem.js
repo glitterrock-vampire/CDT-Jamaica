@@ -285,8 +285,8 @@ export default {
     //   initialValue: false
     // },
     // {
-    //   name: 'status',
-    //   title: 'Status',
+    //   name: '_status_commented_out',
+    //   title: 'Status (commented out)',
     //   type: 'string',
     //   options: {
     //     list: [
@@ -296,7 +296,7 @@ export default {
     //     ]
     //   },
     //   initialValue: 'active',
-    //   description: 'The current status of this piece in the repertoire'
+    //   description: 'The current status of this piece in the repertoire (commented out)'
     // },
     // {
     //   name: 'difficulty',
