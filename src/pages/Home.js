@@ -65,7 +65,7 @@ const Home = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                 >
-                  Season 2025 · Kingston, Jamaica
+                  Season 2026 · Kingston, Jamaica
                 </motion.div>
                 <motion.p
                   className={`text-sm md:text-base max-w-xl leading-relaxed ${mutedText}`}
