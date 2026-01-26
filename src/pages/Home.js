@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
-import { getUpcomingPerformances } from '../lib/performances';
+import { Hero } from '../components/Hero';
+import { getUpcomingPerformances, getFeaturedPerformance } from '../lib/performances';
+import { getSiteSettings, urlFor } from '../lib/sanity';
 
 const Home = () => {
   const { isDarkMode } = useTheme();
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
+  const [featuredPerformance, setFeaturedPerformance] = useState(null);
+  const [siteSettings, setSiteSettings] = useState(null);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -13,26 +17,43 @@ const Home = () => {
   const secondaryBg = isDarkMode ? 'bg-neutral-900' : 'bg-gray-50';
 
   useEffect(() => {
-    const fetchUpcoming = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getUpcomingPerformances();
-        setUpcomingPerformances(data || []);
+        const [upcoming, featured, settings] = await Promise.all([
+          getUpcomingPerformances(),
+          getFeaturedPerformance(),
+          getSiteSettings()
+        ]);
+        setUpcomingPerformances(upcoming || []);
+        setFeaturedPerformance(featured);
+        setSiteSettings(settings);
       } catch (error) {
-        console.error('Error fetching upcoming performances:', error);
+        console.error('Error fetching data:', error);
       }
     };
-    fetchUpcoming();
+    fetchData();
   }, []);
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'} flex justify-center px-4 md:px-8`}>
+    <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+      {/* Hero Section */}
+      <Hero
+        image={{
+          url: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&h=1080&fit=crop",
+          alt: "CDT Dance Performance"
+        }}
+        title="Celebrating"
+        subtitle="dance in Jamaica."
+      />
+
+      {/* Main Content */}
       <motion.div
-        className="w-full max-w-6xl py-10 md:py-14"
+        className="container mx-auto px-4 w-full max-w-6xl py-10 md:py-14"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* HERO */}
+        {/* Featured Performance Section */}
         <header className={`border-b ${borderColor} pb-10 md:pb-14`}>
           <div className="grid gap-10 md:gap-12 md:grid-cols-[2fr,1.4fr] items-stretch">
             {/* Left column */}
@@ -46,18 +67,6 @@ const Home = () => {
                 >
                   Season 2025 · Kingston, Jamaica
                 </motion.div>
-                <motion.h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight uppercase leading-[0.95]"
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  Celebrating
-                  <br />
-                  dance in
-                  <br />
-                  Jamaica.
-                </motion.h1>
                 <motion.p
                   className={`text-sm md:text-base max-w-xl leading-relaxed ${mutedText}`}
                   initial={{ opacity: 0, y: 18 }}
@@ -74,7 +83,7 @@ const Home = () => {
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
                   <a
-                    href="https://www.linktr.ee/cdtjamaica"
+                    href={featuredPerformance?.ticketUrl || "https://www.linktr.ee/cdtjamaica"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
@@ -93,18 +102,19 @@ const Home = () => {
               </div>
 
               <motion.div
-                className="grid gap-4 md:grid-cols-2 text-[11px] mt-4 md:mt-0"
+                className="text-[11px] mt-4 md:mt-0"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <div className={`border-t ${borderColor} pt-2 flex items-center justify-between ${mutedText}`}>
-                  <span className="tracking-[0.12em] uppercase">Next performance</span>
-                  <span className="tracking-[0.12em] uppercase text-xs text-inherit">Oct 14 · 8:00 PM</span>
-                </div>
-                <div className={`border-t ${borderColor} pt-2 flex items-center justify-between ${mutedText}`}>
-                  <span className="tracking-[0.12em] uppercase">Venue</span>
-                  <span className="tracking-[0.12em] uppercase text-xs text-inherit">Little Theatre</span>
+                  <span className="tracking-[0.12em] uppercase">Featured performance</span>
+                  <span className="tracking-[0.12em] uppercase text-xs text-inherit">
+                    {featuredPerformance 
+                      ? `${new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · ${featuredPerformance.time}`
+                      : 'TBA'
+                    }
+                  </span>
                 </div>
               </motion.div>
             </div>
@@ -116,20 +126,31 @@ const Home = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
             >
-              <div className={`px-3 py-2 text-[10px] tracking-[0.12em] uppercase flex items-center justify-between border-b ${borderColor}`}>
-                <span>CDT Jamaica</span>
-                <span>Prog 01</span>
+              <div className={`px-3 py-2 text-[10px] tracking-[0.12em] uppercase flex items-center justify-between border-t ${borderColor}`}>
+                <span>{featuredPerformance?.title || 'Featured Performance'}</span>
+                <span>{featuredPerformance?.venue || 'Venue'}</span>
               </div>
               <div className="relative overflow-hidden">
-                <img
-                  src="https://storage.googleapis.com/banani-generated-images/generated-images/c9b454d4-22d2-4eb5-a7b7-87d8e868760e.jpg"
-                  alt="Season poster"
-                  className="w-full h-full object-cover grayscale contrast-110"
-                />
+                {featuredPerformance?.image ? (
+                  <img
+                    src={featuredPerformance.image.url || urlFor(featuredPerformance.image).url()}
+                    alt={featuredPerformance.image.alt || 'Featured performance'}
+                    className="w-full h-full object-cover grayscale contrast-110"
+                  />
+                ) : (
+                  <div className={`w-full h-full flex items-center justify-center ${mutedText} ${secondaryBg}`}>
+                    <span className="text-sm">No featured performance image</span>
+                  </div>
+                )}
               </div>
               <div className={`px-3 py-2 text-[10px] tracking-[0.12em] uppercase flex items-center justify-between border-t ${borderColor}`}>
-                <span>2025 / 2026</span>
-                <span>Kingston · Montego Bay</span>
+                <span>
+                  {featuredPerformance 
+                    ? new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                    : 'Date'
+                  }
+                </span>
+                <span>{featuredPerformance?.venue || 'Venue'}</span>
               </div>
             </motion.div>
           </div>

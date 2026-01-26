@@ -66,6 +66,32 @@ export const getUpcomingPerformances = async () => {
   }
 };
 
+export const getFeaturedPerformance = async () => {
+  const query = `
+    *[_type == "performance" && isFeatured == true] | order(date asc) [0] {
+      _id,
+      title,
+      date,
+      time,
+      venue,
+      location,
+      isFeatured,
+      image {
+        url,
+        alt
+      }
+    }
+  `;
+  
+  try {
+    const performance = await client.fetch(query);
+    return performance;
+  } catch (error) {
+    console.error('Error fetching featured performance:', error);
+    return null;
+  }
+};
+
 export const getPerformanceBySlug = async (slug) => {
   const query = `
     *[_type == "performance" && slug.current == $slug][0] {

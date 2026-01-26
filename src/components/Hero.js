@@ -4,6 +4,24 @@ import { urlFor } from '../lib/sanity';
 export const Hero = ({ image, title, subtitle, children }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
   
+  // Function to get image URL - handles both Sanity assets and regular URLs
+  const getImageUrl = (img, width = 1200) => {
+    if (!img) return '';
+    
+    // If it's a regular URL (has url property), return it directly
+    if (img.url && typeof img.url === 'string') {
+      return img.url;
+    }
+    
+    // If it's a Sanity image asset, use urlFor
+    try {
+      return urlFor(img).width(width).url();
+    } catch (error) {
+      console.warn('Unable to resolve image URL, using fallback:', error);
+      return img.url || '';
+    }
+  };
+  
   return (
     <div className="relative w-full h-auto min-h-[60vh] overflow-hidden">
       {image && (
@@ -16,11 +34,11 @@ export const Hero = ({ image, title, subtitle, children }) => {
               </div>
             )}
             <img
-              src={urlFor(image).width(1200).url()}
+              src={getImageUrl(image, 1200)}
               srcSet={`
-                ${urlFor(image).width(800).url()} 800w,
-                ${urlFor(image).width(1200).url()} 1200w,
-                ${urlFor(image).width(1920).url()} 1920w
+                ${getImageUrl(image, 800)} 800w,
+                ${getImageUrl(image, 1200)} 1200w,
+                ${getImageUrl(image, 1920)} 1920w
               `}
               sizes="100vw"
               alt={image.alt || 'Hero Image'}

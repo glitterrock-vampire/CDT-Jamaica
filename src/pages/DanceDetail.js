@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { PortableText } from '@portabletext/react';
 import SlideGallery from '../components/SlideGallery';
 import { getRepertoireItemById } from '../lib/sanity';
-import LoadingSpinner from '../components/LoadingSpinner';
+// import LoadingSpinner from '../components/LoadingSpinner';
 
 const DanceDetail = () => {
   const { id } = useParams();
@@ -42,8 +42,12 @@ const DanceDetail = () => {
     fetchDance();
   }, [id]);
 
+  // Avoid showing the full-screen loading spinner; keep a minimal loading state instead
+  // if (loading) {
+  //   return <LoadingSpinner text="Loading dance details..." />;
+  // }
   if (loading) {
-    return <LoadingSpinner text="Loading dance details..." />;
+    return null;
   }
 
   if (error || !dance) {

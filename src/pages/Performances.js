@@ -214,7 +214,7 @@ export default function PerformancesPage() {
                 return (
                   <motion.div
                     key={performance._id}
-                    className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg}`}
+                    className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg}`}
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.04 }}
@@ -228,40 +228,22 @@ export default function PerformancesPage() {
                       <span>{performance.category}</span>
                       <span>{month} {day}</span>
                     </motion.div>
+                    <div className={`h-40 border ${borderColor} overflow-hidden`}>
+                      <img
+                        src={getImageUrl(performance.image)}
+                        alt={performance.image?.alt || performance.title}
+                        className="w-full h-full object-cover grayscale"
+                      />
+                    </div>
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.1 + index * 0.04 }}
                     >
-                      <div className="text-sm font-semibold uppercase mb-1">{performance.title}</div>
-                      <div className={`text-[11px] ${mutedText}`}>{performance.venue} · {performance.location}</div>
-                      <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
-                        <img
-                          src={getImageUrl(performance.image)}
-                          alt={performance.image?.alt || performance.title}
-                          className="w-full h-full object-cover grayscale"
-                        />
-                      </div>
+                      <div className="text-lg font-bold uppercase mb-1">{performance.title}</div>
+                      <div className={`text-sm font-semibold ${mutedText}`}>{performance.company}</div>
+                      <div className={`text-sm font-semibold ${mutedText}`}>{performance.time}</div>
                     </motion.div>
-                    <motion.p
-                      className={`text-xs leading-snug ${mutedText}`}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.15 + index * 0.04 }}
-                    >
-                      {performance.description}
-                    </motion.p>
-                    <motion.button
-                      type="button"
-                      className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
-                        isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                      } transition-colors`}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.2 + index * 0.04 }}
-                    >
-                      Get Tickets
-                    </motion.button>
                   </motion.div>
                 );
               })}

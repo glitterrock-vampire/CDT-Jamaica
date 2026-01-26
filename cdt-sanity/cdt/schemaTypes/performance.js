@@ -10,6 +10,21 @@ export default {
       validation: Rule => Rule.required()
     },
     {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+        slugify: input => input
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[^a-z0-9-]+/g, '')
+          .replace(/-+/g, '-')
+      },
+      validation: Rule => Rule.required()
+    },
+    {
       name: 'company',
       title: 'Company',
       type: 'string',
@@ -19,12 +34,33 @@ export default {
       name: 'date',
       title: 'Date',
       type: 'date',
-      validation: Rule => Rule.required()
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+        calendarTodayLabel: 'Today'
+      },
+      validation: Rule => Rule.required().min(new Date())
     },
     {
       name: 'time',
       title: 'Time',
       type: 'string',
+      options: {
+        list: [
+          { title: '10:00 AM', value: '10:00 AM' },
+          { title: '11:00 AM', value: '11:00 AM' },
+          { title: '12:00 PM', value: '12:00 PM' },
+          { title: '1:00 PM', value: '1:00 PM' },
+          { title: '2:00 PM', value: '2:00 PM' },
+          { title: '3:00 PM', value: '3:00 PM' },
+          { title: '4:00 PM', value: '4:00 PM' },
+          { title: '5:00 PM', value: '5:00 PM' },
+          { title: '6:00 PM', value: '6:00 PM' },
+          { title: '7:00 PM', value: '7:00 PM' },
+          { title: '8:00 PM', value: '8:00 PM' },
+          { title: '9:00 PM', value: '9:00 PM' },
+          { title: '10:00 PM', value: '10:00 PM' }
+        ]
+      },
       validation: Rule => Rule.required()
     },
     {
@@ -87,6 +123,13 @@ export default {
       type: 'boolean',
       initialValue: true,
       description: 'Whether this performance should be shown in upcoming performances'
+    },
+    {
+      name: 'isFeatured',
+      title: 'Featured Performance',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Show this performance in the homepage hero section as the featured performance'
     }
   ],
   orderings: [

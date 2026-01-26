@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
-import LoadingSpinner from '../components/LoadingSpinner';
+// import LoadingSpinner from '../components/LoadingSpinner';
 import { getSiteSettings } from '../lib/siteSettings';
 import NewsletterSubscription from '../components/NewsletterSubscription';
 
@@ -35,9 +35,10 @@ const Contact = () => {
     fetchSettings();
   }, []);
 
-  if (isLoading) {
-    return <LoadingSpinner text="Loading contact information..." />;
-  }
+  // Render page without global loading spinner overlay
+  // if (isLoading) {
+  //   return <LoadingSpinner text="Loading contact information..." />;
+  // }
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">

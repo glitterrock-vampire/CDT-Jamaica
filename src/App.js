@@ -7,6 +7,7 @@ import Repertoire from './pages/Repertoire';
 import About from './pages/About';
 import DanceDetail from './pages/DanceDetail';
 import Contact from './pages/Contact';
+import Performances from './pages/Performances';
 import { getSiteSettings } from './lib/siteSettings';
 
 function App() {
@@ -54,6 +55,13 @@ function App() {
           <Layout>
             <PageScrollReveal>
               <About />
+            </PageScrollReveal>
+          </Layout>
+        } />
+        <Route path="/performances" element={
+          <Layout>
+            <PageScrollReveal>
+              <Performances />
             </PageScrollReveal>
           </Layout>
         } />

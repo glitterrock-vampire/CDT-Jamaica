@@ -18,7 +18,7 @@ const performances = [
     _type: 'performance',
     title: 'Jamaica Dance Umbrella',
     company: 'CDT Senior Company',
-    date: '2026-03-01',
+    date: '2026-02-28',
     time: '6:00 PM',
     venue: 'Phillip Sherlock Center',
     location: 'Kingston, Jamaica',
@@ -35,24 +35,25 @@ const performances = [
     _type: 'performance',
     title: 'Caribbean Rhythms International',
     company: 'CDT Senior Company',
-    date: '2026-03-14',
+    date: '2026-03-13',
     time: '8:00 PM',
     venue: 'Miramar Cultural Center',
     location: 'Florida, USA',
     description: 'An electrifying showcase of Caribbean dance traditions bringing the vibrant culture of Jamaica to international audiences.',
     category: 'International',
     isUpcoming: true,
+    isFeatured: true,
     image: {
       url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop',
       alt: 'Caribbean Rhythms International Performance'
     },
-    ticketUrl: null
+    ticketUrl: 'https://www.miramarculturalcenter.org/Events-directory/Streams'
   },
   {
     _type: 'performance',
     title: 'Spring Season Premiere',
     company: 'CDT All Companies',
-    date: '2026-04-17',
+    date: '2026-04-15',
     time: '7:30 PM',
     venue: 'Phillip Sherlock Center',
     location: 'Kingston, Jamaica',
@@ -69,7 +70,7 @@ const performances = [
     _type: 'performance',
     title: 'UK Dance Exchange',
     company: 'CDT Senior Company',
-    date: '2026-05-06',
+    date: '2026-05-04',
     time: '7:00 PM',
     venue: 'Lester',
     location: 'Lester, UK',
@@ -86,7 +87,7 @@ const performances = [
     _type: 'performance',
     title: 'Annual Gala Performance',
     company: 'CDT Senior & Junior Companies',
-    date: '2026-06-13',
+    date: '2026-06-11',
     time: '7:30 PM',
     venue: 'Courtleigh Auditorium',
     location: 'Kingston, Jamaica',
@@ -109,24 +110,46 @@ function generateId(title) {
 async function importPerformances() {
   console.log('Starting performance import...');
   
-  for (const perf of performances) {
-    const docId = generateId(perf.title);
-    const doc = {
-      ...perf,
-      _id: docId,
-    };
+  try {
+    const transaction = client.transaction();
+    
+    for (const perf of performances) {
+      // Create a slug from the title
+      const slug = perf.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
 
-    try {
-      // Try to create or replace the document
-      const result = await client.createOrReplace(doc);
-      console.log(`✅ Imported: ${result.title} (ID: ${result._id})`);
-    } catch (error) {
-      console.error(`❌ Failed to import ${perf.title}:`, error.message);
+      // Create the document with deterministic _id
+      const doc = {
+        ...perf,
+        _id: generateId(perf.title),
+        slug: {
+          _type: 'slug',
+          current: slug
+        }
+      };
+
+      // Use createOrReplace to merge/update existing documents
+      transaction.createOrReplace(doc);
     }
+
+    const results = await transaction.commit();
+    console.log('Import complete.');
+    console.log(`Processed ${results.results.length} performances.`);
+    
+    results.results.forEach((result, index) => {
+      if (result.operation === 'create') {
+        console.log(`✅ Created: ${performances[index].title} (ID: ${result.id})`);
+      } else if (result.operation === 'update') {
+        console.log(`🔄 Updated: ${performances[index].title} (ID: ${result.id})`);
+      }
+    });
+    
+  } catch (error) {
+    console.error('Error importing performances:', error);
+    process.exit(1);
   }
-  
-  console.log('Import complete.');
-  process.exit(0);
 }
 
 importPerformances().catch((error) => {

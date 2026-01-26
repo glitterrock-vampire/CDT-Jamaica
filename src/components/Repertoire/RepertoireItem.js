@@ -26,7 +26,7 @@ const RepertoireItem = ({ item }) => {
 
   return (
     <motion.div 
-      className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
+      className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
       onClick={handleClick}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
@@ -40,39 +40,29 @@ const RepertoireItem = ({ item }) => {
         <span>Repertoire</span>
         <span>{year}</span>
       </motion.div>
+      <div className={`h-40 border ${borderColor} overflow-hidden`}>
+        {imageUrl ? (
+          <img
+            src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
+            alt={imageAlt}
+            className="w-full h-full object-cover grayscale"
+            loading="lazy"
+          />
+        ) : (
+          <div className={`w-full h-full flex items-center justify-center ${mutedText} text-xs`}>
+            No Image
+          </div>
+        )}
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
-        <div className="text-sm font-semibold uppercase mb-1">{title}</div>
-        <div className={`text-[11px] ${mutedText}`}>{choreographer}</div>
-        <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
-          {imageUrl ? (
-            <img
-              src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
-              alt={imageAlt}
-              className="w-full h-full object-cover grayscale"
-              loading="lazy"
-            />
-          ) : (
-            <div className={`w-full h-full flex items-center justify-center ${mutedText} text-xs`}>
-              No Image
-            </div>
-          )}
-        </div>
+        <div className="text-lg font-bold uppercase mb-1">{title}</div>
+        <div className={`text-sm font-semibold ${mutedText}`}>{choreographer}</div>
+        <div className={`text-sm font-semibold ${mutedText}`}>{year}</div>
       </motion.div>
-      <motion.button
-        type="button"
-        className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
-          isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-        } transition-colors`}
-        initial={{ opacity: 0, y: 6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.15 }}
-      >
-        View Details
-      </motion.button>
     </motion.div>
   );
 };

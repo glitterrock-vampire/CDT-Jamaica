@@ -96,13 +96,13 @@ const Navbar = () => {
                   {/* Light mode logo (hidden in dark mode) */}
                   <img
                     src={urlFor(siteSettings.lightLogo).url()}
-                    alt="CDT Jamaica Logo"
+                    // alt="CDT Jamaica Logo"
                     className={`h-10 w-auto ${isDarkMode ? 'hidden' : 'block'}`}
                   />
                   {/* Dark mode logo (hidden in light mode) */}
                   <img
                     src={urlFor(siteSettings.darkLogo).url()}
-                    alt="CDT Jamaica Logo"
+                    // alt="CDT Jamaica Logo"
                     className={`h-10 w-auto ${!isDarkMode ? 'hidden' : 'block'}`}
                   />
                 </>
@@ -117,6 +117,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
             <NavLink to="/">Home</NavLink>
             <NavLink to="/repertoire">Repertoire</NavLink>
+            <NavLink to="/performances">Performances</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>
             <button
@@ -176,6 +177,7 @@ const Navbar = () => {
           <ul className="menu-items">
             <li className="menu-item"><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
             <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
+            <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li>
             <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link></li>
             <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
           </ul>

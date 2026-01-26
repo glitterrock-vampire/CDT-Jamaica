@@ -13,7 +13,7 @@ const clientConfig = {
   projectId,
   dataset,
   apiVersion: '2023-05-03',
-  useCdn: process.env.NODE_ENV === 'production',
+  useCdn: false, // Disable CDN to get fresh data
   // Note: In Create React App, all environment variables are included in the client bundle
   // if they start with REACT_APP_. Be careful not to expose sensitive tokens.
   token: process.env.REACT_APP_SANITY_TOKEN,

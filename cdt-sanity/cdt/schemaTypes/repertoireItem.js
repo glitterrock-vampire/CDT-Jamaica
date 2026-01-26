@@ -277,66 +277,6 @@ export default {
       type: 'string',
       description: 'The YouTube video ID (e.g., 4QnwZ0OlmUk)'
     },
-    // {
-    //   name: 'isFeatured',
-    //   title: 'Featured',
-    //   type: 'boolean',
-    //   description: 'Whether this piece should be featured prominently',
-    //   initialValue: false
-    // },
-    // {
-    //   name: '_status_commented_out',
-    //   title: 'Status (commented out)',
-    //   type: 'string',
-    //   options: {
-    //     list: [
-    //       { title: 'Active', value: 'active' },
-    //       { title: 'Archived', value: 'archived' },
-    //       { title: 'In Development', value: 'in-development' }
-    //     ]
-    //   },
-    //   initialValue: 'active',
-    //   description: 'The current status of this piece in the repertoire (commented out)'
-    // },
-    // {
-    //   name: 'difficulty',
-    //   title: 'Difficulty Level',
-    //   type: 'string',
-    //   options: {
-    //     list: [
-    //       { title: 'Beginner', value: 'beginner' },
-    //       { title: 'Intermediate', value: 'intermediate' },
-    //       { title: 'Advanced', value: 'advanced' },
-    //       { title: 'Professional', value: 'professional' }
-    //     ]
-    //   },
-    //   description: 'Technical difficulty level of the piece'
-    // },
-    // {
-    //   name: 'performanceNotes',
-    //   title: 'Performance Notes',
-    //   type: 'array',
-    //   of: [
-    //     {
-    //       type: 'block',
-    //       styles: [
-    //         { title: 'Normal', value: 'normal' },
-    //         { title: 'H1', value: 'h1' },
-    //         { title: 'H2', value: 'h2' },
-    //         { title: 'H3', value: 'h3' },
-    //         { title: 'Quote', value: 'blockquote' }
-    //       ]
-    //     }
-    //   ],
-    //   description: 'Detailed performance notes and cast information'
-    // },
-    // {
-    //   name: 'technicalRequirements',
-    //   title: 'Technical Requirements',
-    //   type: 'array',
-    //   of: [{ type: 'string' }],
-    //   description: 'List of technical requirements for this piece'
-    // },
     {
       name: 'seo',
       title: 'SEO',

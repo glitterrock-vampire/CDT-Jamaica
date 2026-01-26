@@ -20,20 +20,30 @@ const config = {
 // Create a Sanity client
 export const client = createClient(config);
 
-// Verify the client configuration
-console.log('Sanity client configured with:', {
-  projectId: config.projectId ? '✅ Set' : '❌ Missing',
-  dataset: config.dataset,
-  apiVersion: config.apiVersion,
-  useCdn: config.useCdn,
-  hasToken: false, // We're using public read access
-  endpoint: `https://${config.projectId}.api.sanity.io/v${config.apiVersion}/data/query/${config.dataset}`,
-});
-
 // Helper function to generate image URLs
 const builder = imageUrlBuilder(client);
 
 export const urlFor = (source) => builder.image(source);
+
+// Fetch site settings
+export const getSiteSettings = async () => {
+  const query = `*[_type == "siteSettings"][0]{
+    title,
+    description,
+    lightLogo,
+    darkLogo,
+    heroImage,
+    seasonPoster
+  }`;
+  
+  try {
+    const settings = await client.fetch(query);
+    return settings;
+  } catch (error) {
+    console.error('Error fetching site settings:', error);
+    return null;
+  }
+};
 
 // Fetch all repertoire items
 export const getRepertoireItems = async () => {
@@ -44,7 +54,6 @@ export const getRepertoireItems = async () => {
       _id,
       title,
       slug,
-     // composer,
       runTime,
       year,
       youtubeId,
@@ -123,26 +132,17 @@ export const getRepertoireItemById = async (id) => {
       title,
       subtitle,
       slug,
-      // composer,
       runTime,
       year,
       youtubeId,
-      // youtubeUrl,
       description,
-      // instruments,
-      // style,
       choreographer,
       companyPremiere,
       worldPremiere,
       music,
       costumeDesign,
       lighting,
-      // genre,
-      // stylePeriod,
       premieredBy,
-      // dedicatedTo,
-      // movements,
-      // durations,
       mediaReviews[] {
         _key,
         _type,
@@ -201,9 +201,7 @@ export const getRepertoireItemById = async (id) => {
         alt,
         crop,
         hotspot
-      },
-      // notableRecordings,
-      // status
+      }
     }`;
     
     console.log(`Fetching repertoire item with ID: ${id} (also checking ${docId})`);

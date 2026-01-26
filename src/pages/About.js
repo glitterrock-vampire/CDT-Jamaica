@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
-import LoadingSpinner from '../components/LoadingSpinner';
+// import LoadingSpinner from '../components/LoadingSpinner';
 import { getSiteSettings } from '../lib/siteSettings';
 
 const fadeInUp = {
@@ -25,7 +25,6 @@ const staggerContainer = {
 };
 
 const About = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [siteSettings, setSiteSettings] = useState(null);
 
   useEffect(() => {
@@ -43,17 +42,10 @@ const About = () => {
     fetchSettings();
   }, []);
 
-  useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return <LoadingSpinner text="Loading about us..." />;
-  }
+  // Removed artificial loading spinner so page renders immediately
+  // if (isLoading) {
+  //   return <LoadingSpinner text="Loading about us..." />;
+  // }
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300">
