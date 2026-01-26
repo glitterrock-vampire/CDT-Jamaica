@@ -3,9 +3,11 @@ import Hero from '../components/Hero';
 import RepertoireItem from '../components/Repertoire/RepertoireItem';
 import RepertoireControls from '../components/Repertoire/RepertoireControls';
 import { getRepertoireItems, getSiteSettings } from '../lib/siteSettings';
+import { useTheme } from '../context/ThemeContext';
 // import LoadingSpinner from '../components/LoadingSpinner';
 
 const Repertoire = () => {
+  const { isDarkMode } = useTheme();
   const [repertoire, setRepertoire] = useState([]);
   const [filteredRepertoire, setFilteredRepertoire] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -109,7 +111,7 @@ const Repertoire = () => {
         />
       )}
 
-      <div className="container mx-auto px-4 py-8">
+      <div className={`container mx-auto px-4 py-8 ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
         {/* Search and Sort Controls */}
         <RepertoireControls
           searchTerm={searchTerm}
@@ -138,7 +140,7 @@ const Repertoire = () => {
         )}
 
         {filteredRepertoire.length === 0 && !loading && !error && (
-          <div className="text-center py-12">
+          <div className={`text-center py-12 ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
             <div className="text-gray-400 mb-4">
               <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12 7-12 7z" />

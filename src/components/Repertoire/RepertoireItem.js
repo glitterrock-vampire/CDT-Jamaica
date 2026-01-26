@@ -45,7 +45,7 @@ const RepertoireItem = ({ item }) => {
           <img
             src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
             alt={imageAlt}
-            className="w-full h-full object-cover grayscale"
+            className="w-full h-full object-cover"
             loading="lazy"
           />
         ) : (

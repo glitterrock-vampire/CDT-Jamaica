@@ -232,7 +232,7 @@ export default function PerformancesPage() {
                       <img
                         src={getImageUrl(performance.image)}
                         alt={performance.image?.alt || performance.title}
-                        className="w-full h-full object-cover grayscale"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     <motion.div
