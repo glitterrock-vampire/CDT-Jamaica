@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import { getUpcomingPerformances, getFeaturedPerformance } from '../lib/performances';
@@ -233,15 +234,18 @@ const Home = () => {
                 <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>On stage</div>
                 <div className="text-xl md:text-2xl uppercase">Upcoming Performances</div>
               </div>
-              <motion.button
-                type="button"
-                className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
+              <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.36 }}
               >
-                Full calendar →
-              </motion.button>
+                <Link
+                  to="/performances"
+                  className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
+                >
+                  Full calendar →
+                </Link>
+              </motion.div>
             </motion.div>
 
             <div className="grid gap-5 md:grid-cols-3">
