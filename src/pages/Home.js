@@ -30,7 +30,7 @@ const Home = () => {
           {/* Image */}
           <div className={`transition-all duration-1000 ease-in-out ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}>
             <img
-              src="/images/CDT Streams 2025- Main Flyer copy.jpg"
+              src="/images/Miramar.jpg"
               alt="CDT Jamaica 2025 Main Flyer"
               className="w-full h-auto"
               style={{ maxHeight: '80vh', objectFit: 'contain' }}
