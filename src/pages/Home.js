@@ -73,7 +73,7 @@ const Home = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  Contemporary Dance Theatre Jamaica presents a season of new and classic works in conversation with
+                  Company Dance Theatre Jamaica presents a season of new and classic works in conversation with
                   Caribbean sound, space, and history.
                 </motion.p>
                 <motion.div
