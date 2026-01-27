@@ -133,11 +133,13 @@ const Home = () => {
               </div>
               <div className="relative overflow-hidden">
                 {featuredPerformance?.image ? (
-                  <img
-                    src={featuredPerformance.image?.asset?.url || featuredPerformance.image?.url}
-                    alt={featuredPerformance.image.alt || 'Featured performance'}
-                    className="w-full h-full object-cover grayscale contrast-110"
-                  />
+                  <Link to={`/performance/${featuredPerformance.slug?.current || featuredPerformance._id}`}>
+                    <img
+                      src={featuredPerformance.image?.asset?.url || featuredPerformance.image?.url}
+                      alt={featuredPerformance.image.alt || 'Featured performance'}
+                      className="w-full h-full object-cover grayscale contrast-110 hover:grayscale-0 transition-all duration-300 cursor-pointer"
+                    />
+                  </Link>
                 ) : (
                   <div className={`w-full h-full flex items-center justify-center ${mutedText} ${secondaryBg}`}>
                     <span className="text-sm">No featured performance image</span>
@@ -254,57 +256,62 @@ const Home = () => {
                 const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
                 const day = dateObj.getDate();
                 return (
-                  <motion.div
+                  <Link
                     key={perf._id}
-                    className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg}`}
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.38 + index * 0.04 }}
+                    to={`/performance/${perf.slug?.current || perf._id}`}
+                    className="block group"
                   >
                     <motion.div
-                      className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                      initial={{ opacity: 0, y: 8 }}
+                      className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                      initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.4 + index * 0.04 }}
+                      transition={{ duration: 0.5, delay: 0.38 + index * 0.04 }}
                     >
-                      <span>{perf.category}</span>
-                      <span>{month} {day}</span>
+                      <motion.div
+                        className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.4 + index * 0.04 }}
+                      >
+                        <span>{perf.category}</span>
+                        <span>{month} {day}</span>
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
+                      >
+                        <div className="text-sm font-semibold uppercase mb-1">{perf.title}</div>
+                        <div className={`text-[11px] ${mutedText}`}>{perf.venue} · {perf.location}</div>
+                        <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
+                          <img
+                            src={perf.image?.asset?.url || perf.image?.url}
+                            alt={perf.image?.alt || perf.title}
+                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                          />
+                        </div>
+                      </motion.div>
+                      <motion.p
+                        className={`text-xs leading-snug ${mutedText}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
+                      >
+                        {perf.description}
+                      </motion.p>
+                      <motion.button
+                        type="button"
+                        className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
+                          isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                        } transition-colors`}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
+                      >
+                        Get Tickets
+                      </motion.button>
                     </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
-                    >
-                      <div className="text-sm font-semibold uppercase mb-1">{perf.title}</div>
-                      <div className={`text-[11px] ${mutedText}`}>{perf.venue} · {perf.location}</div>
-                      <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
-                        <img
-                          src={perf.image?.asset?.url || perf.image?.url}
-                          alt={perf.image?.alt || perf.title}
-                          className="w-full h-full object-cover grayscale"
-                        />
-                      </div>
-                    </motion.div>
-                    <motion.p
-                      className={`text-xs leading-snug ${mutedText}`}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
-                    >
-                      {perf.description}
-                    </motion.p>
-                    <motion.button
-                      type="button"
-                      className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
-                        isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                      } transition-colors`}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
-                    >
-                      Get Tickets
-                    </motion.button>
-                  </motion.div>
+                  </Link>
                 );
               })}
             </div>

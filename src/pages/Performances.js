@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import { getPerformances } from '../lib/performances';
@@ -199,39 +200,44 @@ export default function PerformancesPage() {
                 const day = dateObj.getDate();
                 
                 return (
-                  <motion.div
+                  <Link
                     key={performance._id}
-                    className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg}`}
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.04 }}
+                    to={`/performance/${performance.slug?.current || performance._id}`}
+                    className="block group"
                   >
                     <motion.div
-                      className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                      initial={{ opacity: 0, y: 8 }}
+                      className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                      initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.05 + index * 0.04 }}
+                      transition={{ duration: 0.5, delay: index * 0.04 }}
                     >
-                      <span>{performance.category}</span>
-                      <span>{month} {day}</span>
+                      <motion.div
+                        className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.05 + index * 0.04 }}
+                      >
+                        <span>{performance.category}</span>
+                        <span>{month} {day}</span>
+                      </motion.div>
+                      <div className={`h-40 border ${borderColor} overflow-hidden`}>
+                        <img
+                          src={getImageUrl(performance.image)}
+                          alt={performance.image?.alt || performance.title}
+                          className="w-full h-full object-cover group-hover:grayscale-0 transition-all duration-300"
+                        />
+                      </div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 + index * 0.04 }}
+                      >
+                        <div className="text-lg font-bold uppercase mb-1">{performance.title}</div>
+                        <div className={`text-sm font-semibold ${mutedText}`}>{performance.company}</div>
+                        <div className={`text-sm font-semibold ${mutedText}`}>{performance.time}</div>
+                      </motion.div>
                     </motion.div>
-                    <div className={`h-40 border ${borderColor} overflow-hidden`}>
-                      <img
-                        src={getImageUrl(performance.image)}
-                        alt={performance.image?.alt || performance.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.1 + index * 0.04 }}
-                    >
-                      <div className="text-lg font-bold uppercase mb-1">{performance.title}</div>
-                      <div className={`text-sm font-semibold ${mutedText}`}>{performance.company}</div>
-                      <div className={`text-sm font-semibold ${mutedText}`}>{performance.time}</div>
-                    </motion.div>
-                  </motion.div>
+                  </Link>
                 );
               })}
             </motion.div>

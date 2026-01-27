@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Repertoire from './pages/Repertoire';
 import About from './pages/About';
 import DanceDetail from './pages/DanceDetail';
+import PerformanceDetail from './pages/PerformanceDetail';
 import Contact from './pages/Contact';
 import Performances from './pages/Performances';
 import { getSiteSettings } from './lib/siteSettings';
@@ -62,6 +63,13 @@ function App() {
           <Layout>
             <PageScrollReveal>
               <Performances />
+            </PageScrollReveal>
+          </Layout>
+        } />
+        <Route path="/performance/:slug" element={
+          <Layout>
+            <PageScrollReveal>
+              <PerformanceDetail />
             </PageScrollReveal>
           </Layout>
         } />
