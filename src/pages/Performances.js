@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import { getPerformances } from '../lib/performances';
+import { getSiteSettings } from '../lib/siteSettings';
 import { builder } from '../lib/sanityClient';
 
 const categories = ["All", "Main Stage", "International", "Showcase"];
@@ -12,6 +13,7 @@ export default function PerformancesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [performances, setPerformances] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [siteSettings, setSiteSettings] = useState(null);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -29,11 +31,7 @@ export default function PerformancesPage() {
       location: 'Kingston, Jamaica',
       description: 'A celebration of Jamaican dance featuring contemporary and traditional works from across the island.',
       category: 'Main Stage',
-      isUpcoming: true,
-      image: {
-        url: 'https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800&h=600&fit=crop',
-        alt: 'Jamaica Dance Umbrella Performance'
-      }
+      isUpcoming: true
     },
     {
       _id: 'temp-2',
@@ -45,11 +43,7 @@ export default function PerformancesPage() {
       location: 'Florida, USA',
       description: 'An electrifying showcase of Caribbean dance traditions bringing the vibrant culture of Jamaica to international audiences.',
       category: 'International',
-      isUpcoming: true,
-      image: {
-        url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop',
-        alt: 'Caribbean Rhythms International Performance'
-      }
+      isUpcoming: true
     },
     {
       _id: 'temp-3',
@@ -61,11 +55,7 @@ export default function PerformancesPage() {
       location: 'Kingston, Jamaica',
       description: 'Three-night celebration featuring new choreographic works and beloved repertoire pieces from all CDT companies.',
       category: 'Showcase',
-      isUpcoming: true,
-      image: {
-        url: 'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=800&h=600&fit=crop',
-        alt: 'Spring Season Premiere Performance'
-      }
+      isUpcoming: true
     },
     {
       _id: 'temp-4',
@@ -77,11 +67,7 @@ export default function PerformancesPage() {
       location: 'Lester, UK',
       description: 'Cultural exchange performance bringing Jamaican dance heritage to UK audiences in collaboration with local dance companies.',
       category: 'International',
-      isUpcoming: true,
-      image: {
-        url: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?w=800&h=600&fit=crop',
-        alt: 'UK Dance Exchange Performance'
-      }
+      isUpcoming: true
     },
     {
       _id: 'temp-5',
@@ -93,26 +79,28 @@ export default function PerformancesPage() {
       location: 'Kingston, Jamaica',
       description: 'Our annual gala celebration featuring the best works of the season and special guest artists.',
       category: 'Main Stage',
-      isUpcoming: true,
-      image: {
-        url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop',
-        alt: 'Annual Gala Performance'
-      }
+      isUpcoming: true
     }
   ];
 
   useEffect(() => {
-    const fetchPerformances = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getPerformances();
-        if (data && data.length > 0) {
-          setPerformances(data);
+        const [performancesData, settings] = await Promise.all([
+          getPerformances(),
+          getSiteSettings()
+        ]);
+        
+        if (performancesData && performancesData.length > 0) {
+          setPerformances(performancesData);
         } else {
           // Use fallback data if no Sanity data
           setPerformances(fallbackPerformances);
         }
+        
+        setSiteSettings(settings);
       } catch (error) {
-        console.error('Error loading performances:', error);
+        console.error('Error loading data:', error);
         // Use fallback data on error
         setPerformances(fallbackPerformances);
       } finally {
@@ -120,7 +108,7 @@ export default function PerformancesPage() {
       }
     };
 
-    fetchPerformances();
+    fetchData();
   }, []);
 
   const filteredPerformances = selectedCategory === "All" 
@@ -134,20 +122,19 @@ export default function PerformancesPage() {
     if (image?.url) {
       return image.url;
     }
-    return "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop";
+    return null;
   };
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section */}
-      <Hero
-        image={{
-          url: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&h=1080&fit=crop",
-          alt: "CDT Dance Performance"
-        }}
-        title="Performances"
-        subtitle=""
-      />
+      {siteSettings?.heroImage && (
+        <Hero
+          image={siteSettings.heroImage}
+          title="Performances"
+          subtitle=""
+        />
+      )}
 
       {/* Subtitle Section */}
       <div className={`py-12 ${isDarkMode ? 'bg-black' : 'bg-white'}`}>

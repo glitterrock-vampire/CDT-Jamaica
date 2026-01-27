@@ -39,8 +39,8 @@ const Home = () => {
       {/* Hero Section */}
       <Hero
         image={{
-          url: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&h=1080&fit=crop",
-          alt: "CDT Dance Performance"
+          url: "/images/CDT Streams Photo.jpg",
+          alt: "CDT Streams Performance"
         }}
         title="Celebrating"
         subtitle="dance in Jamaica."
@@ -133,7 +133,7 @@ const Home = () => {
               <div className="relative overflow-hidden">
                 {featuredPerformance?.image ? (
                   <img
-                    src={featuredPerformance.image.url || urlFor(featuredPerformance.image).url()}
+                    src={featuredPerformance.image?.asset?.url || featuredPerformance.image?.url}
                     alt={featuredPerformance.image.alt || 'Featured performance'}
                     className="w-full h-full object-cover grayscale contrast-110"
                   />
@@ -275,7 +275,7 @@ const Home = () => {
                       <div className={`text-[11px] ${mutedText}`}>{perf.venue} · {perf.location}</div>
                       <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
                         <img
-                          src={perf.image?.url}
+                          src={perf.image?.asset?.url || perf.image?.url}
                           alt={perf.image?.alt || perf.title}
                           className="w-full h-full object-cover grayscale"
                         />
