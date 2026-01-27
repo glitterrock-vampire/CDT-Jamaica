@@ -20,70 +20,6 @@ export default function PerformancesPage() {
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
-  // Temporary fallback data while Sanity is being set up
-  const fallbackPerformances = [
-    {
-      _id: 'temp-1',
-      title: 'Jamaica Dance Umbrella',
-      company: 'CDT Senior Company',
-      date: '2026-03-01',
-      time: '6:00 PM',
-      venue: 'Phillip Sherlock Center',
-      location: 'Kingston, Jamaica',
-      description: 'A celebration of Jamaican dance featuring contemporary and traditional works from across the island.',
-      category: 'Main Stage',
-      isUpcoming: true
-    },
-    {
-      _id: 'temp-2',
-      title: 'Caribbean Rhythms International',
-      company: 'CDT Senior Company',
-      date: '2026-03-14',
-      time: '8:00 PM',
-      venue: 'Miramar Cultural Center',
-      location: 'Florida, USA',
-      description: 'An electrifying showcase of Caribbean dance traditions bringing the vibrant culture of Jamaica to international audiences.',
-      category: 'International',
-      isUpcoming: true
-    },
-    {
-      _id: 'temp-3',
-      title: 'Spring Season Premiere',
-      company: 'CDT All Companies',
-      date: '2026-04-17',
-      time: '7:30 PM',
-      venue: 'Phillip Sherlock Center',
-      location: 'Kingston, Jamaica',
-      description: 'Three-night celebration featuring new choreographic works and beloved repertoire pieces from all CDT companies.',
-      category: 'Showcase',
-      isUpcoming: true
-    },
-    {
-      _id: 'temp-4',
-      title: 'UK Dance Exchange',
-      company: 'CDT Senior Company',
-      date: '2026-05-06',
-      time: '7:00 PM',
-      venue: 'Lester',
-      location: 'Lester, UK',
-      description: 'Cultural exchange performance bringing Jamaican dance heritage to UK audiences in collaboration with local dance companies.',
-      category: 'International',
-      isUpcoming: true
-    },
-    {
-      _id: 'temp-5',
-      title: 'Annual Gala Performance',
-      company: 'CDT Senior & Junior Companies',
-      date: '2026-06-13',
-      time: '7:30 PM',
-      venue: 'Courtleigh Auditorium',
-      location: 'Kingston, Jamaica',
-      description: 'Our annual gala celebration featuring the best works of the season and special guest artists.',
-      category: 'Main Stage',
-      isUpcoming: true
-    }
-  ];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -92,18 +28,11 @@ export default function PerformancesPage() {
           getSiteSettings()
         ]);
         
-        if (performancesData && performancesData.length > 0) {
-          setPerformances(performancesData);
-        } else {
-          // Use fallback data if no Sanity data
-          setPerformances(fallbackPerformances);
-        }
-        
+        setPerformances(performancesData || []);
         setSiteSettings(settings);
       } catch (error) {
         console.error('Error loading data:', error);
-        // Use fallback data on error
-        setPerformances(fallbackPerformances);
+        setPerformances([]);
       } finally {
         setLoading(false);
       }

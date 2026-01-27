@@ -504,7 +504,7 @@
             "level": "error"
           }
         ],
-        "description": "This image will be used as the hero image in the navigation bar",
+        "description": "This image will be used as the hero image for Contact, About, Repertoire, and Performances pages",
         "fields": [
           {
             "validation": [
@@ -525,6 +525,33 @@
           }
         ],
         "name": "heroImage",
+        "type": "image"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "This image will be used specifically as the hero image for the Home page only",
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Important for SEO and accessibility",
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative text"
+          }
+        ],
+        "name": "homePageHeroImage",
         "type": "image"
       },
       {
@@ -852,6 +879,193 @@
       }
     ],
     "name": "performance",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "description": "e.g., Principal Dancer, Company Member, Apprentice, etc.",
+        "name": "role",
+        "type": "string",
+        "title": "Role/Position"
+      },
+      {
+        "description": "Brief biography of the dancer",
+        "name": "bio",
+        "type": "text",
+        "title": "Biography"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Important for SEO and accessibility",
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative text"
+          }
+        ],
+        "name": "headshot",
+        "type": "image"
+      },
+      {
+        "description": "e.g., 2020-Present, 2018-2022",
+        "name": "yearsActive",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "description": "Show this dancer in featured sections",
+        "name": "featured",
+        "type": "boolean",
+        "title": "Featured Dancer"
+      },
+      {
+        "description": "Order in which to display this dancer (lower numbers appear first)",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "dancer",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g., Chairperson, Treasurer, Secretary, Board Member, etc.",
+        "name": "position",
+        "type": "string",
+        "title": "Position/Title"
+      },
+      {
+        "description": "Brief biography and background of the board member",
+        "name": "bio",
+        "type": "text",
+        "title": "Biography"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Important for SEO and accessibility",
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative text"
+          }
+        ],
+        "name": "headshot",
+        "type": "image"
+      },
+      {
+        "description": "e.g., 2024-2026, 2023-Present",
+        "name": "term",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "description": "Show this board member in featured sections",
+        "name": "featured",
+        "type": "boolean",
+        "title": "Featured Board Member"
+      },
+      {
+        "description": "Order in which to display this board member (lower numbers appear first)",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "boardMember",
     "type": "document"
   }
 ]

@@ -71,13 +71,17 @@ export const getFeaturedPerformance = async () => {
     *[_type == "performance" && isFeatured == true] | order(date asc) [0] {
       _id,
       title,
+      slug,
       date,
       time,
       venue,
       location,
       isFeatured,
       image {
-        url,
+        asset-> {
+          _id,
+          url
+        },
         alt
       }
     }

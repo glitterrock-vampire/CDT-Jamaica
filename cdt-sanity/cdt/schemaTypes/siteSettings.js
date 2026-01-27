@@ -52,7 +52,7 @@ export default {
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
-      description: 'This image will be used as the hero image in the navigation bar',
+      description: 'This image will be used as the hero image for Contact, About, Repertoire, and Performances pages',
       options: {
         hotspot: true
       },
@@ -66,6 +66,24 @@ export default {
         }
       ],
       validation: Rule => Rule.required()
+    },
+    {
+      name: 'homePageHeroImage',
+      title: 'Home Page Hero Image',
+      type: 'image',
+      description: 'This image will be used specifically as the hero image for the Home page only',
+      options: {
+        hotspot: true
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessibility',
+          validation: Rule => Rule.required()
+        }
+      ]
     },
     {
       name: 'description',

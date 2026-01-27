@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
+import DancersGrid from '../components/Dancers/DancersGrid';
+import BoardGrid from '../components/Board/BoardGrid';
 // import LoadingSpinner from '../components/LoadingSpinner';
 import { getSiteSettings } from '../lib/siteSettings';
 
@@ -87,6 +89,21 @@ const About = () => {
             </motion.div>
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* Headshots Sections */}
+      <div className="bg-gray-50 dark:bg-black">
+        {/* Featured Dancers */}
+        <DancersGrid 
+          featuredOnly={false} 
+          title="Meet Our Dancers" 
+        />
+
+        {/* Board of Directors */}
+        <BoardGrid 
+          featuredOnly={false} 
+          title="Board of Directors" 
+        />
       </div>
     </div>
   );

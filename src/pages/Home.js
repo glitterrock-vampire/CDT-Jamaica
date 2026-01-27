@@ -5,12 +5,14 @@ import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import { getUpcomingPerformances, getFeaturedPerformance } from '../lib/performances';
 import { getSiteSettings, urlFor } from '../lib/sanity';
+import { getFeaturedDancers } from '../lib/dancers';
 
 const Home = () => {
   const { isDarkMode } = useTheme();
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [featuredDancers, setFeaturedDancers] = useState([]);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -20,14 +22,16 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [upcoming, featured, settings] = await Promise.all([
+        const [upcoming, featured, settings, dancers] = await Promise.all([
           getUpcomingPerformances(),
           getFeaturedPerformance(),
-          getSiteSettings()
+          getSiteSettings(),
+          getFeaturedDancers()
         ]);
         setUpcomingPerformances(upcoming || []);
         setFeaturedPerformance(featured);
         setSiteSettings(settings);
+        setFeaturedDancers(dancers || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -41,7 +45,7 @@ const Home = () => {
       <Hero
         image={{
           url: "/images/CDT Streams Photo.jpg",
-          alt: "CDT Streams Performance"
+          alt: "CDT Streams Performance - Company Dance Theatre Jamaica"
         }}
         title="Celebrating"
         subtitle="dance in Jamaica."
@@ -347,44 +351,56 @@ const Home = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.41 }}
                 >
-                  Meet the Artists
+                  Meet the Company
                 </motion.div>
               </div>
-              <motion.button
-                type="button"
-                className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
+              <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.43 }}
               >
-                Full roster →
-              </motion.button>
+                <Link
+                  to="/company"
+                  className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
+                >
+                  Full roster →
+                </Link>
+              </motion.div>
             </motion.div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-              {[
-                { name: 'Sarah M.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FAfrican%2F3' },
-                { name: 'David C.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F25-35%2FAfrican%2F1' },
-                { name: 'Elaine T.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F18-25%2FAfrican%2F5' },
-                { name: 'Marcus G.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F18-25%2FAfrican%2F2' },
-                { name: 'Lisa B.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FAfrican%2F8' },
-                { name: 'Robert H.', src: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F25-35%2FAfrican%2F4' }
-              ].map((dancer, index) => (
+              {featuredDancers.slice(0, 6).map((dancer, index) => (
                 <motion.div
-                  key={dancer.name}
-                  className={`flex flex-col gap-2 border ${borderColor} ${cardBg} p-3`}
+                  key={dancer._id}
+                  className={`flex flex-col gap-2 border ${borderColor} ${cardBg} p-3 group cursor-pointer`}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.36 + index * 0.04 }}
+                  whileHover={{ y: -5 }}
                 >
                   <div className={`relative w-full pb-[120%] overflow-hidden ${secondaryBg}`}>
-                    <img
-                      src={dancer.src}
-                      alt={dancer.name}
-                      className="absolute inset-0 w-full h-full object-cover grayscale"
-                    />
+                    {dancer.headshot ? (
+                      <img
+                        src={dancer.headshot.asset?.url}
+                        alt={dancer.headshot.alt || dancer.name}
+                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                      />
+                    ) : (
+                      <div className={`absolute inset-0 w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
+                        <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          No photo
+                        </span>
+                      </div>
+                    )}
                   </div>
-                  <div className="text-[11px] tracking-[0.05em] uppercase mt-2">{dancer.name}</div>
+                  <div className="text-[11px] tracking-[0.05em] uppercase mt-2 group-hover:text-orange-500 transition-colors">
+                    {dancer.name}
+                  </div>
+                  {dancer.role && (
+                    <div className={`text-[9px] ${mutedText}`}>
+                      {dancer.role}
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>
