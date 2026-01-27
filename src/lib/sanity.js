@@ -6,15 +6,8 @@ const config = {
   projectId: process.env.REACT_APP_SANITY_PROJECT_ID || 'sbvvl9vs',
   dataset: process.env.REACT_APP_SANITY_DATASET || 'production',
   apiVersion: '2023-05-03',
-  useCdn: process.env.NODE_ENV === 'production',
-  ignoreBrowserTokenWarning: true,
-  withCredentials: false,
-  // Add CORS headers
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET',
-    'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type, Authorization'
-  }
+  useCdn: true,
+  ignoreBrowserTokenWarning: true
 };
 
 // Create a Sanity client
