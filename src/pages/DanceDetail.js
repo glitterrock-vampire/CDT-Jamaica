@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PortableText } from '@portabletext/react';
+import { useTheme } from '../context/ThemeContext';
 import SlideGallery from '../components/SlideGallery';
 import { getRepertoireItemById } from '../lib/sanity';
 // import LoadingSpinner from '../components/LoadingSpinner';
@@ -9,11 +10,16 @@ import { getRepertoireItemById } from '../lib/sanity';
 const DanceDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isDarkMode } = useTheme();
   const [dance, setDance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [, setSelectedImageIndex] = useState(0);
+
+  const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
   useEffect(() => {
     const fetchDance = async () => {
@@ -117,193 +123,64 @@ const DanceDetail = () => {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
-        <div className="ailey-two-column">
-          <div className="ailey-main-content text-gray-900 dark:text-gray-100">
-            {/* Mobile: Cast info at top */}
-            <div className="md:hidden space-y-6 mb-8">
-              {dance.choreographer && (
-                <div>
-                  <h4 className="ailey-metadata-label">Choreographer</h4>
-                  <p className="ailey-metadata-value">{dance.choreographer}</p>
-                </div>
-              )}
-              {dance.music && dance.music.length > 0 && (
-                <div>
-                  <h4 className="ailey-metadata-label">Music</h4>
-                  <p className="ailey-metadata-value">
-                    {Array.isArray(dance.music) 
-                      ? dance.music.join(', ') 
-                      : dance.music}
-                  </p>
-                </div>
-              )}
-              {dance.costumeDesign && (
-                <div>
-                  <h4 className="ailey-metadata-label">Costume Design</h4>
-                  <p className="ailey-metadata-value">{dance.costumeDesign}</p>
-                </div>
-              )}
-              {dance.lighting && (
-                <div>
-                  <h4 className="ailey-metadata-label">Lighting Design</h4>
-                  <p className="ailey-metadata-value">{dance.lighting}</p>
-                </div>
-              )}
-              {displayDuration && (
-                <div>
-                  <h4 className="ailey-metadata-label">Run Time</h4>
-                  <p className="ailey-metadata-value">{displayDuration}</p>
-                </div>
-              )}
-              {dance.worldPremiere && (
-                <div>
-                  <h4 className="ailey-metadata-label">World Premiere</h4>
-                  <p className="ailey-metadata-value">{dance.worldPremiere}</p>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile: Description */}
-            <div className="md:hidden">
-              {dance.description && (
-                <motion.div
-                  className="w-full max-w-7xl mx-auto mb-8"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                >
-                  <div className="prose prose-lg max-w-none">
-                    <div className="text-gray-700 dark:text-gray-100 leading-relaxed prose dark:prose-invert max-w-none">
-                      <PortableText value={dance.description} />
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </div>
-
-            {/* Desktop: Original sidebar layout */}
-            <div className="hidden md:block">
-              {dance.youtubeId && dance.description && (
-                <div className="space-y-8">
-                  <motion.div
-                    className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <div className="aspect-video">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${dance.youtubeId}`}
-                        className="w-full h-full"
-                        allowFullScreen
-                        title={dance.title}
-                      />
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className="prose prose-lg max-w-none"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                  >
-                    <div className="text-gray-700 dark:text-gray-100 leading-relaxed prose dark:prose-invert max-w-none">
-                      <PortableText value={dance.description} />
-                    </div>
-                  </motion.div>
-                </div>
-              )}
-
-              {dance.youtubeId && !dance.description && (
-                <motion.div
-                  className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <div className="aspect-video">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${dance.youtubeId}`}
-                      className="w-full h-full"
-                      allowFullScreen
-                      title={dance.title}
-                    />
-                  </div>
-                </motion.div>
-              )}
-            </div>
-
-            {/* Mobile: Video at bottom */}
-            {dance.youtubeId && (
-              <div className="md:hidden mt-8">
-                <motion.div
-                  className="w-full max-w-7xl mx-auto overflow-hidden rounded-lg shadow-sm"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <div className="aspect-video">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${dance.youtubeId}`}
-                      className="w-full h-full"
-                      allowFullScreen
-                      title={dance.title}
-                    />
-                  </div>
-                </motion.div>
-              </div>
-            )}
-
-            {dance.description && !dance.youtubeId && (
+      <motion.div
+        className="container mx-auto px-4 w-full max-w-6xl py-10 md:py-14"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="grid gap-6 lg:grid-cols-3">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Description */}
+            {dance.description && (
               <motion.div
-                className="prose prose-lg max-w-none"
+                className={`border ${borderColor} ${cardBg} shadow-[0_12px_30px_rgba(0,0,0,0.08)] p-6 md:p-8`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <div className="text-gray-700 dark:text-gray-100 leading-relaxed whitespace-pre-line">
-                  {dance.description}
-                </div>
+                <motion.div
+                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                >
+                  About
+                </motion.div>
+                <motion.div
+                  className="prose prose-lg dark:prose-invert max-w-none mt-4"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.25 }}
+                >
+                  <PortableText value={dance.description} />
+                </motion.div>
               </motion.div>
             )}
 
-            {(dance.mediaReviews && dance.mediaReviews.length > 0) && (
+            {/* Additional Images */}
+            {dance.image && (
               <motion.div
-                className="ailey-section"
+                className={`border ${borderColor} ${cardBg} shadow-[0_12px_30px_rgba(0,0,0,0.08)] p-6 md:p-8`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
               >
-                <h3 className="ailey-subtitle mb-6">Media Reviews</h3>
-                <div className="space-y-8">
-                  {dance.mediaReviews.map((review, index) => (
-                    <blockquote key={index} className="ailey-quote">
-                      <p className="ailey-body dark:text-gray-100 italic mb-4">
-                        "{review.quote}"
-                      </p>
-                      <footer className="flex items-center justify-between">
-                        <div>
-                          <cite className="text-gray-900 dark:text-gray-100 font-medium">{review.source}</cite>
-                          {review.year && (
-                            <span className="text-gray-500 dark:text-gray-400 ml-2">({review.year})</span>
-                          )}
-                        </div>
-                        {review.url && (
-                          <a
-                            href={review.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors duration-200"
-                          >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                          </a>
-                        )}
-                      </footer>
-                    </blockquote>
-                  ))}
+                <motion.div
+                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.4 }}
+                >
+                  Gallery
+                </motion.div>
+                <div className="mt-4">
+                  <img
+                    src={dance.image.asset?.url}
+                    alt={dance.image.alt || dance.title}
+                    className="w-full h-auto rounded-lg"
+                  />
                 </div>
               </motion.div>
             )}
@@ -505,7 +382,7 @@ const DanceDetail = () => {
           isOpen={galleryOpen}
           onClose={() => setGalleryOpen(false)}
         />
-      </div>
+      </motion.div>
     </div>
   );
 };
