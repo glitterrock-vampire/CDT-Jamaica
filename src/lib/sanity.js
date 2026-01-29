@@ -8,7 +8,6 @@ const config = {
   apiVersion: '2023-05-03',
   useCdn: true,
   ignoreBrowserTokenWarning: true,
-  token: process.env.REACT_APP_SANITY_TOKEN || 'skEkeCZV1xAygAcJoYvMoMkYxovWNKON6cvNSMMgPL6xX8l0KMdkNXrChzKHfKdjJyPwBsUa2rI9i7asRoxP1jWMB1HphLzaSBKre5m8PhufGHxjIoNsfHTvbQayOhUW9xtLsBWA54cCAF0xYg4YOy5mIgm3KiopuCHdPfhDrIpe7By4q4tr'
 };
 
 // Create a Sanity client
