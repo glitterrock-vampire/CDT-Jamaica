@@ -97,6 +97,8 @@ export const getFeaturedPerformance = async () => {
 };
 
 export const getPerformanceBySlug = async (slug) => {
+  console.log('getPerformanceBySlug called with slug:', slug);
+  
   const query = `
     *[_type == "performance" && slug.current == $slug][0] {
       _id,
@@ -121,7 +123,9 @@ export const getPerformanceBySlug = async (slug) => {
   `;
   
   try {
+    console.log('Executing query with slug:', slug);
     const performance = await client.fetch(query, { slug });
+    console.log('Query result:', performance);
     return performance;
   } catch (error) {
     console.error('Error fetching performance:', error);
