@@ -1,8 +1,8 @@
-import sanityClient from '@sanity/client';
+import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 
 // Configuration for Sanity client
-const projectId = process.env.REACT_APP_SANITY_PROJECT_ID;
+const projectId = process.env.REACT_APP_SANITY_PROJECT_ID || 'sbvvl9vs';
 const dataset = process.env.REACT_APP_SANITY_DATASET || 'production';
 
 if (!projectId) {
@@ -13,12 +13,11 @@ const clientConfig = {
   projectId,
   dataset,
   apiVersion: '2023-05-03',
-  useCdn: true, // Enable CDN for better performance
-  // No token needed for public data access
+  useCdn: true,
   ignoreBrowserTokenWarning: true,
 };
 
-export const client = sanityClient(clientConfig);
+export const client = createClient(clientConfig);
 
 const builder = imageUrlBuilder(client);
 
