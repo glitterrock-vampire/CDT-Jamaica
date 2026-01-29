@@ -45,18 +45,8 @@ const DancerCard = ({ dancer, index }) => {
             {dancer.name}
           </h3>
           {dancer.role && (
-            <p className={`text-sm font-medium mb-2 ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
+            <p className={`text-sm font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
               {dancer.role}
-            </p>
-          )}
-          {dancer.yearsActive && (
-            <p className={`text-xs mb-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              {dancer.yearsActive}
-            </p>
-          )}
-          {dancer.bio && (
-            <p className={`text-sm leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              {dancer.bio}
             </p>
           )}
         </div>

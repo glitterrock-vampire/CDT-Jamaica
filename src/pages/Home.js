@@ -255,7 +255,7 @@ const Home = () => {
             </motion.div>
 
             <div className="grid gap-5 md:grid-cols-3">
-              {upcomingPerformances.map((perf, index) => {
+              {upcomingPerformances.slice(0, 3).map((perf, index) => {
                 const dateObj = new Date(perf.date);
                 const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
                 const day = dateObj.getDate();

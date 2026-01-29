@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import RepertoireItem from '../components/Repertoire/RepertoireItem';
 import RepertoireControls from '../components/Repertoire/RepertoireControls';
@@ -15,6 +17,10 @@ const Repertoire = () => {
   const [siteSettings, setSiteSettings] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('title-asc');
+
+  const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
   // Fetch repertoire data
   useEffect(() => {
@@ -121,35 +127,53 @@ const Repertoire = () => {
         />
 
         {loading ? (
-          // <LoadingSpinner />
-          null
-        ) : error ? (
-          <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
-            <div className="flex">
-              <div className="ml-3">
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            </div>
+          <div className="text-center py-20">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+            <p className={`mt-4 text-xl ${mutedText}`}>Loading repertoire...</p>
           </div>
         ) : (
-          <div className="grid gap-5 md:grid-cols-3 mt-6">
-            {filteredRepertoire.map((item) => (
-              <RepertoireItem key={item._id || item.id} item={item} />
-            ))}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${searchTerm}-${sortBy}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid gap-5 md:grid-cols-3 mt-6"
+            >
+              {filteredRepertoire.map((item, index) => (
+                <Link
+                  key={item._id}
+                  to={`/dance/${item.slug?.current || item._id}`}
+                  className="block group"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.04 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <RepertoireItem item={item} />
+                  </motion.div>
+                </Link>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         )}
 
-        {filteredRepertoire.length === 0 && !loading && !error && (
-          <div className={`text-center py-12 ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-            <div className="text-gray-400 mb-4">
-              <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12 7-12 7z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white">No repertoire items found</h3>
-            <p className="text-gray-500 dark:text-gray-400">Try adjusting your search or filter criteria.</p>
-          </div>
-        )}
+        {filteredRepertoire.length === 0 && !loading && (
+            <motion.div
+              className="text-center py-20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className={`text-xl ${mutedText}`}>
+                {searchTerm ? 'No repertoire items found matching your search.' : 'No repertoire items found.'}
+              </p>
+            </motion.div>
+          )}
       </div>
     </div>
   );

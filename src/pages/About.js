@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
-import DancersGrid from '../components/Dancers/DancersGrid';
-import BoardGrid from '../components/Board/BoardGrid';
 // import LoadingSpinner from '../components/LoadingSpinner';
 import { getSiteSettings } from '../lib/siteSettings';
 
@@ -74,16 +73,16 @@ const About = () => {
             variants={staggerContainer}
           >
             <motion.div 
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 md:p-8 border border-gray-100 dark:border-gray-700"
+              className="border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900 shadow-[0_12px_30px_rgba(0,0,0,0.08)] p-6 md:p-8"
               variants={fadeInUp}
             >
               {/* <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Our Story</h3> */}
               <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4 dark:prose-invert">
                 <p>
-                  CDT is a legacy organization formed to honour Mr. Tony Wilson, O.D. who founded The Company Dance Theatre in 1988. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director of the Company; Renée I. McDonald, Associate Artistic Director of the Company; Steven Cornwall, Artistic Director of the School; and Colin Blackwood, Executive Director of the Company and the School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
+                  CDT is a legacy organization formed to honour Mr. Tony Wilson, O.D. who founded The Company Dance Theatre in 1988. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director of the Company; Renée I. McDonald, Associate Artistic Director of the Company; Steven Cornwall, Artistic Director of the School; and Colin Blackwood, Executive Director of the Company and the School. CDT&apos;s purpose is to continue Mr. Tony Wilson&apos;s legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
                 </p>
                 <p>
-                  Our mission is to further the pioneering work of Tony Wilson and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and <i>to di worl'!</i>
+                  Our mission is to further the pioneering work of Tony Wilson and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and <i>to di worl&apos;!</i>
                 </p>
               </div>
             </motion.div>
@@ -93,17 +92,36 @@ const About = () => {
 
       {/* Headshots Sections */}
       <div className="bg-gray-50 dark:bg-black">
-        {/* Featured Dancers */}
-        <DancersGrid 
-          featuredOnly={false} 
-          title="Meet Our Dancers" 
-        />
-
-        {/* Board of Directors */}
-        <BoardGrid 
-          featuredOnly={false} 
-          title="Board of Directors" 
-        />
+        {/* Links to Company Page */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <h3 className="text-2xl font-semibold mb-4">Meet Our Company</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-8">
+                Explore our talented dancers and dedicated board members who make CDT Jamaica possible.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  to="/company#dancers"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors duration-200"
+                >
+                  Meet Our Dancers
+                </Link>
+                <Link
+                  to="/company#board"
+                  className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+                >
+                  Board of Directors
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </div>
   );

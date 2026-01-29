@@ -50,23 +50,21 @@ const Company = () => {
         />
       )}
 
-      {/* Featured Dancers */}
-      <DancersGrid 
-        featuredOnly={true} 
-        title="Featured Dancers" 
-      />
+      {/* Meet Our Dancers */}
+      <div id="dancers">
+        <DancersGrid 
+          featuredOnly={false} 
+          title="Meet Our Dancers" 
+        />
+      </div>
 
-      {/* Board of Directors */}
-      <BoardGrid 
-        featuredOnly={false} 
-        title="Board of Directors" 
-      />
-
-      {/* All Dancers */}
-      <DancersGrid 
-        featuredOnly={false} 
-        title="Complete Dance Company" 
-      />
+      {/* Meet Our Board Members */}
+      <div id="board">
+        <BoardGrid 
+          featuredOnly={false} 
+          title="Meet Our Board Members" 
+        />
+      </div>
     </div>
   );
 };

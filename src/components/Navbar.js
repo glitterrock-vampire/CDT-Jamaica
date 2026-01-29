@@ -7,6 +7,7 @@ import { urlFor } from '../lib/sanity';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [siteSettings, setSiteSettings] = useState(null);
   const location = useLocation();
@@ -28,6 +29,7 @@ const Navbar = () => {
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsAboutDropdownOpen(false);
   }, [location]);
 
   // Close mobile menu on Escape key
@@ -64,6 +66,67 @@ const Navbar = () => {
     >
       {children}
     </Link>
+  );
+
+  // Dropdown component for About menu
+  const AboutDropdown = () => (
+    <div 
+      className="relative about-dropdown group"
+    >
+      <button
+        className={`text-base font-medium ${
+          location.pathname === '/about' || location.pathname === '/company'
+            ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
+            : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+        } transition-colors flex items-center gap-1`}
+      >
+        About
+        <svg 
+          className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
+      <div className={`absolute top-full left-0 mt-2 w-48 shadow-[0_12px_30px_rgba(0,0,0,0.08)] border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform scale-95 group-hover:scale-100 origin-top`}>
+        <Link
+          to="/about"
+          onClick={() => setIsAboutDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium rounded-t-lg border-b border-black/10 dark:border-white/10 ${
+            location.pathname === '/about'
+              ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
+          } transition-colors`}
+        >
+          Our Story
+        </Link>
+        <Link
+          to="/company#dancers"
+          onClick={() => setIsAboutDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium border-b border-black/10 dark:border-white/10 ${
+            location.pathname === '/company#dancers'
+              ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
+          } transition-colors`}
+        >
+          Company Dancers
+        </Link>
+        <Link
+          to="/company#board"
+          onClick={() => setIsAboutDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium rounded-b-lg ${
+            location.pathname === '/company#board'
+              ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
+          } transition-colors`}
+        >
+          Board of Directors
+        </Link>
+      </div>
+    </div>
   );
 
   // MobileNavLink component
@@ -118,7 +181,9 @@ const Navbar = () => {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/repertoire">Repertoire</NavLink>
             <NavLink to="/performances">Performances</NavLink>
-            <NavLink to="/about">About</NavLink>
+            <div className="about-dropdown">
+              <AboutDropdown />
+            </div>
             <NavLink to="/contact">Contact</NavLink>
             <button
               onClick={toggleDarkMode}
@@ -178,7 +243,16 @@ const Navbar = () => {
             <li className="menu-item"><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
             <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
             <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li>
-            <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link></li>
+            <li className="menu-item">
+              <div className="py-2">
+                <div className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider mb-2">About</div>
+                <ul className="space-y-1">
+                  <li><Link to="/about" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Our Story</Link></li>
+                  <li><Link to="/company#dancers" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Company Dancers</Link></li>
+                  <li><Link to="/company#board" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Board of Directors</Link></li>
+                </ul>
+              </div>
+            </li>
             <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
           </ul>
           <div className="mt-8">
