@@ -18,8 +18,16 @@ const PerformanceDetail = () => {
 
   useEffect(() => {
     const fetchPerformance = async () => {
+      if (!slug) {
+        console.error('No slug provided');
+        setLoading(false);
+        return;
+      }
+
+      console.log('Fetching performance with slug:', slug);
       try {
         const data = await getPerformanceBySlug(slug);
+        console.log('Performance data:', data);
         setPerformance(data);
       } catch (error) {
         console.error('Error fetching performance:', error);
