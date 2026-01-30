@@ -5,14 +5,12 @@ import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import { getUpcomingPerformances, getFeaturedPerformance } from '../lib/performances';
 import { getSiteSettings, urlFor } from '../lib/sanity';
-import { getFeaturedDancers } from '../lib/dancers';
 
 const Home = () => {
   const { isDarkMode } = useTheme();
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
-  const [featuredDancers, setFeaturedDancers] = useState([]);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -22,16 +20,14 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [upcoming, featured, settings, dancers] = await Promise.all([
+        const [upcoming, featured, settings] = await Promise.all([
           getUpcomingPerformances(),
           getFeaturedPerformance(),
-          getSiteSettings(),
-          getFeaturedDancers()
+          getSiteSettings()
         ]);
         setUpcomingPerformances(upcoming || []);
         setFeaturedPerformance(featured);
         setSiteSettings(settings);
-        setFeaturedDancers(dancers || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -41,194 +37,146 @@ const Home = () => {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {/* Hero Section */}
-      <Hero
-        image={{
-          url: "/images/CDT Streams Photo.jpg",
-          alt: "CDT Streams Performance - Company Dance Theatre Jamaica"
-        }}
-        title="Celebrating"
-        subtitle="dance in Jamaica."
-      />
+      {/* Hero Section with Full Width Performance */}
+      <div className={`relative w-full min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} overflow-hidden`}>
+        {/* Full Width Hero Image */}
+        {featuredPerformance?.image && (
+          <div className="absolute inset-0 z-0">
+            <img
+              src={featuredPerformance.image?.asset?.url || featuredPerformance.image?.url}
+              alt={featuredPerformance.image.alt || 'Featured performance'}
+              className="w-full h-full object-cover grayscale contrast-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
+          </div>
+        )}
 
-      {/* Main Content */}
-      <motion.div
-        className="container mx-auto px-4 w-full max-w-6xl py-10 md:py-14"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Featured Performance Section */}
-        <header className={`border-b ${borderColor} pb-10 md:pb-14`}>
-          <div className="grid gap-10 md:gap-12 md:grid-cols-[2fr,1.4fr] items-stretch">
-            {/* Left column */}
-            <div className="flex flex-col justify-between gap-8">
-              <div className="space-y-6">
-                <motion.div
-                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                >
-                  Season 2026 · Kingston, Jamaica
-                </motion.div>
-                <motion.p
-                  className={`text-sm md:text-base max-w-xl leading-relaxed ${mutedText}`}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  Company Dance Theatre Jamaica presents a season of new and classic works in conversation with
-                  Caribbean sound, space, and history.
-                </motion.p>
-                <motion.div
-                  className="flex flex-wrap gap-3"
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  <a
-                    href={featuredPerformance?.ticketUrl || "https://www.linktr.ee/cdtjamaica"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
-                  >
-                    Buy Tickets
-                  </a>
-                  <button
-                    type="button"
-                    className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
-                      isDarkMode ? 'bg-transparent text-white hover:bg-white/5' : 'bg-transparent text-black hover:bg-gray-100'
-                    } transition-colors`}
-                  >
-                    Play trailer
-                  </button>
-                </motion.div>
-              </div>
-
+        {/* Content Overlay */}
+        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex items-center">
+          <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.2fr,1fr] items-center">
+            {/* Left Column - Performance Info */}
+            <motion.div 
+              className="space-y-8"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
               <motion.div
-                className="text-[11px] mt-4 md:mt-0"
+                className={`font-nova-slim text-2xl md:text-3xl lg:text-4xl font-light tracking-tight text-white`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+              >
+                {featuredPerformance 
+                  ? `${new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`
+                  : 'Date TBA'
+                }
+              </motion.div>
+              
+              <motion.h1 
+                className="font-nova-slim text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
+                style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                {featuredPerformance?.title || 'Featured Performance'}
+              </motion.h1>
+              
+              <motion.div
+                className={`text-lg md:text-xl text-white`}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                CDT at Miramar Cultural Center
+              </motion.div>
+              
+              <motion.p
+                className={`text-base md:text-lg max-w-xl leading-relaxed text-white/90`}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+              >
+                Company Dance Theatre Jamaica presents a season of new and classic works in conversation with Caribbean sound, space, and history.
+              </motion.p>
+              
+              <motion.div
+                className="flex flex-wrap gap-4"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <a
+                  href={featuredPerformance?.ticketUrl || "https://www.linktr.ee/cdtjamaica"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                >
+                  Buy Tickets
+                </a>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center px-8 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-white/30 text-white hover:bg-white/10 transition-colors"
+                >
+                  Play trailer
+                </button>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column - Season Info Card */}
+            <motion.div
+              className={`border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_12px_30px_rgba(0,0,0,0.3)] p-8 md:p-10`}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <motion.div
+                className="text-[10px] tracking-[0.12em] uppercase text-white/80 mb-6"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              >
+                Season 2026 · Kingston, Jamaica
+              </motion.div>
+              
+              <motion.div
+                className="space-y-4"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
-                <div className={`border-t ${borderColor} pt-2 flex items-center justify-between ${mutedText}`}>
-                  <span className="tracking-[0.12em] uppercase">Featured performance</span>
-                  <span className="tracking-[0.12em] uppercase text-xs text-inherit">
+                <div className="border-b border-white/20 pb-4">
+                  <h3 className="text-white font-semibold mb-2">Featured Performance</h3>
+                  <p className="text-white/80 text-sm">{featuredPerformance?.venue || 'Venue TBA'}</p>
+                  <p className="text-white/60 text-xs mt-1">
                     {featuredPerformance 
-                      ? `${new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · ${featuredPerformance.time}`
+                      ? `${new Date(featuredPerformance.date).toLocaleDateString('en-US', { weekday: 'long' })} · ${featuredPerformance.time}`
                       : 'TBA'
                     }
-                  </span>
+                  </p>
+                </div>
+                
+                <div className="pt-2">
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    Experience the vibrant rhythms and movements of Caribbean dance in this spectacular season opener.
+                  </p>
                 </div>
               </motion.div>
-            </div>
-
-            {/* Hero Poster */}
-            <motion.div
-              className={`border ${borderColor} ${secondaryBg} h-[380px] md:h-[420px] grid grid-rows-[auto,1fr,auto]`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-            >
-              <div className={`px-3 py-2 text-[10px] tracking-[0.12em] uppercase flex items-center justify-between border-t ${borderColor}`}>
-                <span>{featuredPerformance?.title || 'Featured Performance'}</span>
-                <span>{featuredPerformance?.venue || 'Venue'}</span>
-              </div>
-              <div className="relative overflow-hidden">
-                {featuredPerformance?.image ? (
-                  <Link to={`/performance/${featuredPerformance.slug?.current || featuredPerformance._id}`}>
-                    <img
-                      src={featuredPerformance.image?.asset?.url || featuredPerformance.image?.url}
-                      alt={featuredPerformance.image.alt || 'Featured performance'}
-                      className="w-full h-full object-cover grayscale contrast-110 hover:grayscale-0 transition-all duration-300 cursor-pointer"
-                    />
-                  </Link>
-                ) : (
-                  <div className={`w-full h-full flex items-center justify-center ${mutedText} ${secondaryBg}`}>
-                    <span className="text-sm">No featured performance image</span>
-                  </div>
-                )}
-              </div>
-              <div className={`px-3 py-2 text-[10px] tracking-[0.12em] uppercase flex items-center justify-between border-t ${borderColor}`}>
-                <span>
-                  {featuredPerformance 
-                    ? new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                    : 'Date'
-                  }
-                </span>
-                <span>{featuredPerformance?.venue || 'Venue'}</span>
-              </div>
             </motion.div>
           </div>
-        </header>
+        </div>
+      </div>
 
-        {/* ABOUT / MISSION */}
-        <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-        >
-          <div className="grid gap-10 md:grid-cols-2 items-start">
-            <div className="space-y-3">
-              <motion.div
-                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-              >
-                About Us
-              </motion.div>
-              <motion.div
-                className="text-2xl md:text-3xl uppercase leading-tight"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.35 }}
-              >
-                Moving the Caribbean forward through the language of dance.
-              </motion.div>
-            </div>
-            <div className="space-y-4">
-              <motion.p
-                className={`text-sm md:text-base leading-relaxed ${mutedText}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                Founded in 1995, CDT Jamaica has grown into the region&apos;s premier contemporary dance company. We are
-                dedicated to creating works that reflect the complexity, beauty, and resilience of our culture.
-              </motion.p>
-              <motion.div
-                className={`flex flex-wrap gap-6 pt-4 mt-2 border-t ${borderColor}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.45 }}
-              >
-                <div className="space-y-1">
-                  <div className="text-xl md:text-2xl">30+</div>
-                  <div className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Years Active</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-xl md:text-2xl">120</div>
-                  <div className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Original Works</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-xl md:text-2xl">15k</div>
-                  <div className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Students Taught</div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ON STAGE / EVENTS */}
-        <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+      {/* Main Content */}
+      {/* UPCOMING PERFORMANCES */}
+      <motion.section
+        className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        <div className="container mx-auto px-4">
           <div className="flex flex-col gap-8">
             <motion.div
               className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
@@ -320,101 +268,79 @@ const Home = () => {
               })}
             </div>
           </div>
+          </div>
         </motion.section>
 
-        {/* THE COMPANY / DANCERS */}
+        {/* ABOUT / MISSION */}
         <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor}`}
+          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
         >
-          <div className="flex flex-col gap-8">
-            <motion.div
-              className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.37 }}
-            >
-              <div>
-                <motion.div
-                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.39 }}
-                >
-                  The Company
-                </motion.div>
-                <motion.div
-                  className="text-xl md:text-2xl uppercase"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.41 }}
-                >
-                  Meet the Company
-                </motion.div>
-              </div>
+          <div className="container mx-auto px-4">
+            <div className="grid gap-10 md:grid-cols-2 items-start">
+            <div className="space-y-3">
               <motion.div
-                initial={{ opacity: 0, y: 8 }}
+                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.43 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
               >
-                <Link
-                  to="/company"
-                  className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
-                >
-                  Full roster →
-                </Link>
+                About Us
               </motion.div>
-            </motion.div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-              {featuredDancers.slice(0, 6).map((dancer, index) => (
-                <motion.div
-                  key={dancer._id}
-                  className={`flex flex-col gap-2 border ${borderColor} ${cardBg} p-3 group cursor-pointer`}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.36 + index * 0.04 }}
-                  whileHover={{ y: -5 }}
-                >
-                  <div className={`relative w-full pb-[120%] overflow-hidden ${secondaryBg}`}>
-                    {dancer.headshot ? (
-                      <img
-                        src={dancer.headshot.asset?.url}
-                        alt={dancer.headshot.alt || dancer.name}
-                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />
-                    ) : (
-                      <div className={`absolute inset-0 w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
-                        <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                          No photo
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-[11px] tracking-[0.05em] uppercase mt-2 group-hover:text-orange-500 transition-colors">
-                    {dancer.name}
-                  </div>
-                  {dancer.role && (
-                    <div className={`text-[9px] ${mutedText}`}>
-                      {dancer.role}
-                    </div>
-                  )}
-                </motion.div>
-              ))}
+              <motion.div
+                className="text-2xl md:text-3xl uppercase leading-tight"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
+              >
+                Moving the Caribbean forward through the language of dance.
+              </motion.div>
             </div>
+            <div className="space-y-4">
+              <motion.p
+                className={`text-sm md:text-base leading-relaxed ${mutedText}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                Founded in 1995, CDT Jamaica has grown into the region&apos;s premier contemporary dance company. We are
+                dedicated to creating works that reflect the complexity, beauty, and resilience of our culture.
+              </motion.p>
+              <motion.div
+                className={`flex flex-wrap gap-6 pt-4 mt-2 border-t ${borderColor}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.55 }}
+              >
+                <div className="space-y-1">
+                  <div className="text-2xl md:text-3xl font-bold">30+</div>
+                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Years Active</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-2xl md:text-3xl font-bold">120</div>
+                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Original Works</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-2xl md:text-3xl font-bold">15k</div>
+                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Students Taught</div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
           </div>
         </motion.section>
 
         {/* SUPPORT TEASER */}
         <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor}`}
+          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-6 md:grid-cols-2">
             {/* Philanthropy / Patron Programme */}
             <motion.div
               className={`flex flex-col items-center text-center gap-4 p-8 border ${borderColor} ${secondaryBg}`}
@@ -507,16 +433,18 @@ const Home = () => {
               </motion.button>
             </motion.div>
           </div>
+          </div>
         </motion.section>
 
         {/* SCHOOL / TRAINING */}
         <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor}`}
+          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
         >
-          <div className="grid gap-10 md:grid-cols-[1.2fr,1fr] items-center">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-10 md:grid-cols-[1.2fr,1fr] items-center">
             <motion.div
               className="space-y-4"
               initial={{ opacity: 0, y: 16 }}
@@ -576,16 +504,18 @@ const Home = () => {
               />
             </motion.div>
           </div>
+          </div>
         </motion.section>
 
         {/* NEWS / SIGNALS */}
         <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor}`}
+          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <div className="flex flex-col gap-8">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col gap-8">
             {/* Header */}
             <motion.div
               className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
@@ -696,16 +626,18 @@ const Home = () => {
               </div>
             </div>
           </div>
+          </div>
         </motion.section>
 
         {/* NEWSLETTER (kept simple because global Footer already exists) */}
         <motion.section
-          className="py-10 md:py-12"
+          className={`py-10 md:py-12 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.55 }}
         >
-          <div className="max-w-xl space-y-4">
+          <div className="container mx-auto px-4">
+            <div className="max-w-xl space-y-4">
             <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Newsletter</div>
             <div className="text-lg md:text-xl">
               Signals from the studio and stage, once a month.
@@ -730,8 +662,8 @@ const Home = () => {
               </button>
             </form>
           </div>
+          </div>
         </motion.section>
-      </motion.div>
     </div>
   );
 };

@@ -160,13 +160,13 @@ const Navbar = () => {
                   <img
                     src={urlFor(siteSettings.lightLogo).url()}
                     // alt="CDT Jamaica Logo"
-                    className={`h-10 w-auto ${isDarkMode ? 'hidden' : 'block'}`}
+                    className={`h-14 w-auto ${isDarkMode ? 'hidden' : 'block'}`}
                   />
                   {/* Dark mode logo (hidden in light mode) */}
                   <img
                     src={urlFor(siteSettings.darkLogo).url()}
                     // alt="CDT Jamaica Logo"
-                    className={`h-10 w-auto ${!isDarkMode ? 'hidden' : 'block'}`}
+                    className={`h-14 w-auto ${!isDarkMode ? 'hidden' : 'block'}`}
                   />
                 </>
               ) : (

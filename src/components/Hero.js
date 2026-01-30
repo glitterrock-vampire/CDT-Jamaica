@@ -1,7 +1,9 @@
 import React from 'react';
 import { urlFor } from '../lib/sanity';
+import { useTheme } from '../context/ThemeContext';
 
 export const Hero = ({ image, title, subtitle, children }) => {
+  const { isDarkMode } = useTheme();
   const [imageLoaded, setImageLoaded] = React.useState(false);
   
   // Function to get image URL - handles both Sanity assets and regular URLs
@@ -24,7 +26,7 @@ export const Hero = ({ image, title, subtitle, children }) => {
   
   return (
     <div className="relative w-full h-auto min-h-[60vh] overflow-hidden">
-      {image && (
+      {image ? (
         <div className="relative w-full h-full">
           <div className="w-full h-[60vh] overflow-hidden">
             {/* Loading placeholder */}
@@ -63,6 +65,21 @@ export const Hero = ({ image, title, subtitle, children }) => {
               )}
               {children}
             </div>
+          </div>
+        </div>
+      ) : (
+        // Text-only hero with solid background
+        <div className={`w-full h-[60vh] ${isDarkMode ? 'bg-black' : 'bg-white'} flex items-end pb-20 px-8 md:px-16 lg:px-24`}>
+          <div className="max-w-4xl w-full">
+            <h1 className={`font-nova-slim text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '2px 2px 4px rgba(0,0,0,0.8)' : '2px 2px 4px rgba(255,255,255,0.8)'}}>
+              {title}
+            </h1>
+            {subtitle && (
+              <p className={`font-raleway text-3xl md:text-4xl lg:text-5xl text-left font-light leading-tight tracking-wide ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(255,255,255,0.8)'}}>
+                {subtitle}
+              </p>
+            )}
+            {children}
           </div>
         </div>
       )}

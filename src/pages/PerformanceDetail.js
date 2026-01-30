@@ -79,32 +79,67 @@ const PerformanceDetail = () => {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {/* Hero Section */}
-      {performance.image && (
-        <Hero
-          image={{
-            url: getImageUrl(performance.image),
-            alt: performance.image.alt || performance.title
-          }}
-          title={performance.title}
-          subtitle={performance.company}
-        />
-      )}
+      {/* Hero Section - Text Only */}
+      <Hero
+        title={performance.title}
+        subtitle={performance.company}
+      />
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="container mx-auto px-4 py-12 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="space-y-8"
+          className="grid lg:grid-cols-3 gap-8"
         >
-          {/* Performance Details */}
-          <div className={`grid md:grid-cols-2 gap-8 p-6 border ${borderColor} ${cardBg}`}>
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold uppercase">Performance Details</h2>
+          {/* Image Sidebar - 1 column */}
+          {performance.image && (
+            <div className="lg:col-span-1">
+              <motion.div
+                className={`border ${borderColor} ${cardBg} shadow-[0_12px_30px_rgba(0,0,0,0.08)] overflow-hidden sticky top-8`}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <motion.div
+                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText} p-4 pb-2`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                >
+                  Performance Image
+                </motion.div>
+                <div className="px-4 pb-4">
+                  <img
+                    src={getImageUrl(performance.image)}
+                    alt={performance.image.alt || performance.title}
+                    className="w-full h-auto rounded-lg aspect-[3/4] object-cover"
+                  />
+                </div>
+              </motion.div>
+            </div>
+          )}
+
+          {/* Performance Details - 2 columns */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Performance Info Card */}
+            <motion.div
+              className={`border ${borderColor} ${cardBg} shadow-[0_12px_30px_rgba(0,0,0,0.08)] p-6 md:p-8`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <motion.div
+                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              >
+                Performance Details
+              </motion.div>
               
-              <div className="space-y-2">
+              <div className="mt-4 space-y-4">
                 <div className="flex justify-between">
                   <span className={mutedText}>Date:</span>
                   <span className="font-semibold">
@@ -137,38 +172,63 @@ const PerformanceDetail = () => {
                   <span className="font-semibold">{performance.category}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold uppercase">About This Performance</h2>
-              <p className={`leading-relaxed ${mutedText}`}>
-                {performance.description}
-              </p>
-              
-              {performance.ticketUrl && (
-                <div className="pt-4">
-                  <a
-                    href={performance.ticketUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-orange-500 text-white hover:bg-orange-400 transition-colors w-full md:w-auto"
-                  >
-                    Buy Tickets
-                  </a>
+            {/* About Performance Card */}
+            {performance.description && (
+              <motion.div
+                className={`border ${borderColor} ${cardBg} shadow-[0_12px_30px_rgba(0,0,0,0.08)] p-6 md:p-8`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <motion.div
+                  className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                >
+                  About This Performance
+                </motion.div>
+                <div className={`mt-4 leading-relaxed ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+                  {performance.description}
                 </div>
-              )}
-            </div>
+                
+                {performance.ticketUrl && (
+                  <motion.div 
+                    className="pt-6"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                  >
+                    <a
+                      href={performance.ticketUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-orange-500 text-white hover:bg-orange-400 transition-colors w-full md:w-auto"
+                    >
+                      Buy Tickets
+                    </a>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
           </div>
+        </motion.div>
 
-          {/* Back Navigation */}
-          <div className="text-center pt-8">
-            <Link 
-              to="/performances" 
-              className={`inline-flex items-center px-6 py-2 text-sm font-semibold border ${borderColor} hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
-            >
-              ← Back to All Performances
-            </Link>
-          </div>
+        {/* Back Navigation */}
+        <motion.div 
+          className="text-center pt-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <Link 
+            to="/performances" 
+            className={`inline-flex items-center px-6 py-2 text-sm font-semibold border ${borderColor} hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
+          >
+            ← Back to All Performances
+          </Link>
         </motion.div>
       </div>
     </div>
