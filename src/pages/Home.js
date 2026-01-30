@@ -36,14 +36,6 @@ const Home = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % schoolImages.length);
-    }, 4000); // Change image every 4 seconds
-
-    return () => clearInterval(interval);
-  }, [schoolImages.length]);
-
   const schoolImages = [
     '/images/cdt-school.jpg',
     '/images/cdt-school-2.jpg',
@@ -51,6 +43,14 @@ const Home = () => {
     '/images/cdt-school-4.jpg',
     '/images/cdt-school-5.jpg'
   ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % schoolImages.length);
+    }, 4000); // Change image every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [schoolImages.length]);
 
   // Scroll-to-color effect for images
   useEffect(() => {
