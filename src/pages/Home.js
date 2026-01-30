@@ -11,6 +11,7 @@ const Home = () => {
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -35,6 +36,44 @@ const Home = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 2);
+    }, 4000); // Change image every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const schoolImages = [
+    '/images/cdt-school.jpg',
+    '/images/cdt-school-2.jpg'
+  ];
+
+  // Scroll-to-color effect for images
+  useEffect(() => {
+    const handleScroll = () => {
+      const images = document.querySelectorAll('.scroll-color-image');
+      images.forEach((img) => {
+        const rect = img.getBoundingClientRect();
+        const scrollY = window.scrollY;
+        const imageTop = rect.top + scrollY;
+        const windowHeight = window.innerHeight;
+        
+        // Calculate how much the image has been scrolled past
+        const scrollProgress = Math.max(0, Math.min(1, (scrollY - imageTop + windowHeight) / windowHeight));
+        
+        // Apply grayscale based on scroll (0% = color, 100% = grayscale)
+        const grayscaleAmount = Math.max(0, (1 - scrollProgress) * 100);
+        img.style.filter = `grayscale(${grayscaleAmount}%)`;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section with Full Width Performance */}
@@ -45,7 +84,21 @@ const Home = () => {
             <img
               src={featuredPerformance.image?.asset?.url || featuredPerformance.image?.url}
               alt={featuredPerformance.image.alt || 'Featured performance'}
-              className="w-full h-full object-cover grayscale contrast-110"
+              className="w-full h-full object-cover contrast-110 transition-all duration-1000 ease-in-out"
+              style={{
+                filter: 'grayscale(0%)',
+              }}
+              onLoad={(e) => {
+                const handleScroll = () => {
+                  const scrollY = window.scrollY;
+                  const maxScroll = window.innerHeight;
+                  const grayscaleAmount = Math.min(scrollY / maxScroll, 1);
+                  e.target.style.filter = `grayscale(${grayscaleAmount * 100}%)`;
+                };
+                
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
           </div>
@@ -62,7 +115,7 @@ const Home = () => {
               transition={{ duration: 0.8 }}
             >
               <motion.div
-                className={`font-nova-slim text-2xl md:text-3xl lg:text-4xl font-light tracking-tight text-white`}
+                className={`font-nova-slim text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
@@ -98,7 +151,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
-                Company Dance Theatre Jamaica presents a season of new and classic works in conversation with Caribbean sound, space, and history.
+                CDT Jamaica presents a season of new and classic works in conversation with Caribbean sound, space, and history.
               </motion.p>
               
               <motion.div
@@ -108,62 +161,16 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
                 <a
-                  href={featuredPerformance?.ticketUrl || "https://www.linktr.ee/cdtjamaica"}
+                  href={featuredPerformance?.ticketUrl || "https://www.miramarculturalcenter.org/Events-directory/Streams"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-8 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
                 >
                   Buy Tickets
                 </a>
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center px-8 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-white/30 text-white hover:bg-white/10 transition-colors"
-                >
-                  Play trailer
-                </button>
               </motion.div>
             </motion.div>
 
-            {/* Right Column - Season Info Card */}
-            <motion.div
-              className={`border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_12px_30px_rgba(0,0,0,0.3)] p-8 md:p-10`}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <motion.div
-                className="text-[10px] tracking-[0.12em] uppercase text-white/80 mb-6"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.4 }}
-              >
-                Season 2026 · Kingston, Jamaica
-              </motion.div>
-              
-              <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                <div className="border-b border-white/20 pb-4">
-                  <h3 className="text-white font-semibold mb-2">Featured Performance</h3>
-                  <p className="text-white/80 text-sm">{featuredPerformance?.venue || 'Venue TBA'}</p>
-                  <p className="text-white/60 text-xs mt-1">
-                    {featuredPerformance 
-                      ? `${new Date(featuredPerformance.date).toLocaleDateString('en-US', { weekday: 'long' })} · ${featuredPerformance.time}`
-                      : 'TBA'
-                    }
-                  </p>
-                </div>
-                
-                <div className="pt-2">
-                  <p className="text-white/70 text-sm leading-relaxed">
-                    Experience the vibrant rhythms and movements of Caribbean dance in this spectacular season opener.
-                  </p>
-                </div>
-              </motion.div>
-            </motion.div>
           </div>
         </div>
       </div>
@@ -332,110 +339,6 @@ const Home = () => {
           </div>
         </motion.section>
 
-        {/* SUPPORT TEASER */}
-        <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <div className="container mx-auto px-4">
-            <div className="grid gap-6 md:grid-cols-2">
-            {/* Philanthropy / Patron Programme */}
-            <motion.div
-              className={`flex flex-col items-center text-center gap-4 p-8 border ${borderColor} ${secondaryBg}`}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.42 }}
-            >
-              <motion.div
-                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.44 }}
-              >
-                Philanthropy
-              </motion.div>
-              <motion.div
-                className="text-lg md:text-xl uppercase"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.46 }}
-              >
-                Patron Programme
-              </motion.div>
-              <motion.p
-                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.48 }}
-              >
-                Join a community of supporters who believe in the power of dance to transform lives. Benefits include
-                rehearsal access and priority booking.
-              </motion.p>
-              <motion.button
-                type="button"
-                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
-                  isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                } transition-colors`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.5 }}
-              >
-                Learn more
-              </motion.button>
-            </motion.div>
-
-            {/* Education / Scholarship Fund */}
-            <motion.div
-              className={`flex flex-col items-center text-center gap-4 p-8 border ${borderColor} ${
-                isDarkMode ? 'border-dashed bg-black' : 'border-dashed bg-white'
-              }`}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.44 }}
-            >
-              <motion.div
-                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.46 }}
-              >
-                Education
-              </motion.div>
-              <motion.div
-                className="text-lg md:text-xl uppercase"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.48 }}
-              >
-                Scholarship Fund
-              </motion.div>
-              <motion.p
-                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.5 }}
-              >
-                Help us identify and train the next generation of Caribbean dance artists, regardless of their
-                financial background.
-              </motion.p>
-              <motion.button
-                type="button"
-                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
-                  isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                } transition-colors`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.52 }}
-              >
-                Donate now
-              </motion.button>
-            </motion.div>
-          </div>
-          </div>
-        </motion.section>
-
         {/* SCHOOL / TRAINING */}
         <motion.section
           className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
@@ -459,9 +362,8 @@ const Home = () => {
               </p>
               <div className="space-y-2 text-sm mt-4">
                 {[
-                  { label: 'Junior division', meta: 'Ages 4–10' },
-                  { label: 'Pre-professional', meta: 'Ages 11–18' },
-                  { label: 'Adult open', meta: 'Evenings + weekends' }
+                  { label: 'Juniors', meta: 'Ages 4–10' },
+                  { label: 'Adults', meta: 'Evenings + weekends' }
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -473,22 +375,14 @@ const Home = () => {
                 ))}
               </div>
               <div className="flex flex-wrap gap-3 mt-4">
-                <button
-                  type="button"
-                  className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
-                    isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                  } transition-colors`}
+                <a
+                  href="https://linktr.ee/cdtjamaica"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors`}
                 >
-                  Class schedule
-                </button>
-                <button
-                  type="button"
-                  className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border border-transparent ${
-                    isDarkMode ? 'text-gray-200 hover:bg-white/5' : 'text-gray-700 hover:bg-gray-100'
-                  } transition-colors`}
-                >
-                  Faculty list
-                </button>
+                  Registration
+                </a>
               </div>
             </motion.div>
             <motion.div
@@ -497,11 +391,29 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              <img
-                src="https://storage.googleapis.com/banani-generated-images/generated-images/5af85720-d5f2-47cd-ae66-b06199a02abb.jpg"
-                alt="School rehearsal"
-                className="w-full h-full object-cover grayscale"
-              />
+              {schoolImages.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`School rehearsal ${index + 1}`}
+                  className={`absolute inset-0 w-full h-full object-cover grayscale transition-opacity duration-1000 ease-in-out scroll-color-image ${
+                    index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
+              ))}
+              {/* Slideshow indicators */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {schoolImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                      index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
             </motion.div>
           </div>
           </div>
@@ -625,6 +537,110 @@ const Home = () => {
                 </motion.button>
               </div>
             </div>
+          </div>
+          </div>
+        </motion.section>
+
+        {/* SUPPORT TEASER */}
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.55 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="grid gap-6 md:grid-cols-2">
+            {/* Philanthropy / Patron Programme */}
+            <motion.div
+              className={`flex flex-col items-center text-center gap-4 p-8 border ${borderColor} ${secondaryBg}`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.57 }}
+            >
+              <motion.div
+                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.59 }}
+              >
+                Philanthropy
+              </motion.div>
+              <motion.div
+                className="text-lg md:text-xl uppercase"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.61 }}
+              >
+                Patron Programme
+              </motion.div>
+              <motion.p
+                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.63 }}
+              >
+                Join a community of supporters who believe in the power of dance to transform lives. Benefits include
+                rehearsal access and priority booking.
+              </motion.p>
+              <motion.button
+                type="button"
+                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                  isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                } transition-colors`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.65 }}
+              >
+                Learn more
+              </motion.button>
+            </motion.div>
+
+            {/* Education / Scholarship Fund */}
+            <motion.div
+              className={`flex flex-col items-center text-center gap-4 p-8 border ${borderColor} ${
+                isDarkMode ? 'border-dashed bg-black' : 'border-dashed bg-white'
+              }`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.59 }}
+            >
+              <motion.div
+                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.61 }}
+              >
+                Education
+              </motion.div>
+              <motion.div
+                className="text-lg md:text-xl uppercase"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.63 }}
+              >
+                Scholarship Fund
+              </motion.div>
+              <motion.p
+                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.65 }}
+              >
+                Help us identify and train the next generation of Caribbean dance artists, regardless of their
+                financial background.
+              </motion.p>
+              <motion.button
+                type="button"
+                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                  isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                } transition-colors`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.67 }}
+              >
+                Donate now
+              </motion.button>
+            </motion.div>
           </div>
           </div>
         </motion.section>

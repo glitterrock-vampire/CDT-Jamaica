@@ -8,6 +8,8 @@ import { urlFor } from '../lib/sanity';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
+  const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
+  const [isSchoolDropdownOpen, setIsSchoolDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [siteSettings, setSiteSettings] = useState(null);
   const location = useLocation();
@@ -30,6 +32,8 @@ const Navbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsAboutDropdownOpen(false);
+    setIsCompanyDropdownOpen(false);
+    setIsSchoolDropdownOpen(false);
   }, [location]);
 
   // Close mobile menu on Escape key
@@ -129,6 +133,113 @@ const Navbar = () => {
     </div>
   );
 
+  // Dropdown component for CDT Company menu
+  const CompanyDropdown = () => (
+    <div 
+      className="relative company-dropdown group"
+    >
+      <button
+        className={`text-base font-medium ${
+          location.pathname === '/repertoire' || location.pathname === '/performances' || location.pathname === '/about' || location.pathname === '/company'
+            ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
+            : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+        } transition-colors flex items-center gap-1`}
+      >
+        CDT Company
+        <svg 
+          className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
+      <div className={`absolute top-full left-0 mt-2 w-48 shadow-[0_12px_30px_rgba(0,0,0,0.08)] border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform scale-95 group-hover:scale-100 origin-top`}>
+        <Link
+          to="/repertoire"
+          onClick={() => setIsCompanyDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium rounded-t-lg border-b border-black/10 dark:border-white/10 ${
+            location.pathname === '/repertoire'
+              ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
+          } transition-colors`}
+        >
+          Repertoire
+        </Link>
+        <Link
+          to="/performances"
+          onClick={() => setIsCompanyDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium border-b border-black/10 dark:border-white/10 ${
+            location.pathname === '/performances'
+              ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
+          } transition-colors`}
+        >
+          Performances
+        </Link>
+        <Link
+          to="/about"
+          onClick={() => setIsCompanyDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium rounded-b-lg ${
+            location.pathname === '/about'
+              ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
+          } transition-colors`}
+        >
+          About
+        </Link>
+      </div>
+    </div>
+  );
+
+  // Dropdown component for CDT School menu
+  const SchoolDropdown = () => (
+    <div 
+      className="relative school-dropdown group"
+    >
+      <button
+        className={`text-base font-medium ${
+          location.pathname === '/school'
+            ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
+            : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+        } transition-colors flex items-center gap-1`}
+      >
+        CDT School
+        <svg 
+          className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
+      <div className={`absolute top-full left-0 mt-2 w-48 shadow-[0_12px_30px_rgba(0,0,0,0.08)] border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform scale-95 group-hover:scale-100 origin-top`}>
+        <a
+          href="https://linktr.ee/cdtjamaica"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setIsSchoolDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium rounded-t-lg border-b border-black/10 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400 transition-colors`}
+        >
+          Adult Registration
+        </a>
+        <a
+          href="https://linktr.ee/cdtjamaica"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setIsSchoolDropdownOpen(false)}
+          className={`block px-4 py-3 text-sm font-medium rounded-b-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400 transition-colors`}
+        >
+          Kids Registration
+        </a>
+      </div>
+    </div>
+  );
+
   // MobileNavLink component
   const MobileNavLink = ({ to, children }) => (
     <Link
@@ -144,11 +255,12 @@ const Navbar = () => {
   );
 
   return (
-    <nav className={`w-full transition-all duration-300 ${
-      scrolled 
-        ? 'bg-white/95 dark:bg-black backdrop-blur-md shadow-lg dark:shadow-black/30' 
-        : 'bg-white/80 dark:bg-black backdrop-blur-sm shadow-md dark:shadow-black/20'
-    }`}>
+    <>
+      <nav className={`w-full transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/95 dark:bg-black backdrop-blur-md shadow-lg dark:shadow-black/30' 
+          : 'bg-white/80 dark:bg-black backdrop-blur-sm shadow-md dark:shadow-black/20'
+      }`}>
       <div className="w-full px-6 lg:px-12 xl:px-16 2xl:px-24">
         <div className="flex items-center justify-between h-20">
           {/* Logo/Brand */}
@@ -178,39 +290,30 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/repertoire">Repertoire</NavLink>
+            <NavLink to="/about">Our Story</NavLink>
             <NavLink to="/performances">Performances</NavLink>
-            <div className="about-dropdown">
-              <AboutDropdown />
-            </div>
-            <NavLink to="/contact">Contact</NavLink>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-all duration-200 shadow-sm"
-              aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            <NavLink to="/repertoire">Repertoire</NavLink>
+            <a
+              href="https://linktr.ee/cdtjamaica"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
             >
-              {isDarkMode ? (
-                <FiSun className="w-5 h-5 text-yellow-400" />
-              ) : (
-                <FiMoon className="w-5 h-5 text-gray-800" />
-              )}
-            </button>
+              Training
+            </a>
+            <NavLink to="/contact">Contact</NavLink>
+            <a
+              href="https://linktr.ee/cdtjamaica"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-base font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors font-semibold"
+            >
+              Give
+            </a>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-4">
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none"
-              aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {isDarkMode ? (
-                <FiSun className="w-5 h-5 text-yellow-400" />
-              ) : (
-                <FiMoon className="w-5 h-5 text-gray-800" />
-              )}
-            </button>
+          <div className="md:hidden flex items-center">
             <div className="hamburger-menu" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               <div className="hamburger-lines">
                 <span className={`line line-1 ${isMenuOpen ? 'active' : ''}`}></span>
@@ -240,20 +343,32 @@ const Navbar = () => {
             </svg>
           </button>
           <ul className="menu-items">
-            <li className="menu-item"><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
-            <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
+            <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)}>Our Story</Link></li>
             <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li>
+            <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
             <li className="menu-item">
-              <div className="py-2">
-                <div className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider mb-2">About</div>
-                <ul className="space-y-1">
-                  <li><Link to="/about" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Our Story</Link></li>
-                  <li><Link to="/company#dancers" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Company Dancers</Link></li>
-                  <li><Link to="/company#board" onClick={() => setIsMenuOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Board of Directors</Link></li>
-                </ul>
-              </div>
+              <a
+                href="https://linktr.ee/cdtjamaica"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                Training
+              </a>
             </li>
             <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
+            <li className="menu-item">
+              <a
+                href="https://linktr.ee/cdtjamaica"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 dark:text-orange-400 hover:bg-gray-100 dark:hover:bg-gray-800 font-semibold"
+              >
+                Give
+              </a>
+            </li>
           </ul>
           <div className="mt-8">
             <button
@@ -277,6 +392,20 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+
+    {/* Floating Dark/Light Mode Toggle */}
+    <button
+      onClick={toggleDarkMode}
+      className="fixed bottom-6 right-6 z-50 p-3 rounded-full text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 dark:focus:ring-offset-gray-900 transition-all duration-300 border border-gray-200 dark:border-gray-700"
+      aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      {isDarkMode ? (
+        <FiSun className="w-5 h-5 text-yellow-400" />
+      ) : (
+        <FiMoon className="w-5 h-5 text-gray-800" />
+      )}
+    </button>
+    </>
   );
 };
 
