@@ -72,23 +72,73 @@ const Company = () => {
         <Hero
           image={siteSettings.heroImage}
           title="Our Company"
-          subtitle="Meet the talented dancers and dedicated board members"
+          subtitle="Meet our board members, management team, and talented dancers"
         />
       )}
-
-      {/* Meet Our Dancers */}
-      <div id="dancers">
-        <DancersGrid 
-          featuredOnly={false} 
-          title="Meet Our Dancers" 
-        />
-      </div>
 
       {/* Meet Our Board Members */}
       <div id="board">
         <BoardGrid 
           featuredOnly={false} 
-          title="Meet Our Board Members" 
+          title="Board of Directors" 
+        />
+      </div>
+
+      {/* Management Team */}
+      <div id="management">
+        <motion.div
+          className="py-16 md:py-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <motion.h2 
+                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                Management
+              </motion.h2>
+              <motion.p 
+                className={`text-lg max-w-2xl mx-auto ${mutedText}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                Meet the dedicated team that manages CDT Jamaica's operations and artistic vision
+              </motion.p>
+            </div>
+            
+            <motion.div 
+              className="max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className={`text-center py-12 px-8 rounded-lg border ${
+                isDarkMode 
+                  ? 'bg-gray-900/50 border-gray-800' 
+                  : 'bg-gray-50 border-gray-200'
+              }`}>
+                <div className="text-6xl mb-4">👥</div>
+                <h3 className="text-xl font-semibold mb-3">Management Team Coming Soon</h3>
+                <p className={mutedText}>
+                  Our management team information will be available shortly. Please check back soon to meet the talented professionals who help keep CDT Jamaica running smoothly.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Meet Our Dancers */}
+      <div id="dancers">
+        <DancersGrid 
+          featuredOnly={false} 
+          title="Company Dancers" 
         />
       </div>
     </div>
