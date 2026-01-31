@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import { getUpcomingPerformances, getFeaturedPerformance } from '../lib/performances';
 import { getSiteSettings, urlFor } from '../lib/sanity';
+import Calendar from '../components/Calendar/Calendar';
 
 const Home = () => {
   const { isDarkMode } = useTheme();
@@ -12,6 +13,14 @@ const Home = () => {
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showFullCalendar, setShowFullCalendar] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categories = ["All", "Main Stage", "International", "Showcase"];
+
+  const filteredPerformances = selectedCategory === "All" 
+    ? upcomingPerformances 
+    : upcomingPerformances.filter(p => p.category === selectedCategory);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -179,13 +188,14 @@ const Home = () => {
       </div>
 
       {/* Main Content */}
-      {/* UPCOMING PERFORMANCES */}
-      <motion.section
-        className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
+      {/* UPCOMING PERFORMANCES - Only show if there are performances */}
+      {upcomingPerformances.length > 0 && (
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
         <div className="container mx-auto px-4">
           <div className="flex flex-col gap-8">
             <motion.div
@@ -203,12 +213,12 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.36 }}
               >
-                <Link
-                  to="/performances"
+                <button
+                  onClick={() => setShowFullCalendar(!showFullCalendar)}
                   className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
                 >
-                  Full calendar →
-                </Link>
+                  {showFullCalendar ? 'Hide calendar' : 'Full calendar'} {showFullCalendar ? '↑' : '↓'}
+                </button>
               </motion.div>
             </motion.div>
 
@@ -277,9 +287,47 @@ const Home = () => {
                 );
               })}
             </div>
+
+            {/* Calendar Dropdown */}
+            <AnimatePresence>
+              {showFullCalendar && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-8"
+                >
+                  {/* Category Filters */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2 overflow-x-auto">
+                      {categories.map((category) => (
+                        <motion.button
+                          key={category}
+                          onClick={() => setSelectedCategory(category)}
+                          className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                            selectedCategory === category
+                              ? 'bg-orange-500 text-white shadow-md'
+                              : `${isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
+                          }`}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          {category}
+                        </motion.button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Calendar Component */}
+                  <Calendar performances={filteredPerformances} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           </div>
         </motion.section>
+      )}
 
         {/* ABOUT / MISSION */}
         <motion.section

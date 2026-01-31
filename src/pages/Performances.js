@@ -6,6 +6,7 @@ import { Hero } from '../components/Hero';
 import { getPerformances } from '../lib/performances';
 import { getSiteSettings } from '../lib/siteSettings';
 import { builder } from '../lib/sanityClient';
+import Calendar from '../components/Calendar/Calendar';
 
 const categories = ["All", "Main Stage", "International", "Showcase"];
 
@@ -15,6 +16,7 @@ export default function PerformancesPage() {
   const [performances, setPerformances] = useState([]);
   const [loading, setLoading] = useState(true);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [viewMode, setViewMode] = useState("grid"); // "grid" or "calendar"
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -85,104 +87,143 @@ export default function PerformancesPage() {
         </div>
       </div>
 
-      {/* Filter Section */}
+      {/* View Toggle Section */}
       <div className="container mx-auto px-4">
-        <div className="flex items-center gap-2 overflow-x-auto py-4">
-          {categories.map((category) => (
-            <motion.button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                selectedCategory === category
-                  ? 'bg-orange-500 text-white shadow-md'
-                  : `${isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
+        <div className="flex items-center justify-between py-4">
+          <div className="flex items-center gap-2 overflow-x-auto">
+            {categories.map((category) => (
+              <motion.button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                  selectedCategory === category
+                    ? 'bg-orange-500 text-white shadow-md'
+                    : `${isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {category}
+              </motion.button>
+            ))}
+          </div>
+          
+          <div className={`inline-flex rounded-lg border ${borderColor} p-1`}>
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                viewMode === 'grid'
+                  ? 'bg-orange-500 text-white'
+                  : isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
-              {category}
-            </motion.button>
-          ))}
+              Grid View
+            </button>
+            <button
+              onClick={() => setViewMode('calendar')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                viewMode === 'calendar'
+                  ? 'bg-orange-500 text-white'
+                  : isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
+              }`}
+            >
+              Calendar View
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Performances Grid */}
-      <div className="container mx-auto px-4 py-8">
-        {loading ? (
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-            <p className={`mt-4 text-xl ${mutedText}`}>Loading performances...</p>
-          </div>
-        ) : (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedCategory}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="grid gap-5 md:grid-cols-3 mt-6"
-            >
-              {filteredPerformances.map((performance, index) => {
-                const dateObj = new Date(performance.date);
-                const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
-                const day = dateObj.getDate();
-                
-                return (
-                  <Link
-                    key={performance._id}
-                    to={`/performance/${performance.slug?.current || performance._id}`}
-                    className="block group"
-                  >
-                    <motion.div
-                      className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
-                      initial={{ opacity: 0, y: 18 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.04 }}
-                    >
-                      <motion.div
-                        className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.05 + index * 0.04 }}
-                      >
-                        <span>{performance.category}</span>
-                        <span>{month} {day}</span>
-                      </motion.div>
-                      <div className={`h-40 border ${borderColor} overflow-hidden`}>
-                        <img
-                          src={getImageUrl(performance.image)}
-                          alt={performance.image?.alt || performance.title}
-                          className="w-full h-full object-cover group-hover:grayscale-0 transition-all duration-300"
-                        />
-                      </div>
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.1 + index * 0.04 }}
-                      >
-                        <div className="text-lg font-bold uppercase mb-1">{performance.title}</div>
-                        <div className={`text-sm font-semibold ${mutedText}`}>{performance.company}</div>
-                        <div className={`text-sm font-semibold ${mutedText}`}>{performance.time}</div>
-                      </motion.div>
-                    </motion.div>
-                  </Link>
-                );
-              })}
-            </motion.div>
-          </AnimatePresence>
-        )}
-
-        {!loading && filteredPerformances.length === 0 && (
+      {/* Content Section */}
+      <AnimatePresence mode="wait">
+        {viewMode === 'calendar' ? (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
+            key="calendar"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            <p className={`text-xl ${mutedText}`}>No performances found in this category.</p>
+            <Calendar performances={filteredPerformances} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="grid"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Performances Grid */}
+            <div className="container mx-auto px-4 py-8">
+              {loading ? (
+                <div className="text-center py-20">
+                  <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+                  <p className={`mt-4 text-xl ${mutedText}`}>Loading performances...</p>
+                </div>
+              ) : (
+                <div className="grid gap-5 md:grid-cols-3 mt-6">
+                  {filteredPerformances.map((performance, index) => {
+                    const dateObj = new Date(performance.date);
+                    const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
+                    const day = dateObj.getDate();
+                    
+                    return (
+                      <Link
+                        key={performance._id}
+                        to={`/performance/${performance.slug?.current || performance._id}`}
+                        className="block group"
+                      >
+                        <motion.div
+                          className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                          initial={{ opacity: 0, y: 18 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: index * 0.04 }}
+                        >
+                          <motion.div
+                            className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.05 + index * 0.04 }}
+                          >
+                            <span>{performance.category}</span>
+                            <span>{month} {day}</span>
+                          </motion.div>
+                          <div className={`h-40 border ${borderColor} overflow-hidden`}>
+                            <img
+                              src={getImageUrl(performance.image)}
+                              alt={performance.image?.alt || performance.title}
+                              className="w-full h-full object-cover group-hover:grayscale-0 transition-all duration-300"
+                            />
+                          </div>
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.1 + index * 0.04 }}
+                          >
+                            <div className="text-lg font-bold uppercase mb-1">{performance.title}</div>
+                            <div className={`text-sm font-semibold ${mutedText}`}>{performance.company}</div>
+                            <div className={`text-sm font-semibold ${mutedText}`}>{performance.time}</div>
+                          </motion.div>
+                        </motion.div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+
+              {!loading && filteredPerformances.length === 0 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-20"
+                >
+                  <p className={`text-xl ${mutedText}`}>No performances found in this category.</p>
+                </motion.div>
+              )}
+            </div>
           </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 }
