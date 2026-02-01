@@ -5,67 +5,77 @@ import { useTheme } from '../../context/ThemeContext';
 export default function FounderSection() {
   const { isDarkMode } = useTheme();
 
+  const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
+
   return (
-    <section id="our-founder" className={`relative ${isDarkMode ? 'bg-black' : 'bg-white'}`}>
-      {/* Quote Section */}
-      <div className="relative">
-        <div className="container mx-auto px-4 py-20 md:py-32">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Image */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
+    <section id="our-founder" className={`py-12 md:py-16 bg-black`}>
+      <div className="container mx-auto px-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto"
+        >
+          {/* Header */}
+          <motion.div
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <div>
+              <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Our Legacy</div>
+              <div className="text-xl md:text-2xl uppercase">Our Founder</div>
+            </div>
+          </motion.div>
+
+          {/* Main Content Card */}
+          <motion.div
+            className={`p-4 md:p-6 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300`}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {/* Name Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="mb-6"
             >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800"
-                  alt="CDT Jamaica Founder"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            </motion.div>
-            
-            {/* Quote */}
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-8"
-            >
-              <blockquote className="relative">
-                <span className="text-orange-500 text-8xl font-serif absolute -top-8 -left-4 opacity-50">"</span>
-                <p className={`${isDarkMode ? 'text-white' : 'text-black'} text-2xl md:text-3xl lg:text-4xl font-light leading-relaxed italic pl-8`}>
-                  Dance is for everybody. I believe that dance came from the people and that it should always be delivered back to the people.
-                </p>
-              </blockquote>
-              <p className="text-orange-500 text-xl font-medium pl-8">— CDT Jamaica Founder</p>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Biography Section */}
-      <div className={`py-20 ${isDarkMode ? 'bg-gradient-to-b from-black to-zinc-900' : 'bg-gradient-to-b from-white to-gray-50'}`}>
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center space-y-6"
-            >
-              <h2 className="text-orange-500 text-sm font-bold tracking-[0.3em] uppercase">Our Founder</h2>
-              <h3 className={`${isDarkMode ? 'text-white' : 'text-black'} text-3xl md:text-4xl font-light leading-relaxed`}>
-                Our founder was an incomparable dancer, a forward-facing visionary, and one of the most significant choreographers in Caribbean dance, whose work changed the course of modern dance in Jamaica forever. Their legacy lives on today.
+              <h2 className="text-orange-500 text-sm font-bold tracking-[0.3em] uppercase mb-4">Founder</h2>
+              <h3 className={`${isDarkMode ? 'text-white' : 'text-black'} text-xl font-bold mb-2`}>
+                TONY WILSON O.D.
               </h3>
             </motion.div>
-          </div>
-        </div>
+
+            {/* Content */}
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+            >
+              <p className={`${isDarkMode ? 'text-white/90' : 'text-black/90'} text-lg leading-relaxed`}>
+                <span className="text-orange-500 font-semibold">Mr. Tony Wilson</span>, our beloved "Sir", contributed immensely to the performing arts, specifically to modern dance, in Jamaica for over 30 years.
+              </p>
+              
+              <p className={`${isDarkMode ? 'text-white/90' : 'text-black/90'} text-lg leading-relaxed`}>
+                Our Sir, after having suffered a number of severe strokes, passed away on October 16, 2024.
+              </p>
+
+              {/* Legacy Info */}
+              <div className={`pt-4 border-t ${borderColor}`}>
+                <div className={`text-xs ${mutedText} uppercase tracking-[0.12em] mb-2`}>Legacy</div>
+                <p className={`${isDarkMode ? 'text-white/80' : 'text-black/80'} text-lg leading-relaxed`}>
+                  His pioneering work and contribution to Jamaican arts and culture continue to inspire and guide CDT Jamaica's mission to bring dynamic, highly-technical, cutting-edge modern dance to the Jamaican stage and beyond.
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

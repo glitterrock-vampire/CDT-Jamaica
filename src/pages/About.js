@@ -5,10 +5,9 @@ import { Hero } from '../components/Hero';
 import SectionNav from '../components/ailey/SectionNav';
 import IntroSection from '../components/ailey/IntroSection';
 import FounderSection from '../components/ailey/FounderSection';
-import OrganizationGrid from '../components/ailey/OrganizationGrid';
 import MissionSection from '../components/ailey/MissionSection';
 import PeopleSection from '../components/ailey/PeopleSection';
-import LocationSection from '../components/ailey/LocationSection';
+import CompanySection from '../components/ailey/CompanySection';
 import { getSiteSettings } from '../lib/siteSettings';
 
 const About = () => {
@@ -19,25 +18,56 @@ const About = () => {
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
-  // Hide main navbar when scrolling on About page
+  // Smooth navbar transition on About page
   useEffect(() => {
     let timeoutId;
+    let lastScrollY = 0;
+    let isTransitioning = false;
     
     const handleScroll = () => {
       const navbar = document.querySelector('nav');
       const secondaryNav = document.querySelector('[data-secondary-nav]');
       
-      if (navbar && secondaryNav) {
+      if (navbar && secondaryNav && !isTransitioning) {
         const scrollY = window.scrollY;
         const secondaryNavTop = secondaryNav.offsetTop;
+        const threshold = secondaryNavTop - 150; // Start transition earlier
         
-        if (scrollY >= secondaryNavTop - 100) {
-          // Hide main navbar completely
-          navbar.style.display = 'none';
-        } else {
-          // Show main navbar
-          navbar.style.display = '';
+        // Scrolling down and approaching secondary nav
+        if (scrollY >= threshold && scrollY > lastScrollY) {
+          isTransitioning = true;
+          
+          // Smooth fade out main navbar
+          navbar.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+          navbar.style.opacity = '0';
+          navbar.style.transform = 'translateY(-20px)';
+          
+          setTimeout(() => {
+            navbar.style.display = 'none';
+            isTransitioning = false;
+          }, 300);
         }
+        // Scrolling up and away from secondary nav
+        else if (scrollY < threshold - 50 || scrollY < lastScrollY) {
+          isTransitioning = true;
+          
+          // Show navbar with smooth fade in
+          navbar.style.display = '';
+          navbar.style.transition = 'opacity 0.3s ease-in, transform 0.3s ease-in';
+          navbar.style.opacity = '0';
+          navbar.style.transform = 'translateY(-20px)';
+          
+          requestAnimationFrame(() => {
+            navbar.style.opacity = '1';
+            navbar.style.transform = 'translateY(0)';
+          });
+          
+          setTimeout(() => {
+            isTransitioning = false;
+          }, 300);
+        }
+        
+        lastScrollY = scrollY;
       }
     };
 
@@ -45,16 +75,19 @@ const About = () => {
     timeoutId = setTimeout(() => {
       window.addEventListener('scroll', handleScroll, { passive: true });
       handleScroll(); // Check initial position after delay
-    }, 500); // 500ms delay
+    }, 500);
     
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
       window.removeEventListener('scroll', handleScroll);
-      // Reset navbar display when leaving page
+      // Reset navbar styles when leaving page
       const navbar = document.querySelector('nav');
       if (navbar) {
+        navbar.style.transition = '';
+        navbar.style.opacity = '';
+        navbar.style.transform = '';
         navbar.style.display = '';
       }
     };
@@ -102,11 +135,10 @@ const About = () => {
           <div className="flex flex-wrap gap-2 md:gap-4 justify-center items-center">
             {[
               { id: 'our-founder', label: 'Our Founder' },
-              { id: 'our-organization', label: 'Our Organization' },
+              { id: 'the-company', label: 'The Company' },
               { id: 'our-mission', label: 'Our Mission' },
-              { id: 'our-people', label: 'Our People' },
-              { id: 'our-location', label: 'Our Location' },
-            ].map((item) => (
+              { id: 'our-people', label: 'Our People' }
+            ].map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => {
@@ -135,10 +167,9 @@ const About = () => {
       {/* Content Sections */}
       <IntroSection />
       <FounderSection />
-      <OrganizationGrid />
+      <CompanySection />
       <MissionSection />
       <PeopleSection />
-      <LocationSection />
     </div>
   );
 };

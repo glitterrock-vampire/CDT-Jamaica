@@ -654,18 +654,20 @@ const Home = () => {
                 </motion.div>
 
                 {/* Download brochure button */}
-                <motion.button
-                  type="button"
+                <motion.a
+                  href="https://drive.google.com/file/d/1QFtkeI2cGyEXoaCnQoChasgnZ87Q6njT/view"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`flex items-center justify-between px-3 py-2 text-sm border ${borderColor} ${cardBg} ${
                     isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                  } transition-colors`}
+                  } transition-colors cursor-pointer`}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.68 }}
                 >
-                  <span>Download 2025 Brochure</span>
+                  <span>Download Brochure</span>
                   <span className="text-xs">⤓</span>
-                </motion.button>
+                </motion.a>
               </div>
             </div>
           </div>

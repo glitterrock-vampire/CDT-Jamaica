@@ -29,10 +29,10 @@ const DancerCard = ({ dancer, index }) => {
               <img
                 src={getHeadshotUrl(dancer.headshot)}
                 alt={dancer.headshot.alt || dancer.name}
-                className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
               />
-              {/* Color overlay effect */}
-              <div className="absolute inset-0 bg-gradient-to-t from-orange-500/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {/* Subtle color overlay effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-orange-500/5 via-transparent to-transparent opacity-100 group-hover:opacity-60 transition-opacity duration-500"></div>
             </>
           ) : (
             <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>

@@ -21,15 +21,19 @@ const BoardMemberCard = ({ boardMember, index }) => {
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -5 }}
     >
-      <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} transition-all duration-300 group-hover:border-orange-500/50`}>
+      <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} transition-all duration-300 group-hover:border-orange-500/50 group-hover:shadow-lg`}>
         {/* Headshot Image */}
-        <div className="aspect-square overflow-hidden">
+        <div className="aspect-square overflow-hidden relative">
           {boardMember.headshot ? (
-            <img
-              src={getHeadshotUrl(boardMember.headshot)}
-              alt={boardMember.headshot.alt || boardMember.name}
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
+            <>
+              <img
+                src={getHeadshotUrl(boardMember.headshot)}
+                alt={boardMember.headshot.alt || boardMember.name}
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+              />
+              {/* Subtle color overlay effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-orange-500/5 via-transparent to-transparent opacity-100 group-hover:opacity-60 transition-opacity duration-500"></div>
+            </>
           ) : (
             <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
               <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
