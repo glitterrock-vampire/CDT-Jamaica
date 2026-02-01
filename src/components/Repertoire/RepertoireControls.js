@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../../context/ThemeContext';
 import { 
   FiSearch, 
   FiFilter, 
@@ -20,6 +21,7 @@ const sortOptions = [
 ];
 
 const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) => {
+  const { isDarkMode } = useTheme();
   const [showSort, setShowSort] = React.useState(false);
   
   const getSortLabel = () => {
@@ -27,17 +29,21 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
     return option ? option.label : 'Sort by...';
   };
 
+  const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
+
   return (
     <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-center md:justify-between mb-8">
       {/* Search - Left aligned */}
       <div className="relative w-full md:w-96">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <FiSearch className="text-gray-400" />
+          <FiSearch className={mutedText} />
         </div>
         <input
           type="text"
           placeholder="Search by title, choreographer, or year..."
-          className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          className={`pl-10 pr-4 py-2 border ${borderColor} rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-transparent w-full ${cardBg} ${isDarkMode ? 'text-white' : 'text-black'} transition-colors duration-200`}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -47,7 +53,7 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
             className="absolute inset-y-0 right-0 pr-3 flex items-center"
             aria-label="Clear search"
           >
-            <FiX className="text-gray-400 hover:text-gray-600" />
+            <FiX className={`${mutedText} hover:text-orange-500 transition-colors`} />
           </button>
         )}
       </div>
@@ -56,24 +62,24 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
       <div className="relative">
         <button
           onClick={() => setShowSort(!showSort)}
-          className="flex items-center space-x-2 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-colors duration-200"
+          className={`flex items-center space-x-2 px-4 py-2 border ${borderColor} ${cardBg} rounded-md hover:border-orange-500/50 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-transparent transition-all duration-200`}
           aria-haspopup="true"
           aria-expanded={showSort}
         >
-          <FiFilter className="text-gray-600" />
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{getSortLabel()}</span>
+          <FiFilter className={mutedText} />
+          <span className={`text-sm font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>{getSortLabel()}</span>
           {showSort ? (
-            <FiChevronUp className="text-gray-500" />
+            <FiChevronUp className={mutedText} />
           ) : (
-            <FiChevronDown className="text-gray-500" />
+            <FiChevronDown className={mutedText} />
           )}
         </button>
 
         {/* Sort Dropdown */}
         {showSort && (
-          <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-700">
+          <div className={`absolute right-0 mt-2 w-64 ${cardBg} rounded-md shadow-lg z-10 border ${borderColor}`}>
             <div className="py-1">
-              <div className="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <div className={`px-4 py-2 text-xs font-semibold ${mutedText} uppercase tracking-wider`}>
                 Sort by
               </div>
               {sortOptions.map((option) => {
@@ -85,13 +91,15 @@ const RepertoireControls = ({ searchTerm, setSearchTerm, sortBy, setSortBy }) =>
                       setSortBy(option.id);
                       setShowSort(false);
                     }}
-                    className={`w-full text-left px-4 py-2 text-sm flex items-center ${
+                    className={`w-full text-left px-4 py-2 text-sm flex items-center transition-colors ${
                       isSelected
-                        ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                        ? `${isDarkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`
+                        : `${isDarkMode ? 'text-gray-300 hover:bg-gray-800' : 'text-gray-700 hover:bg-gray-100'}`
                     }`}
                   >
-                    {option.icon}
+                    <span className={isSelected ? 'text-orange-500' : ''}>
+                      {option.icon}
+                    </span>
                     {option.label}
                   </button>
                 );

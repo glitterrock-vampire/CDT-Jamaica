@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
-import { getUpcomingPerformances, getFeaturedPerformance } from '../lib/performances';
+import { getUpcomingPerformances, getFeaturedPerformance, getVideosByCategory, getAllVideos } from '../lib/performances';
 import { getSiteSettings, urlFor } from '../lib/sanity';
 import Calendar from '../components/Calendar/Calendar';
 
@@ -12,15 +12,9 @@ const Home = () => {
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [newsArchiveVideos, setNewsArchiveVideos] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showFullCalendar, setShowFullCalendar] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
-  const categories = ["All", "Main Stage", "International", "Showcase"];
-
-  const filteredPerformances = selectedCategory === "All" 
-    ? upcomingPerformances 
-    : upcomingPerformances.filter(p => p.category === selectedCategory);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -30,14 +24,24 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [upcoming, featured, settings] = await Promise.all([
+        const [upcoming, featured, settings, allVideos] = await Promise.all([
           getUpcomingPerformances(),
           getFeaturedPerformance(),
-          getSiteSettings()
+          getSiteSettings(),
+          getAllVideos() // Temporarily fetch all videos
         ]);
         setUpcomingPerformances(upcoming || []);
         setFeaturedPerformance(featured);
         setSiteSettings(settings);
+        
+        // Filter for newsArchive, videoLog, signals, and null category videos
+        const newsVideos = allVideos.filter(video => 
+          video.category === 'newsArchive' || 
+          video.category === 'videoLog' || 
+          video.category === 'signals' ||
+          video.category === null
+        );
+        setNewsArchiveVideos(newsVideos);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -133,8 +137,8 @@ const Home = () => {
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 {featuredPerformance 
-                  ? `${new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`
-                  : 'Date TBA'
+                  ? <span className="font-share-tech font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                  : <span className="font-share-tech font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
                 }
               </motion.div>
               
@@ -214,7 +218,21 @@ const Home = () => {
                 transition={{ duration: 0.4, delay: 0.36 }}
               >
                 <button
-                  onClick={() => setShowFullCalendar(!showFullCalendar)}
+                  onClick={() => {
+                    setShowFullCalendar(!showFullCalendar);
+                    if (!showFullCalendar) {
+                      // Smooth scroll to dropdown after a longer delay for full expansion
+                      setTimeout(() => {
+                        const dropdownElement = document.getElementById('performances-dropdown');
+                        if (dropdownElement) {
+                          dropdownElement.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                          });
+                        }
+                      }, 300);
+                    }
+                  }}
                   className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
                 >
                   {showFullCalendar ? 'Hide calendar' : 'Full calendar'} {showFullCalendar ? '↑' : '↓'}
@@ -240,27 +258,24 @@ const Home = () => {
                       transition={{ duration: 0.5, delay: 0.38 + index * 0.04 }}
                     >
                       <motion.div
-                        className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.4 + index * 0.04 }}
-                      >
-                        <span>{perf.category}</span>
-                        <span>{month} {day}</span>
-                      </motion.div>
-                      <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                       >
-                        <div className="text-sm font-semibold uppercase mb-1">{perf.title}</div>
-                        <div className={`text-[11px] ${mutedText}`}>{perf.venue} · {perf.location}</div>
-                        <div className={`mt-3 h-40 border ${borderColor} overflow-hidden`}>
+                        <div className="text-sm font-semibold uppercase mb-1 ml-1">{perf.title}</div>
+                        <div className={`text-[11px] ${mutedText} ml-1`}>{perf.venue} · {perf.location}</div>
+                        <div className={`mt-3 relative border-b ${borderColor} overflow-hidden`} style={{ aspectRatio: '3/4' }}>
                           <img
                             src={perf.image?.asset?.url || perf.image?.url}
                             alt={perf.image?.alt || perf.title}
-                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                            className="w-full h-full object-cover transition-all duration-300"
                           />
+                          {/* Date Overlay */}
+                          <div className="absolute top-3 left-3">
+                            <span className="font-share-tech font-bold text-white text-6xl tracking-tight drop-shadow-lg">
+                              {month} {day}, 2026
+                            </span>
+                          </div>
                         </div>
                       </motion.div>
                       <motion.p
@@ -292,35 +307,76 @@ const Home = () => {
             <AnimatePresence>
               {showFullCalendar && (
                 <motion.div
+                  id="performances-dropdown"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
                   className="mt-8"
                 >
-                  {/* Category Filters */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-2 overflow-x-auto">
-                      {categories.map((category) => (
-                        <motion.button
-                          key={category}
-                          onClick={() => setSelectedCategory(category)}
-                          className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                            selectedCategory === category
-                              ? 'bg-orange-500 text-white shadow-md'
-                              : `${isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
-                          }`}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
+                  {/* Additional Performances Grid - Show 2 more (items 4-5) */}
+                  <div className="grid gap-5 md:grid-cols-3">
+                    {upcomingPerformances.slice(3, 5).map((perf, index) => {
+                      const dateObj = new Date(perf.date);
+                      const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
+                      const day = dateObj.getDate();
+                      return (
+                        <Link
+                          key={perf._id}
+                          to={`/performance/${perf.slug?.current || perf._id}`}
+                          className="block group"
                         >
-                          {category}
-                        </motion.button>
-                      ))}
-                    </div>
+                          <motion.div
+                            className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                            initial={{ opacity: 0, y: 18 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.04 }}
+                          >
+                            <motion.div
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
+                            >
+                              <div className="text-sm font-semibold uppercase mb-1">{perf.title}</div>
+                              <div className={`text-[11px] ${mutedText}`}>{perf.venue} · {perf.location}</div>
+                              <div className={`mt-3 relative border-b ${borderColor} overflow-hidden`} style={{ aspectRatio: '3/4' }}>
+                                <img
+                                  src={perf.image?.asset?.url || perf.image?.url}
+                                  alt={perf.image?.alt || perf.title}
+                                  className="w-full h-full object-cover transition-all duration-300"
+                                />
+                                {/* Date Overlay */}
+                                <div className="absolute top-3 left-3">
+                                  <span className="font-share-tech font-bold text-white text-6xl tracking-tight drop-shadow-lg">
+                                    {month} {day}
+                                  </span>
+                                </div>
+                              </div>
+                            </motion.div>
+                            <motion.p
+                              className={`text-xs leading-snug ${mutedText}`}
+                              initial={{ opacity: 0, y: 8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
+                            >
+                              {perf.description}
+                            </motion.p>
+                            <motion.button
+                              type="button"
+                              className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
+                                isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                              } transition-colors`}
+                              initial={{ opacity: 0, y: 6 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
+                            >
+                              Get Tickets
+                            </motion.button>
+                          </motion.div>
+                        </Link>
+                      );
+                    })}
                   </div>
-
-                  {/* Calendar Component */}
-                  <Calendar performances={filteredPerformances} />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -329,7 +385,7 @@ const Home = () => {
         </motion.section>
       )}
 
-        {/* ABOUT / MISSION */}
+      {/* ABOUT / MISSION */}
         <motion.section
           className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
           initial={{ opacity: 0, y: 20 }}
@@ -502,44 +558,68 @@ const Home = () => {
             </motion.div>
 
             <div className="grid gap-6 md:grid-cols-[2fr,1.2fr] items-start">
-              {/* Video log card */}
-              <motion.div
-                className={`grid grid-rows-[auto,1fr,auto] border ${borderColor} ${cardBg}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.58 }}
-              >
-                <motion.div
-                  className={`flex items-center justify-between px-3 py-2 text-[10px] tracking-[0.12em] uppercase border-b ${borderColor} ${mutedText}`}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.6 }}
-                >
-                  <span>Video log 07</span>
-                  <span>Play</span>
-                </motion.div>
-                <motion.div
-                  className="relative overflow-hidden min-h-[220px]"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.62 }}
-                >
-                  <img
-                    src="https://storage.googleapis.com/banani-generated-images/generated-images/a462e780-9779-4d37-8f9b-2e99bbe0dc2b.jpg"
-                    alt="Studio log"
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-                <motion.div
-                  className="px-3 py-3 space-y-1"
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.64 }}
-                >
-                  <div className="text-sm font-medium">Studio notes: Island Pulse</div>
-                  <div className={`text-[11px] ${mutedText}`}>Rehearsal footage · 06 min</div>
-                </motion.div>
-              </motion.div>
+              {/* Video card from Sanity */}
+              {newsArchiveVideos.length > 0 && newsArchiveVideos.map((video, index) => {
+                const dateObj = new Date(video.publishedAt);
+                const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
+                const day = dateObj.getDate();
+                return (
+                    <div
+                      key={video._key}
+                      className={`border ${borderColor} ${cardBg} rounded-lg overflow-hidden group cursor-pointer`}
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.58 + index * 0.1 }}
+                      onClick={() => {
+                        // Toggle video play/pause
+                        const videoElement = document.getElementById(`video-${video._key}`);
+                        if (videoElement) {
+                          if (videoElement.paused) {
+                            videoElement.play();
+                          } else {
+                            videoElement.pause();
+                          }
+                        }
+                      }}
+                    >
+                      {/* Video Player - Full Cover */}
+                      <div className="relative w-full aspect-video">
+                        <video
+                          id={`video-${video._key}`}
+                          className="w-full h-full object-cover"
+                          poster={video.thumbnail?.asset?.url || ''}
+                          preload="metadata"
+                          muted
+                          playsInline
+                        >
+                          <source src={video.videoFile.asset.url} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                        
+                        {/* Date Overlay */}
+                        <div className="absolute top-3 left-3">
+                          <span className="font-share-tech font-bold text-white text-lg tracking-tight drop-shadow-lg">
+                            {month} {day}
+                          </span>
+                        </div>
+                        
+                        {/* Play Button Overlay - Only show when paused */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none">
+                          <div className="bg-white/90 rounded-full p-4">
+                            <svg className="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Title Only - No Grey Section */}
+                      <div className="p-4">
+                        <div className="text-lg font-bold uppercase">{video.title}</div>
+                      </div>
+                    </div>
+                );
+              })}
 
               {/* Side cards */}
               <div className="flex flex-col gap-4">

@@ -10,7 +10,10 @@ module.exports = {
       fontFamily: {
         'nova-slim': ['"Nova Slim"', 'system-ui', 'sans-serif'],
         'raleway': ['Raleway', 'sans-serif'],
-        'amarante': ['Amarante', 'serif']
+        'amarante': ['Amarante', 'serif'],
+        'inter-tight': ['"Inter Tight"', 'sans-serif'],
+        'work-sans': ['"Work Sans"', 'sans-serif'],
+        'share-tech': ['"Share Tech"', 'sans-serif']
       },
       colors: {
         primary: {

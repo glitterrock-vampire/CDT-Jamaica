@@ -559,6 +559,236 @@
         "name": "description",
         "type": "text",
         "title": "Site Description"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "source": "title",
+                  "maxLength": 96
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "custom"
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "slug",
+                "type": "slug"
+              },
+              {
+                "rows": 3,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Video Log",
+                      "value": "videoLog"
+                    },
+                    {
+                      "title": "Studio Log",
+                      "value": "studioLog"
+                    },
+                    {
+                      "title": "Performance",
+                      "value": "performance"
+                    },
+                    {
+                      "title": "Interview",
+                      "value": "interview"
+                    },
+                    {
+                      "title": "Behind the Scenes",
+                      "value": "behindTheScenes"
+                    },
+                    {
+                      "title": "Other",
+                      "value": "other"
+                    }
+                  ]
+                },
+                "initialValue": "videoLog",
+                "name": "videoType",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "accept": "video/*"
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "videoFile",
+                "type": "file"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Optional thumbnail image for the video",
+                "name": "thumbnail",
+                "type": "image",
+                "title": "Thumbnail Image"
+              },
+              {
+                "description": "Video duration in format MM:SS or HH:MM:SS",
+                "name": "duration",
+                "type": "string"
+              },
+              {
+                "name": "publishedAt",
+                "type": "datetime"
+              },
+              {
+                "initialValue": false,
+                "name": "isFeatured",
+                "type": "boolean",
+                "title": "Featured Video"
+              },
+              {
+                "options": {
+                  "layout": "tags"
+                },
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "tags",
+                "type": "array"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Signals",
+                      "value": "signals"
+                    },
+                    {
+                      "title": "News + Archive",
+                      "value": "newsArchive"
+                    },
+                    {
+                      "title": "Video Log",
+                      "value": "videoLog"
+                    },
+                    {
+                      "title": "Studio Log",
+                      "value": "studioLog"
+                    },
+                    {
+                      "title": "Performance",
+                      "value": "performance"
+                    },
+                    {
+                      "title": "Rehearsal",
+                      "value": "rehearsal"
+                    },
+                    {
+                      "title": "Interview",
+                      "value": "interview"
+                    }
+                  ]
+                },
+                "name": "category",
+                "type": "string"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "If you prefer to host on Vimeo instead of uploading directly",
+                "name": "vimeoUrl",
+                "type": "url",
+                "title": "Vimeo URL (Optional)"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "If you prefer to host on YouTube instead of uploading directly",
+                "name": "youtubeUrl",
+                "type": "url",
+                "title": "YouTube URL (Optional)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "videos",
+        "type": "array"
       }
     ],
     "name": "siteSettings",

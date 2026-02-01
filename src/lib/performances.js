@@ -1,5 +1,22 @@
 import { client } from './sanityClient';
 
+// Helper function to fix timezone issues with Sanity dates
+const fixSanityDate = (date) => {
+  if (!date) return null;
+  
+  // If date is a string, create a Date object
+  const dateObj = new Date(date);
+  
+  // Get the date components in UTC to avoid timezone shifts
+  const year = dateObj.getUTCFullYear();
+  const month = dateObj.getUTCMonth();
+  const day = dateObj.getUTCDate();
+  
+  // Create a new Date object using the local timezone with UTC components
+  // This preserves the original date that was stored in Sanity
+  return new Date(year, month, day);
+};
+
 export const getPerformances = async () => {
   const query = `
     *[_type == "performance"] | order(date asc) {
@@ -26,7 +43,11 @@ export const getPerformances = async () => {
   
   try {
     const performances = await client.fetch(query);
-    return performances;
+    // Fix timezone issues for each performance
+    return performances.map(performance => ({
+      ...performance,
+      date: fixSanityDate(performance.date)
+    }));
   } catch (error) {
     console.error('Error fetching performances:', error);
     return [];
@@ -59,7 +80,11 @@ export const getUpcomingPerformances = async () => {
   
   try {
     const performances = await client.fetch(query);
-    return performances;
+    // Fix timezone issues for each performance
+    return performances.map(performance => ({
+      ...performance,
+      date: fixSanityDate(performance.date)
+    }));
   } catch (error) {
     console.error('Error fetching upcoming performances:', error);
     return [];
@@ -89,6 +114,10 @@ export const getFeaturedPerformance = async () => {
   
   try {
     const performance = await client.fetch(query);
+    // Fix timezone issue for the performance
+    if (performance) {
+      performance.date = fixSanityDate(performance.date);
+    }
     return performance;
   } catch (error) {
     console.error('Error fetching featured performance:', error);
@@ -129,10 +158,258 @@ export const getPerformanceBySlug = async (slug) => {
   try {
     console.log('Executing query with clean slug:', cleanSlug);
     const performance = await client.fetch(query, { slug: cleanSlug });
+    // Fix timezone issue for the performance
+    if (performance) {
+      performance.date = fixSanityDate(performance.date);
+    }
     console.log('Query result:', performance);
     return performance;
   } catch (error) {
     console.error('Error fetching performance:', error);
+    return null;
+  }
+};
+
+export const getVideos = async () => {
+  const query = `
+    *[_type == "siteSettings"][0] {
+      videos[] {
+        _key,
+        title,
+        slug,
+        description,
+        videoType,
+        videoFile {
+          asset-> {
+            _id,
+            url,
+            originalFilename
+          }
+        },
+        thumbnail {
+          asset-> {
+            _id,
+            url
+          },
+          alt
+        },
+        duration,
+        publishedAt,
+        isFeatured,
+        tags,
+        category,
+        vimeoUrl,
+        youtubeUrl
+      }
+    }
+  `;
+  
+  try {
+    const siteSettings = await client.fetch(query);
+    const videos = siteSettings?.videos || [];
+    // Fix timezone issues for publishedAt dates
+    return videos.map(video => ({
+      ...video,
+      publishedAt: fixSanityDate(video.publishedAt)
+    }));
+  } catch (error) {
+    console.error('Error fetching videos:', error);
+    return [];
+  }
+};
+
+export const getFeaturedVideos = async () => {
+  const query = `
+    *[_type == "siteSettings"][0] {
+      videos[isFeatured == true] {
+        _key,
+        title,
+        slug,
+        description,
+        videoType,
+        videoFile {
+          asset-> {
+            _id,
+            url,
+            originalFilename
+          }
+        },
+        thumbnail {
+          asset-> {
+            _id,
+            url
+          },
+          alt
+        },
+        duration,
+        publishedAt,
+        isFeatured,
+        tags,
+        category,
+        vimeoUrl,
+        youtubeUrl
+      }
+    }
+  `;
+  
+  try {
+    const siteSettings = await client.fetch(query);
+    const videos = siteSettings?.videos || [];
+    // Fix timezone issues for publishedAt dates
+    return videos.map(video => ({
+      ...video,
+      publishedAt: fixSanityDate(video.publishedAt)
+    }));
+  } catch (error) {
+    console.error('Error fetching featured videos:', error);
+    return [];
+  }
+};
+
+export const getAllVideos = async () => {
+  const query = `
+    *[_type == "siteSettings"][0] {
+      videos[] {
+        _key,
+        title,
+        slug,
+        description,
+        videoType,
+        videoFile {
+          asset-> {
+            _id,
+            url,
+            originalFilename
+          }
+        },
+        thumbnail {
+          asset-> {
+            _id,
+            url
+          },
+          alt
+        },
+        duration,
+        publishedAt,
+        isFeatured,
+        tags,
+        category,
+        vimeoUrl,
+        youtubeUrl
+      }
+    }
+  `;
+  
+  try {
+    const siteSettings = await client.fetch(query);
+    const videos = siteSettings?.videos || [];
+    // Fix timezone issues for publishedAt dates
+    return videos.map(video => ({
+      ...video,
+      publishedAt: fixSanityDate(video.publishedAt)
+    }));
+  } catch (error) {
+    console.error('Error fetching all videos:', error);
+    return [];
+  }
+};
+
+export const getVideosByCategory = async (category) => {
+  const query = `
+    *[_type == "siteSettings"][0] {
+      videos[category == $category] {
+        _key,
+        title,
+        slug,
+        description,
+        videoType,
+        videoFile {
+          asset-> {
+            _id,
+            url,
+            originalFilename
+          }
+        },
+        thumbnail {
+          asset-> {
+            _id,
+            url
+          },
+          alt
+        },
+        duration,
+        publishedAt,
+        isFeatured,
+        tags,
+        category,
+        vimeoUrl,
+        youtubeUrl
+      }
+    }
+  `;
+  
+  try {
+    console.log('Fetching videos for category:', category);
+    const siteSettings = await client.fetch(query, { category });
+    console.log('Site settings result:', siteSettings);
+    const videos = siteSettings?.videos || [];
+    console.log('Filtered videos:', videos);
+    // Fix timezone issues for publishedAt dates
+    return videos.map(video => ({
+      ...video,
+      publishedAt: fixSanityDate(video.publishedAt)
+    }));
+  } catch (error) {
+    console.error('Error fetching videos by category:', error);
+    return [];
+  }
+};
+
+export const getVideoBySlug = async (slug) => {
+  const query = `
+    *[_type == "siteSettings"][0] {
+      videos[slug.current == $slug || _key == $slug] {
+        _key,
+        title,
+        slug,
+        description,
+        videoType,
+        videoFile {
+          asset-> {
+            _id,
+            url,
+            originalFilename
+          }
+        },
+        thumbnail {
+          asset-> {
+            _id,
+            url
+          },
+          alt
+        },
+        duration,
+        publishedAt,
+        isFeatured,
+        tags,
+        category,
+        vimeoUrl,
+        youtubeUrl
+      }
+    }
+  `;
+  
+  try {
+    const siteSettings = await client.fetch(query, { slug });
+    const videos = siteSettings?.videos || [];
+    const video = Array.isArray(videos) ? videos[0] : (videos || null);
+    // Fix timezone issue for the video
+    if (video) {
+      video.publishedAt = fixSanityDate(video.publishedAt);
+    }
+    return video;
+  } catch (error) {
+    console.error('Error fetching video by slug:', error);
     return null;
   }
 };

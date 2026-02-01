@@ -8,6 +8,7 @@ import About from './pages/About';
 import Company from './pages/Company';
 import DanceDetail from './pages/DanceDetail';
 import PerformanceDetail from './pages/PerformanceDetail';
+import VideoDetail from './pages/VideoDetail';
 import Contact from './pages/Contact';
 import Performances from './pages/Performances';
 import { getSiteSettings } from './lib/siteSettings';
@@ -78,6 +79,13 @@ function App() {
           <Layout>
             <PageScrollReveal>
               <PerformanceDetail />
+            </PageScrollReveal>
+          </Layout>
+        } />
+        <Route path="/video/:slug" element={
+          <Layout>
+            <PageScrollReveal>
+              <VideoDetail />
             </PageScrollReveal>
           </Layout>
         } />

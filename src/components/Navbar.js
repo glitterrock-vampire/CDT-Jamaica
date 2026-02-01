@@ -293,14 +293,6 @@ const Navbar = () => {
             <NavLink to="/about">Our Story</NavLink>
             <NavLink to="/performances">Performances</NavLink>
             <NavLink to="/repertoire">Repertoire</NavLink>
-            <a
-              href="https://linktr.ee/cdtjamaica"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-            >
-              Training
-            </a>
             <NavLink to="/contact">Contact</NavLink>
             <a
               href="https://linktr.ee/cdtjamaica"
@@ -346,17 +338,6 @@ const Navbar = () => {
             <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)}>Our Story</Link></li>
             <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li>
             <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
-            <li className="menu-item">
-              <a
-                href="https://linktr.ee/cdtjamaica"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-              >
-                Training
-              </a>
-            </li>
             <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
             <li className="menu-item">
               <a
