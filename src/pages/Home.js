@@ -90,6 +90,83 @@ const Home = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Auto-play video when scrolled into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const videoElement = entry.target;
+          if (entry.isIntersecting) {
+            // Video is in view, start playing muted (browsers allow this)
+            if (videoElement.paused && !videoElement.ended) {
+              videoElement.muted = true; // Ensure muted for autoplay
+              videoElement.play().catch(err => {
+                // Autoplay might be blocked by browser, that's okay
+                console.log('Autoplay blocked:', err);
+              });
+            }
+          } else {
+            // Video is out of view, pause it if it's playing
+            if (!videoElement.paused) {
+              videoElement.pause();
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.5 // Start playing when 50% of video is visible
+      }
+    );
+
+    // Observe all videos in the news archive
+    const videos = document.querySelectorAll('[id^="video-"]');
+    videos.forEach((video) => {
+      observer.observe(video);
+    });
+
+    return () => {
+      // Cleanup observer
+      videos.forEach((video) => {
+        observer.unobserve(video);
+      });
+    };
+  }, [newsArchiveVideos]); // Re-run when videos change
+
+  // Update mute button icons based on video state
+  useEffect(() => {
+    const updateMuteButtons = () => {
+      const videos = document.querySelectorAll('[id^="video-"]');
+      videos.forEach((video) => {
+        const muteButton = video.parentElement?.querySelector('[data-mute-button]');
+        if (muteButton) {
+          const icon = muteButton.querySelector('svg');
+          if (video.muted) {
+            // Show muted icon (speaker with slash)
+            icon.innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+          } else {
+            // Show unmuted icon (speaker)
+            icon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+          }
+        }
+      });
+    };
+
+    // Update icons initially and on video state changes
+    updateMuteButtons();
+    
+    // Listen for volume changes
+    const videos = document.querySelectorAll('[id^="video-"]');
+    videos.forEach((video) => {
+      video.addEventListener('volumechange', updateMuteButtons);
+    });
+
+    return () => {
+      videos.forEach((video) => {
+        video.removeEventListener('volumechange', updateMuteButtons);
+      });
+    };
+  }, [newsArchiveVideos]);
+
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section with Full Width Performance */}
@@ -571,11 +648,13 @@ const Home = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.58 + index * 0.1 }}
                       onClick={() => {
-                        // Toggle video play/pause
+                        // Manual toggle play/pause with state check
                         const videoElement = document.getElementById(`video-${video._key}`);
                         if (videoElement) {
                           if (videoElement.paused) {
-                            videoElement.play();
+                            videoElement.play().catch(err => {
+                              console.log('Play failed:', err);
+                            });
                           } else {
                             videoElement.pause();
                           }
@@ -589,7 +668,7 @@ const Home = () => {
                           className="w-full h-full object-cover"
                           poster={video.thumbnail?.asset?.url || ''}
                           preload="metadata"
-                          muted
+                          muted={false}
                           playsInline
                         >
                           <source src={video.videoFile.asset.url} type="video/mp4" />
@@ -602,6 +681,27 @@ const Home = () => {
                             {month} {day}
                           </span>
                         </div>
+                        
+                        {/* Mute/Unmute Button */}
+                        <button
+                          data-mute-button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent video click
+                            const videoElement = document.getElementById(`video-${video._key}`);
+                            if (videoElement) {
+                              videoElement.muted = !videoElement.muted;
+                              // Trigger volumechange event to update icon
+                              const event = new Event('volumechange');
+                              videoElement.dispatchEvent(event);
+                            }
+                          }}
+                          className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                          title="Toggle mute"
+                        >
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                          </svg>
+                        </button>
                         
                         {/* Play Button Overlay - Only show when paused */}
                         <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none">
