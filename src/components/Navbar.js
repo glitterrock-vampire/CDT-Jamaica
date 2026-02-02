@@ -140,7 +140,7 @@ const Navbar = () => {
     >
       <button
         className={`text-base font-medium ${
-          location.pathname === '/repertoire' || location.pathname === '/performances' || location.pathname === '/about' || location.pathname === '/company'
+          location.pathname === '/repertoire' || location.pathname === '/about' || location.pathname === '/company'
             ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
             : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
         } transition-colors flex items-center gap-1`}
@@ -160,7 +160,7 @@ const Navbar = () => {
         <Link
           to="/repertoire"
           onClick={() => setIsCompanyDropdownOpen(false)}
-          className={`block px-4 py-3 text-sm font-medium rounded-t-lg border-b border-black/10 dark:border-white/10 ${
+          className={`block px-4 py-3 text-sm font-medium border-b border-black/10 dark:border-white/10 ${
             location.pathname === '/repertoire'
               ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
@@ -168,7 +168,7 @@ const Navbar = () => {
         >
           Repertoire
         </Link>
-        <Link
+        {/* <Link
           to="/performances"
           onClick={() => setIsCompanyDropdownOpen(false)}
           className={`block px-4 py-3 text-sm font-medium border-b border-black/10 dark:border-white/10 ${
@@ -178,7 +178,7 @@ const Navbar = () => {
           } transition-colors`}
         >
           Performances
-        </Link>
+        </Link> */}
         <Link
           to="/about"
           onClick={() => setIsCompanyDropdownOpen(false)}
@@ -291,7 +291,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
             <NavLink to="/about">Our Story</NavLink>
-            <NavLink to="/performances">Performances</NavLink>
+            {/* <NavLink to="/performances">Performances</NavLink> */}
             <NavLink to="/repertoire">Repertoire</NavLink>
             <NavLink to="/contact">Contact</NavLink>
             <a
@@ -336,7 +336,7 @@ const Navbar = () => {
           </button>
           <ul className="menu-items">
             <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)}>Our Story</Link></li>
-            <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li>
+            {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
             <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
             <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
             <li className="menu-item">

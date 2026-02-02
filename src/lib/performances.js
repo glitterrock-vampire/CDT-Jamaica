@@ -1,4 +1,4 @@
-import { client } from './sanityClient';
+import { client } from './sanity';
 
 // Helper function to fix timezone issues with Sanity dates
 const fixSanityDate = (date) => {
@@ -133,8 +133,19 @@ export const getFeaturedPerformance = async () => {
 export const getPerformanceBySlug = async (slug) => {
   console.log('getPerformanceBySlug called with slug:', slug);
   
+  // Try multiple slug formats to handle different naming conventions
+  const possibleSlugs = [
+    slug, // Original slug as-is
+    slug.startsWith('performance-') ? slug.replace('performance-', '') : slug, // Without prefix
+    slug.startsWith('performance-') ? slug : `performance-${slug}`, // With prefix
+  ];
+  
+  // Remove duplicates
+  const uniqueSlugs = [...new Set(possibleSlugs)];
+  console.log('Trying slugs:', uniqueSlugs);
+  
   const query = `
-    *[_type == "performance" && slug.current == $slug][0] {
+    *[_type == "performance" && slug.current in $slugs][0] {
       _id,
       title,
       company,
@@ -157,7 +168,7 @@ export const getPerformanceBySlug = async (slug) => {
   `;
   
   try {
-    const performance = await client.fetch(query, { slug });
+    const performance = await client.fetch(query, { slugs: uniqueSlugs });
     console.log('Query result:', performance);
     if (performance) {
       performance.date = fixSanityDate(performance.date);

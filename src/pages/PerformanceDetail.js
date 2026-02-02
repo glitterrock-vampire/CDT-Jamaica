@@ -24,13 +24,15 @@ const PerformanceDetail = () => {
         return;
       }
 
-      console.log('Fetching performance with slug:', slug);
+      console.log('PerformanceDetail: Fetching performance with slug:', slug);
+      console.log('PerformanceDetail: Full URL:', window.location.href);
+      
       try {
         const data = await getPerformanceBySlug(slug);
-        console.log('Performance data:', data);
+        console.log('PerformanceDetail: Fetched data:', data);
         setPerformance(data);
       } catch (error) {
-        console.error('Error fetching performance:', error);
+        console.error('PerformanceDetail: Error fetching performance:', error);
       } finally {
         setLoading(false);
       }

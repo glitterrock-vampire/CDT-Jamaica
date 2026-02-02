@@ -322,6 +322,14 @@ const Home = () => {
                 const dateObj = new Date(perf.date);
                 const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
                 const day = dateObj.getDate();
+                
+                console.log(`Home: Performance tile ${index}:`, {
+                  title: perf.title,
+                  slug: perf.slug?.current,
+                  _id: perf._id,
+                  fullPerf: perf
+                });
+                
                 return (
                   <Link
                     key={perf._id}
