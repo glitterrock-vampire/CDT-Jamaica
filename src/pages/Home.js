@@ -325,7 +325,7 @@ const Home = () => {
                 return (
                   <Link
                     key={perf._id}
-                    to={`/performance/${perf.slug?.current || perf._id}`}
+                    to={`/performance/${perf.slug?.current}`}
                     className="block group"
                   >
                     <motion.div
@@ -400,7 +400,7 @@ const Home = () => {
                       return (
                         <Link
                           key={perf._id}
-                          to={`/performance/${perf.slug?.current || perf._id}`}
+                          to={`/performance/${perf.slug?.current}`}
                           className="block group"
                         >
                           <motion.div

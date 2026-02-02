@@ -74,7 +74,10 @@ export const getUpcomingPerformances = async () => {
       description,
       category,
       ticketUrl,
-      isUpcoming
+      isUpcoming,
+      slug {
+        current
+      }
     }[0...5]
   `;
   
@@ -96,7 +99,9 @@ export const getFeaturedPerformance = async () => {
     *[_type == "performance" && isFeatured == true] | order(date asc) [0] {
       _id,
       title,
-      slug,
+      slug {
+        current
+      },
       date,
       time,
       venue,
@@ -128,10 +133,6 @@ export const getFeaturedPerformance = async () => {
 export const getPerformanceBySlug = async (slug) => {
   console.log('getPerformanceBySlug called with slug:', slug);
   
-  // Remove 'performance-' prefix if it exists
-  const cleanSlug = slug.startsWith('performance-') ? slug.replace('performance-', '') : slug;
-  console.log('Clean slug:', cleanSlug);
-  
   const query = `
     *[_type == "performance" && slug.current == $slug][0] {
       _id,
@@ -156,17 +157,15 @@ export const getPerformanceBySlug = async (slug) => {
   `;
   
   try {
-    console.log('Executing query with clean slug:', cleanSlug);
-    const performance = await client.fetch(query, { slug: cleanSlug });
-    // Fix timezone issue for the performance
+    const performance = await client.fetch(query, { slug });
+    console.log('Query result:', performance);
     if (performance) {
       performance.date = fixSanityDate(performance.date);
     }
-    console.log('Query result:', performance);
     return performance;
   } catch (error) {
-    console.error('Error fetching performance:', error);
-    return null;
+    console.error('Error fetching performance by slug:', error);
+    throw error;
   }
 };
 

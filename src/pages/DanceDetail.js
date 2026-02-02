@@ -24,12 +24,17 @@ const DanceDetail = () => {
         return;
       }
       
+      console.log('DanceDetail: Fetching dance with ID:', id);
+      
       try {
         setLoading(true);
         const data = await getRepertoireItemById(id);
+        console.log('DanceDetail: Fetched data:', data);
         if (data) {
           setDance(data);
-          
+        } else {
+          console.error('DanceDetail: No data returned for ID:', id);
+          setError('No dance found with this ID');
         }
       } catch (err) {
         console.error('Error fetching dance details:', err);

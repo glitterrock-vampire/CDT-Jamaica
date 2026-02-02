@@ -19,8 +19,11 @@ const RepertoireItem = ({ item }) => {
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
   const handleClick = () => {
+    console.log('RepertoireItem clicked:', { _id, title });
     if (_id) {
       navigate(`/dance/${_id}`);
+    } else {
+      console.error('RepertoireItem: No _id available for item:', item);
     }
   };
 

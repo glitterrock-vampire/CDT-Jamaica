@@ -115,8 +115,9 @@ export const getRepertoireItemById = async (id) => {
   }
 
   try {
-    // Ensure the ID is in the correct format (add 'drafts.' prefix if it's a draft)
-    const docId = id.startsWith('drafts.') ? id : `drafts.${id}`;
+    // Check if the ID is already a draft ID
+    const isDraft = id.startsWith('drafts.');
+    const draftId = isDraft ? id : `drafts.${id}`;
     
     const query = `*[_type == "repertoireItem" && (_id == $id || _id == $draftId)][0]{
       _id,
@@ -197,10 +198,10 @@ export const getRepertoireItemById = async (id) => {
       }
     }`;
     
-    console.log(`Fetching repertoire item with ID: ${id} (also checking ${docId})`);
+    console.log(`Fetching repertoire item with ID: ${id} (also checking ${draftId})`);
     const item = await client.fetch(query, { 
       id,
-      draftId: docId 
+      draftId 
     });
     
     if (!item) {
