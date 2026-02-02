@@ -470,67 +470,6 @@ const Home = () => {
         </motion.section>
       )}
 
-      {/* ABOUT / MISSION */}
-        <motion.section
-          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.35 }}
-        >
-          <div className="container mx-auto px-4">
-            <div className="grid gap-10 md:grid-cols-2 items-start">
-            <div className="space-y-3">
-              <motion.div
-                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.4 }}
-              >
-                About Us
-              </motion.div>
-              <motion.div
-                className="text-2xl md:text-3xl uppercase leading-tight"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.45 }}
-              >
-                Moving the Caribbean forward through the language of dance.
-              </motion.div>
-            </div>
-            <div className="space-y-4">
-              <motion.p
-                className={`text-sm md:text-base leading-relaxed ${mutedText}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                Founded in 1995, CDT Jamaica has grown into the region&apos;s premier contemporary dance company. We are
-                dedicated to creating works that reflect the complexity, beauty, and resilience of our culture.
-              </motion.p>
-              <motion.div
-                className={`flex flex-wrap gap-6 pt-4 mt-2 border-t ${borderColor}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.55 }}
-              >
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-bold">30+</div>
-                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Years Active</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-bold">120</div>
-                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Original Works</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-bold">15k</div>
-                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Students Taught</div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-          </div>
-        </motion.section>
-
         {/* SCHOOL / TRAINING */}
         <motion.section
           className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
@@ -886,42 +825,7 @@ const Home = () => {
           </div>
         </motion.section>
 
-        {/* NEWSLETTER (kept simple because global Footer already exists) */}
-        <motion.section
-          className={`py-10 md:py-12 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.55 }}
-        >
-          <div className="container mx-auto px-4">
-            <div className="max-w-xl space-y-4">
-            <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Newsletter</div>
-            <div className="text-lg md:text-xl">
-              Signals from the studio and stage, once a month.
-            </div>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center max-w-md mt-2"
-            >
-              <input
-                type="email"
-                required
-                placeholder="email@address.com"
-                className={`flex-1 px-3 py-2 text-sm outline-none border ${borderColor} ${
-                  isDarkMode ? 'bg-neutral-900 text-white' : 'bg-gray-50 text-black'
-                }`}
-              />
-              <button
-                type="submit"
-                className="mt-2 sm:mt-0 sm:ml-0 px-5 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase bg-black text-white border border-black dark:bg-white dark:text-black dark:border-white"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-          </div>
-        </motion.section>
-    </div>
+        </div>
   );
 };
 
