@@ -4,36 +4,17 @@ import { motion } from 'framer-motion';
 export default function HeroSection() {
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background Image Collage */}
-      <div className="absolute inset-0 flex">
-        {/* Left panels */}
-        <div className="flex-1 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10" />
-          <img 
-            src="https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800" 
-            alt="Dance performance"
-            className="w-full h-full object-cover opacity-70"
-          />
-        </div>
-        
-        {/* Center - darker */}
-        <div className="flex-1 relative bg-black/90">
-          <img 
-            src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800" 
-            alt="Historical dance"
-            className="w-full h-full object-cover opacity-30 grayscale"
-          />
-        </div>
-        
-        {/* Right panels */}
-        <div className="flex-1 relative">
-          <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent z-10" />
-          <img 
-            src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=800" 
-            alt="Dance performance"
-            className="w-full h-full object-cover opacity-70 hue-rotate-15"
-          />
-        </div>
+      {/* Background Video */}
+      <div className="absolute inset-0">
+        <iframe
+          src="https://www.youtube.com/embed/zby-l0-XkBc?autoplay=1&mute=1&loop=1&playlist=zby-l0-XkBc&controls=0&showinfo=0&rel=0&modestbranding=1"
+          className="w-full h-full object-cover"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          title="Company Dance Video"
+        />
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40 z-10" />
       </div>
       
       {/* Overlay gradient */}

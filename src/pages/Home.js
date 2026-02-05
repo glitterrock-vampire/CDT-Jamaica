@@ -206,19 +206,15 @@ const Home = () => {
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section with Video Background */}
       <div className={`relative w-full min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} overflow-hidden`}>
-        {/* Video Background - Local Video File */}
+        {/* Video Background - YouTube Video */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
+          <iframe
+            src="https://www.youtube.com/embed/zby-l0-XkBc?autoplay=1&mute=1&loop=1&playlist=zby-l0-XkBc&controls=0&showinfo=0&rel=0&modestbranding=1"
             className="w-full h-full object-cover"
-            preload="auto"
-            poster="/images/CDT Streams Photo.jpg"
-          >
-            <source src="/videos/CDT Promo 2025.mp4" type="video/mp4" />
-          </video>
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            title="Company Dance Video"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
         </div>
 
