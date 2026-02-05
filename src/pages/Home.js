@@ -13,7 +13,7 @@ const Home = () => {
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
   const [newsArchiveVideos, setNewsArchiveVideos] = useState([]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(2);
   const [showFullCalendar, setShowFullCalendar] = useState(false);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
@@ -204,7 +204,7 @@ const Home = () => {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src="https://drive.google.com/uc?export=download&id=1ijjUm1wpzthQ5UWfr_9gKfGuzb6y5jrl" type="video/mp4" />
+            <source src="https://drive.google.com/uc?export=download&id=1a1K6lFdpbAkMeakCzcJ6r7Q0E3hjbN6r" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
         </div>
@@ -220,19 +220,19 @@ const Home = () => {
               transition={{ duration: 0.8 }}
             >
               <motion.div
-                className={`font-sans text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
+                className={`font-heading text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 {featuredPerformance 
-                  ? <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
-                  : <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
+                  ? <span className="font-heading font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
+                  : <span className="font-heading font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
                 }
               </motion.div>
               
               <motion.h1 
-                className="font-sans text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
+                className="font-heading text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
                 style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -241,22 +241,13 @@ const Home = () => {
                 {featuredPerformance?.title || 'Featured Performance'}
               </motion.h1>
               
-              <motion.div
-                className={`text-lg md:text-xl text-white`}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                CDT at Miramar Cultural Center
-              </motion.div>
-              
               <motion.p
-                className={`text-base md:text-lg max-w-xl leading-relaxed text-white/90`}
+                className={`font-body text-base md:text-lg max-w-xl leading-relaxed text-white/90`}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
-                CDT Jamaica presents a season of new and classic works in conversation with Caribbean sound, space, and history.
+                CDT presents "Streams", a contemporary Caribbean dance performance that honors the legacy of Mr. Tony Wilson, OD, while exploring movement, memory, and identity through expressive choreography.
               </motion.p>
               
               <motion.div
@@ -298,7 +289,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.32 }}
             >
               <div>
-                <div className="text-xl md:text-2xl uppercase">Upcoming Performances</div>
+                <div className="text-xl md:text-2xl uppercase font-heading">Upcoming Performances</div>
               </div>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
@@ -355,11 +346,11 @@ const Home = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                       >
-                        <div className="text-2xl md:text-3xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 ml-1 leading-none">
+                        <div className="text-2xl md:text-3xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 ml-1 leading-none font-heading">
                           {formatPerformanceDate(perf.date)}
                         </div>
-                        <div className="text-2xl md:text-3xl font-semibold uppercase mb-2 ml-1">{perf.title}</div>
-                        <div className={`text-lg ${mutedText} ml-1 mb-4`}>{perf.venue} · {perf.location}</div>
+                        <div className="text-2xl md:text-3xl font-semibold uppercase mb-2 ml-1 font-heading">{perf.title}</div>
+                        <div className={`text-lg font-body ${mutedText} ml-1 mb-4`}>{perf.venue} · {perf.location}</div>
                         <div className={`relative border-b ${borderColor} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
                           <img
                             src={perf.image?.asset?.url || perf.image?.url}
@@ -369,7 +360,7 @@ const Home = () => {
                         </div>
                       </motion.div>
                       <motion.p
-                        className={`text-base leading-snug ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
+                        className={`text-base leading-snug font-body ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
@@ -425,11 +416,11 @@ const Home = () => {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                             >
-                              <div className="text-4xl md:text-5xl font-bold tracking-[0.18em] uppercase text-orange-500 mb-3 leading-none">
+                              <div className="text-2xl md:text-3xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none font-heading">
                                 {formatPerformanceDate(perf.date)}
                               </div>
-                              <div className="text-2xl md:text-3xl font-semibold uppercase mb-2">{perf.title}</div>
-                              <div className={`text-lg ${mutedText} mb-4`}>{perf.venue} · {perf.location}</div>
+                              <div className="text-2xl md:text-3xl font-semibold uppercase mb-2 font-heading">{perf.title}</div>
+                              <div className={`text-lg font-body ${mutedText} mb-4`}>{perf.venue} · {perf.location}</div>
                               <div className={`relative border-b ${borderColor} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
                                 <img
                                   src={perf.image?.asset?.url || perf.image?.url}
@@ -439,7 +430,7 @@ const Home = () => {
                               </div>
                             </motion.div>
                             <motion.p
-                              className={`text-base leading-snug ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
+                              className={`text-base leading-snug font-body ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
                               initial={{ opacity: 0, y: 8 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
@@ -486,7 +477,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.47 }}
             >
               <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>The school</div>
-              <h2 className="text-3xl md:text-4xl uppercase">Training for all ages.</h2>
+              <h2 className="text-3xl md:text-4xl uppercase font-heading">Training for all ages.</h2>
               <p className={`text-base md:text-lg max-w-md leading-relaxed ${mutedText}`}>
                 From first steps to pre-professional study, CDT Jamaica School offers programmes in contemporary, ballet,
                 and Jamaican folk forms led by working artists.
@@ -568,7 +559,7 @@ const Home = () => {
             >
               <div>
                 <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div>
-                <div className="text-2xl md:text-3xl uppercase">News + archive</div>
+                <div className="text-2xl md:text-3xl uppercase font-heading">News + archive</div>
               </div>
               <motion.button
                 type="button"
@@ -630,7 +621,7 @@ const Home = () => {
                   <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>
                     Announcement · Aug 12
                   </div>
-                  <div className="text-base font-medium">New artistic director appointed</div>
+                  <div className="text-base font-medium font-body">New artistic director appointed</div>
                   <div className={`text-sm leading-relaxed ${mutedText}`}>
                     Choreographer James Bennett joins CDT Jamaica to lead the 2025–2028 seasons.
                   </div>
@@ -682,7 +673,7 @@ const Home = () => {
                 Philanthropy
               </motion.div>
               <motion.div
-                className="text-xl md:text-2xl uppercase"
+                className="text-xl md:text-2xl uppercase font-heading"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.61 }}
@@ -729,7 +720,7 @@ const Home = () => {
                 Education
               </motion.div>
               <motion.div
-                className="text-xl md:text-2xl uppercase"
+                className="text-xl md:text-2xl uppercase font-heading"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.63 }}

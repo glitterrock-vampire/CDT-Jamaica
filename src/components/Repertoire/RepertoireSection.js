@@ -58,7 +58,7 @@ const RepertoireSection = ({ title, items, isLoading = false }) => {
   return (
     <section className="mb-12">
       <motion.h2 
-        className="text-2xl font-bold mb-6 text-gray-800 dark:text-white border-b-2 border-gray-200 dark:border-gray-700 pb-2"
+        className="text-2xl font-bold mb-6 text-gray-800 dark:text-white border-b-2 border-gray-200 dark:border-gray-700 pb-2 font-heading"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
       >

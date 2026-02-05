@@ -78,7 +78,7 @@ export default function PerformancesPage() {
             transition={{ duration: 0.6 }}
           >
             <p
-              className={`text-xl md:text-2xl ${mutedText} font-light leading-tight tracking-wide max-w-3xl`}
+              className={`text-xl md:text-2xl ${mutedText} font-light font-body leading-tight tracking-wide max-w-3xl`}
               style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.1)' }}
             >
               Experience the power of dance that celebrates Caribbean culture and inspires audiences worldwide
@@ -95,7 +95,7 @@ export default function PerformancesPage() {
               <motion.button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                className={`px-4 py-2 rounded-full text-sm font-medium font-body whitespace-nowrap transition-all ${
                   selectedCategory === category
                     ? 'bg-orange-500 text-white shadow-md'
                     : `${isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
@@ -111,7 +111,7 @@ export default function PerformancesPage() {
           <div className={`inline-flex rounded-lg border ${borderColor} p-1`}>
             <button
               onClick={() => setViewMode('grid')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-md text-sm font-medium font-body transition-colors ${
                 viewMode === 'grid'
                   ? 'bg-orange-500 text-white'
                   : isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
@@ -121,7 +121,7 @@ export default function PerformancesPage() {
             </button>
             <button
               onClick={() => setViewMode('calendar')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-md text-sm font-medium font-body transition-colors ${
                 viewMode === 'calendar'
                   ? 'bg-orange-500 text-white'
                   : isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
@@ -200,7 +200,7 @@ export default function PerformancesPage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 + index * 0.04 }}
                           >
-                            <div className="text-lg font-bold uppercase mb-1">{performance.title}</div>
+                            <div className="text-lg font-bold uppercase mb-1 font-heading">{performance.title}</div>
                             <div className={`text-sm font-semibold ${mutedText}`}>{performance.company}</div>
                             <div className={`text-sm font-semibold ${mutedText}`}>{performance.time}</div>
                           </motion.div>

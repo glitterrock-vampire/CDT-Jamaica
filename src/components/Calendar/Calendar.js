@@ -107,7 +107,7 @@ const Calendar = ({ performances }) => {
             </svg>
           </motion.button>
 
-          <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-black'}`}>
+          <h2 className={`text-2xl font-bold font-heading ${isDarkMode ? 'text-white' : 'text-black'}`}>
             {formatMonth(currentDate)}
           </h2>
 
@@ -240,7 +240,7 @@ const Calendar = ({ performances }) => {
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       className={`border ${borderColor} rounded-lg p-4 ${cardBg}`}
                     >
-                      <h3 className={`text-lg font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                      <h3 className={`text-lg font-semibold mb-3 font-heading ${isDarkMode ? 'text-white' : 'text-black'}`}>
                         {dateStr}
                       </h3>
                       <div className="space-y-3">

@@ -54,7 +54,7 @@ const BoardGrid = ({ featuredOnly = false, title = "Board of Directors" }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h2 className={`text-3xl md:text-4xl font-bold uppercase mb-4 ${isDarkMode ? 'text-white' : 'text-black'}`}>
+          <h2 className={`text-3xl md:text-4xl font-bold uppercase mb-4 font-heading ${isDarkMode ? 'text-white' : 'text-black'}`}>
             {title}
           </h2>
           <div className={`w-20 h-1 bg-orange-500 mx-auto`}></div>

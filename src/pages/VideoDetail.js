@@ -48,7 +48,7 @@ const VideoDetail = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Video Not Found</h1>
+          <h1 className="text-2xl font-bold mb-4 font-heading">Video Not Found</h1>
           <p className={mutedText + ' mb-8'}>The video you're looking for doesn't exist.</p>
           <Link to="/" className="text-orange-500 hover:text-orange-600 underline">
             Return to Home
@@ -156,7 +156,7 @@ const VideoDetail = () => {
             >
               {/* Title and Meta */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">{video.title}</h1>
+                <h1 className="text-3xl md:text-4xl font-bold mb-4 font-heading">{video.title}</h1>
                 <div className="flex flex-wrap gap-4 text-sm">
                   {video.duration && (
                     <span className={mutedText}>

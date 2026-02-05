@@ -95,7 +95,7 @@ const Company = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <motion.h2 
-                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-heading"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -124,7 +124,7 @@ const Company = () => {
                   : 'bg-gray-50 border-gray-200'
               }`}>
                 <div className="text-6xl mb-4">👥</div>
-                <h3 className="text-xl font-semibold mb-3">Management Team Coming Soon</h3>
+                <h3 className="text-xl font-semibold mb-3 font-heading">Management Team Coming Soon</h3>
                 <p className={mutedText}>
                   Our management team information will be available shortly. Please check back soon to meet the talented professionals who help keep CDT Jamaica running smoothly.
                 </p>

@@ -59,7 +59,7 @@ const DanceDetail = () => {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 md:p-8 flex items-center justify-center transition-colors duration-300">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Dance not found</h2>
+          <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white font-heading">Dance not found</h2>
           <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
           <button
             onClick={() => navigate(-1)}
@@ -110,11 +110,11 @@ const DanceDetail = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-normal leading-none tracking-tight text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
+            <h1 className="font-heading text-6xl md:text-8xl lg:text-9xl font-normal leading-none tracking-tight text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
               {dance.title}
             </h1>
             {dance.subtitle && (
-              <h2 className="mt-4 text-2xl md:text-3xl font-light text-gray-200" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
+              <h2 className="mt-4 text-2xl md:text-3xl font-light text-gray-200 font-heading" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
                 {dance.subtitle}
               </h2>
             )}
@@ -289,7 +289,7 @@ const DanceDetail = () => {
                       </p>
                       <footer className="flex items-center justify-between">
                         <div>
-                          <cite className="text-gray-900 dark:text-gray-100 font-medium">{review.source}</cite>
+                          <cite className="text-gray-900 dark:text-gray-100 font-medium font-body">{review.source}</cite>
                           {review.year && (
                             <span className="text-gray-500 dark:text-gray-400 ml-2">({review.year})</span>
                           )}

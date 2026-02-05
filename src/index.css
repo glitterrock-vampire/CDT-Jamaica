@@ -56,6 +56,14 @@
     @apply text-gray-900 dark:text-gray-50 mt-8 mb-4;
   }
 
+  .font-avenir {
+    font-family: "Avenir", "Gotham", "Inter Tight", "Work Sans", "Open Sans", system-ui, sans-serif;
+  }
+
+  .font-gotham {
+    font-family: "Gotham", "Avenir", "Inter Tight", "Work Sans", "Open Sans", system-ui, sans-serif;
+  }
+
   .font-worksans {
     font-family: "Work Sans", sans-serif;
     font-optical-sizing: auto;
@@ -66,14 +74,22 @@
     font-optical-sizing: auto;
   }
 
-  .font-sharetech {
-    font-family: "Share Tech", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+  .font-adobecaslon {
+    font-family: "Adobe Caslon", "Playfair Display", "Crimson Text", "Lora", Georgia, serif;
   }
 
-  .font-oswald {
-    font-family: "Oswald", sans-serif;
+  .font-playfair {
+    font-family: "Playfair Display", "Crimson Text", serif;
+    font-optical-sizing: auto;
+  }
+
+  .font-crimson {
+    font-family: "Crimson Text", serif;
+    font-optical-sizing: auto;
+  }
+
+  .font-lora {
+    font-family: "Lora", serif;
     font-optical-sizing: auto;
   }
 }
@@ -182,19 +198,19 @@ blockquote footer span {
 .ailey-hero-title {
   font-size: clamp(3.5rem, 8vw, 9rem);
   line-height: 0.85;
-  font-weight: 700;
-  letter-spacing: -0.05em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  font-family: "Oswald", "Inter Tight", sans-serif;
+  font-family: "Adobe Caslon", "Playfair Display", "Crimson Text", "Lora", Georgia, serif;
   color: white !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .ailey-card-title {
   font-size: 1.75rem;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.2;
-  font-family: "Work Sans", "Inter Tight", sans-serif;
+  font-family: "Adobe Caslon", "Playfair Display", "Crimson Text", "Lora", Georgia, serif;
 }
 
 /* Hero Section Gradient */

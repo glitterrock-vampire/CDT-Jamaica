@@ -55,11 +55,11 @@ export const Hero = ({ image, title, subtitle, children }) => {
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end pb-20 px-8 md:px-16 lg:px-24">
             <div className="max-w-4xl w-full">
-              <h1 className="font-nova-slim text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
+              <h1 className="font-heading text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
                 {title}
               </h1>
               {subtitle && (
-                <p className="font-raleway text-3xl md:text-4xl lg:text-5xl text-left text-white font-light leading-tight tracking-wide" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
+                <p className="font-body text-3xl md:text-4xl lg:text-5xl text-left text-white font-light leading-tight tracking-wide" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
                   {subtitle}
                 </p>
               )}
@@ -71,11 +71,11 @@ export const Hero = ({ image, title, subtitle, children }) => {
         // Text-only hero with solid background
         <div className={`w-full h-[60vh] ${isDarkMode ? 'bg-black' : 'bg-white'} flex items-end pb-20 px-8 md:px-16 lg:px-24`}>
           <div className="max-w-4xl w-full">
-            <h1 className={`font-nova-slim text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '2px 2px 4px rgba(0,0,0,0.8)' : '2px 2px 4px rgba(255,255,255,0.8)'}}>
+            <h1 className={`font-heading text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '2px 2px 4px rgba(0,0,0,0.8)' : '2px 2px 4px rgba(255,255,255,0.8)'}}>
               {title}
             </h1>
             {subtitle && (
-              <p className={`font-raleway text-3xl md:text-4xl lg:text-5xl text-left font-light leading-tight tracking-wide ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(255,255,255,0.8)'}}>
+              <p className={`font-body text-3xl md:text-4xl lg:text-5xl text-left font-light leading-tight tracking-wide ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(255,255,255,0.8)'}}>
                 {subtitle}
               </p>
             )}

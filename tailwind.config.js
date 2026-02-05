@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['"Work Sans"', '"Inter Tight"', '"Oswald"', '"Share Tech"', 'Arial', 'sans-serif'],
-        'heading': ['"Oswald"', '"Inter Tight"', '"Work Sans"', 'sans-serif'],
-        'body': ['"Work Sans"', '"Inter Tight"', 'sans-serif']
+        'sans': ['"Avenir"', '"Gotham"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif'],
+        'heading': ['"Adobe Caslon"', '"Playfair Display"', '"Crimson Text"', '"Lora"', 'Georgia', 'serif'],
+        'body': ['"Avenir"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif']
       },
       colors: {
         primary: {

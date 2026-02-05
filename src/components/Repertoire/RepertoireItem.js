@@ -62,9 +62,9 @@ const RepertoireItem = ({ item }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
-        <div className="text-lg font-bold uppercase mb-1">{title}</div>
-        <div className={`text-sm font-semibold ${mutedText}`}>{choreographer}</div>
-        <div className={`text-sm font-semibold ${mutedText}`}>{year}</div>
+        <div className="text-lg font-bold uppercase mb-1 font-heading">{title}</div>
+        <div className={`text-sm font-semibold font-body ${mutedText}`}>{choreographer}</div>
+        <div className={`text-sm font-semibold font-body ${mutedText}`}>{year}</div>
       </motion.div>
     </motion.div>
   );

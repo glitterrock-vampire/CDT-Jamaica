@@ -38,7 +38,8 @@ const Contact = () => {
       {siteSettings?.heroImage && (
         <Hero
           image={siteSettings.heroImage}
-          title="Contact Us"
+          title="Get In Touch"
+          subtitle="Connect with CDT Jamaica"
         />
       )}
 
@@ -158,7 +159,7 @@ const Contact = () => {
                     <p className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Email</p>
                     <a
                       href="mailto:thecompany@cdtjamaica.org"
-                      className={`text-sm md:text-base font-medium hover:text-orange-500 dark:hover:text-orange-400 transition-colors duration-200`}
+                      className={`text-sm md:text-base font-medium font-body hover:text-orange-500 dark:hover:text-orange-400 transition-colors duration-200`}
                     >
                       thecompany@cdtjamaica.org
                     </a>
@@ -183,7 +184,7 @@ const Contact = () => {
                     <p className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>Phone</p>
                     <a
                       href="tel:876-463-7395"
-                      className={`text-sm md:text-base font-medium hover:text-orange-500 dark:hover:text-orange-400 transition-colors duration-200`}
+                      className={`text-sm md:text-base font-medium font-body hover:text-orange-500 dark:hover:text-orange-400 transition-colors duration-200`}
                     >
                       876-463-7395
                     </a>

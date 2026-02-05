@@ -66,7 +66,7 @@ const PerformanceDetail = () => {
     return (
       <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'} flex items-center justify-center`}>
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Performance Not Found</h1>
+          <h1 className="text-2xl font-bold mb-4 font-heading">Performance Not Found</h1>
           <p className={mutedText + ' mb-6'}>The performance you're looking for doesn't exist or has been removed.</p>
           <Link 
             to="/performances" 

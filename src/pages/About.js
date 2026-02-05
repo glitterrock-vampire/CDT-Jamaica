@@ -146,7 +146,7 @@ const About = () => {
       {siteSettings?.heroImage && (
         <Hero
           image={siteSettings.heroImage}
-          title="Our Story"
+          title="The Company"
           subtitle="Discover the legacy and vision of CDT Jamaica"
         />
       )}
@@ -203,7 +203,7 @@ const About = () => {
       <section id="board-of-directors" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4">Board of Directors</h2>
+            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Board of Directors</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -228,7 +228,7 @@ const About = () => {
       <section id="management" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4">Management</h2>
+            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Management</h2>
           </div>
           <div className="text-left py-12">
             <p className={mutedText}>Management team information coming soon.</p>
@@ -240,7 +240,7 @@ const About = () => {
       <section id="dancers" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4">Dancers</h2>
+            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Dancers</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
