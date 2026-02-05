@@ -288,12 +288,13 @@ const Navbar = () => {
             </Link>
           </div>
 
+          <nav className="flex-1 flex justify-center items-center">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
-            <NavLink to="/about">Our Story</NavLink>
+            <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm"> The Company</NavLink>
             {/* <NavLink to="/performances">Performances</NavLink> */}
-            <NavLink to="/repertoire">Repertoire</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
+            <NavLink to="/repertoire" className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</NavLink>
+            <NavLink to="/contact" className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</NavLink>
             <a
               href="https://linktr.ee/cdtjamaica"
               target="_blank"
@@ -303,6 +304,7 @@ const Navbar = () => {
               Give
             </a>
           </div>
+        </nav>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
@@ -335,10 +337,10 @@ const Navbar = () => {
             </svg>
           </button>
           <ul className="menu-items">
-            <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)}>Our Story</Link></li>
+            <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
             {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
-            <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)}>Repertoire</Link></li>
-            <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
+            <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</Link></li>
+            <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</Link></li>
             <li className="menu-item">
               <a
                 href="https://linktr.ee/cdtjamaica"

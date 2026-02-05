@@ -71,7 +71,7 @@ export const Hero = ({ image, title, subtitle, children }) => {
         // Text-only hero with solid background
         <div className={`w-full h-[60vh] ${isDarkMode ? 'bg-black' : 'bg-white'} flex items-end pb-20 px-8 md:px-16 lg:px-24`}>
           <div className="max-w-4xl w-full">
-            <h1 className={`font-heading text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '2px 2px 4px rgba(0,0,0,0.8)' : '2px 2px 4px rgba(255,255,255,0.8)'}}>
+            <h1 className={`font-sans text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '2px 2px 4px rgba(0,0,0,0.8)' : '2px 2px 4px rgba(255,255,255,0.8)'}}>
               {title}
             </h1>
             {subtitle && (

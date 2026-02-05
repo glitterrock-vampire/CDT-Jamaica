@@ -30,12 +30,12 @@ export default function IntroSection() {
 
             {/* Right Column - Content */}
             <motion.div
-              className="md:col-span-6 md:col-start-6"
+              className="md:col-span-7 md:col-start-6"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-xl leading-relaxed`}>
+              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-2xl leading-relaxed`}>
                 <p>
                   Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, the wider Caribbean, and North America.
                 </p>
@@ -43,7 +43,7 @@ export default function IntroSection() {
                   CDT Jamaica is a legacy company formed to honour the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
                 </p>
                 <p>
-                  Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to di worl'!
+                  Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the world!
                 </p>
               </div>
             </motion.div>

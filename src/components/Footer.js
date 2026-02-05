@@ -44,10 +44,10 @@ const Footer = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-center sm:text-left">
               <div>
                 <ul className="space-y-2">
-                  <li><a href="/" className="hover:underline font-body">Home</a></li>
-                  <li><a href="/repertoire" className="hover:underline font-body">Repertoire</a></li>
-                  <li><a href="/about" className="hover:underline font-body">About Us</a></li>
-                  <li><a href="/contact" className="hover:underline font-body">Contact Us</a></li>
+                  <li><a href="/" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm font-body">Home</a></li>
+                  <li><a href="/repertoire" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm font-body">Repertoire</a></li>
+                  <li><a href="/about" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm font-body">About Us</a></li>
+                  <li><a href="/contact" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm font-body">Contact Us</a></li>
                 </ul>
               </div>
             </div>
@@ -55,7 +55,7 @@ const Footer = () => {
 
           {/* Newsletter & Social Media */}
           <div className="w-full max-w-md lg:w-96 mt-8 lg:mt-0 text-center lg:text-left">
-            <h3 className="text-lg font-semibold mb-4 font-body">Stay Connected</h3>
+            <h3 className="text-lg font-semibold mb-4 tracking-[0.08em] uppercase text-sm font-body">Stay Connected</h3>
             
             {/* Newsletter Subscription */}
             <div className="mb-6 p-4 bg-white/5 rounded-lg">

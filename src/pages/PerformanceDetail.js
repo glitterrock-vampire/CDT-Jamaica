@@ -84,7 +84,7 @@ const PerformanceDetail = () => {
       {/* Hero Section - Text Only */}
       <Hero
         title={performance.title}
-        subtitle={performance.company}
+      subtitle={performance.venue}
       />
 
       {/* Main Content */}

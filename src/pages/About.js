@@ -147,7 +147,6 @@ const About = () => {
         <Hero
           image={siteSettings.heroImage}
           title="The Company"
-          subtitle="Discover the legacy and vision of CDT Jamaica"
         />
       )}
       
@@ -173,6 +172,7 @@ const About = () => {
             ].map((item, index) => (
               <button
                 key={item.id}
+                className="px-3 py-2 text-sm font-semibold tracking-[0.08em] uppercase hover:text-orange-500 transition-colors"
                 onClick={() => {
                   const element = document.getElementById(item.id);
                   if (element) {
@@ -187,7 +187,6 @@ const About = () => {
                     });
                   }
                 }}
-                className={`text-[10px] md:text-xs tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} hover:text-orange-500 transition-colors px-2 py-1`}
               >
                 {item.label}
               </button>
@@ -203,7 +202,7 @@ const About = () => {
       <section id="board-of-directors" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Board of Directors</h2>
+            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em] font-body">Board of Directors</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">

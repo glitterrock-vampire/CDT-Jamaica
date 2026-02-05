@@ -29,7 +29,6 @@ const client = createClient({
 const miramarPerformance = {
   _type: 'performance',
   title: 'Miramar Cultural Center Performance',
-  company: 'CDT All Companies',
   date: '2026-03-14T19:00:00.000Z', // March 14, 2026 at 7 PM
   time: '7:00 PM',
   venue: 'MIRAMAR CULTURAL CENTER',

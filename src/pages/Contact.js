@@ -59,7 +59,7 @@ const Contact = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <motion.div
-              className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+              className={`text-sm font-semibold tracking-[0.08em] uppercase ${mutedText} font-body`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
@@ -67,7 +67,7 @@ const Contact = () => {
               Get In Touch
             </motion.div>
             <motion.div
-              className="text-2xl md:text-3xl uppercase leading-tight"
+              className="text-2xl md:text-3xl uppercase leading-tight font-heading"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}

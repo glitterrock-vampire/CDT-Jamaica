@@ -46,6 +46,17 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const video = document.querySelector('video');
+    if (video) {
+      video.addEventListener('loadstart', () => console.log('Video loading started'));
+      video.addEventListener('loadeddata', () => console.log('Video data loaded'));
+      video.addEventListener('canplay', () => console.log('Video can play'));
+      video.addEventListener('play', () => console.log('Video playing'));
+      video.addEventListener('error', (e) => console.error('Video error:', e));
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const [upcoming, featured, settings, allVideos] = await Promise.all([
@@ -195,7 +206,7 @@ const Home = () => {
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section with Video Background */}
       <div className={`relative w-full min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} overflow-hidden`}>
-        {/* Video Background - Google Drive Video */}
+        {/* Video Background - Local Video File */}
         <div className="absolute inset-0 z-0">
           <video
             autoPlay
@@ -203,8 +214,10 @@ const Home = () => {
             loop
             playsInline
             className="w-full h-full object-cover"
+            preload="auto"
+            poster="/images/CDT Streams Photo.jpg"
           >
-            <source src="https://drive.google.com/uc?export=download&id=1a1K6lFdpbAkMeakCzcJ6r7Q0E3hjbN6r" type="video/mp4" />
+            <source src="/videos/CDT Promo 2025.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
         </div>
@@ -226,13 +239,13 @@ const Home = () => {
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 {featuredPerformance 
-                  ? <span className="font-heading font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
-                  : <span className="font-heading font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
+                  ? <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
+                  : <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
                 }
               </motion.div>
               
               <motion.h1 
-                className="font-heading text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
+                className="font-sans text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
                 style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -242,7 +255,7 @@ const Home = () => {
               </motion.h1>
               
               <motion.p
-                className={`font-body text-base md:text-lg max-w-xl leading-relaxed text-white/90`}
+                className={`font-body text-xl md:text-2xl max-w-2xl leading-relaxed text-white/90`}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
@@ -289,7 +302,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.32 }}
             >
               <div>
-                <div className="text-xl md:text-2xl uppercase font-heading">Upcoming Performances</div>
+                <div className="text-2xl md:text-3xl uppercase font-heading">Upcoming Performances</div>
               </div>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
@@ -346,11 +359,12 @@ const Home = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                       >
-                        <div className="text-2xl md:text-3xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 ml-1 leading-none font-heading">
+                        <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 ml-1 leading-none font-sans">
                           {formatPerformanceDate(perf.date)}
                         </div>
-                        <div className="text-2xl md:text-3xl font-semibold uppercase mb-2 ml-1 font-heading">{perf.title}</div>
-                        <div className={`text-lg font-body ${mutedText} ml-1 mb-4`}>{perf.venue} · {perf.location}</div>
+                        <div className={`text-base font-body ${mutedText} ml-1 mb-2`}>{perf.location}</div>
+                        <div className={`text-base font-body ${mutedText} ml-1 mb-2`}>{perf.venue}</div>
+                        <div className="text-xl md:text-2xl font-semibold uppercase mb-4 ml-1 font-sans">{perf.title}</div>
                         <div className={`relative border-b ${borderColor} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
                           <img
                             src={perf.image?.asset?.url || perf.image?.url}

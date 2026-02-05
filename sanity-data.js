@@ -5,7 +5,6 @@ const performances = [
   {
     _type: 'performance',
     title: 'Jamaica Dance Umbrella',
-    company: 'CDT Senior Company',
     date: '2026-03-01',
     time: '6:00 PM',
     venue: 'Phillip Sherlock Center',
@@ -17,7 +16,6 @@ const performances = [
   {
     _type: 'performance',
     title: 'Caribbean Rhythms International',
-    company: 'CDT Senior Company',
     date: '2026-03-14',
     time: '8:00 PM',
     venue: 'Miramar Cultural Center',
@@ -29,7 +27,6 @@ const performances = [
   {
     _type: 'performance',
     title: 'Spring Season Premiere - Night 1',
-    company: 'CDT All Companies',
     date: '2026-04-17',
     time: '7:30 PM',
     venue: 'Phillip Sherlock Center',
@@ -41,7 +38,6 @@ const performances = [
   {
     _type: 'performance',
     title: 'Spring Season Premiere - Night 2',
-    company: 'CDT All Companies',
     date: '2026-04-18',
     time: '7:30 PM',
     venue: 'Phillip Sherlock Center',
@@ -53,7 +49,6 @@ const performances = [
   {
     _type: 'performance',
     title: 'Spring Season Premiere - Night 3',
-    company: 'CDT All Companies',
     date: '2026-04-19',
     time: '7:30 PM',
     venue: 'Phillip Sherlock Center',
@@ -65,7 +60,6 @@ const performances = [
   {
     _type: 'performance',
     title: 'UK Dance Exchange',
-    company: 'CDT Senior Company',
     date: '2026-05-06',
     time: '7:00 PM',
     venue: 'Lester',
@@ -77,7 +71,6 @@ const performances = [
   {
     _type: 'performance',
     title: 'Annual Gala Performance',
-    company: 'CDT Senior & Junior Companies',
     date: '2026-06-13',
     time: '7:30 PM',
     venue: 'Courtleigh Auditorium',

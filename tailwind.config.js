@@ -9,8 +9,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'sans': ['"Avenir"', '"Gotham"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif'],
-        'heading': ['"Adobe Caslon"', '"Playfair Display"', '"Crimson Text"', '"Lora"', 'Georgia', 'serif'],
-        'body': ['"Avenir"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif']
+        'heading': ['"Avenir"', '"Gotham"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif'],
+        'body': ['"Avenir"', '"Gotham"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif']
       },
       colors: {
         primary: {
