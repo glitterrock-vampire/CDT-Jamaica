@@ -1,8 +1,9 @@
-import { client } from './sanityClient';
+import { client } from './sanity';
+import { processNames } from './nameUtils';
 
 export const getDancers = async () => {
   const query = `
-    *[_type == "dancer"] | order(order asc, name asc) {
+    *[_type == "dancer"] | order(order asc) {
       _id,
       name,
       role,
@@ -21,8 +22,15 @@ export const getDancers = async () => {
   `;
   
   try {
+    console.log('Fetching dancers from Sanity...');
     const dancers = await client.fetch(query);
-    return dancers;
+    console.log('Raw dancers data from Sanity:', dancers);
+    console.log('Number of dancers fetched:', dancers?.length || 0);
+    
+    const processedDancers = processNames(dancers);
+    console.log('Processed dancers:', processedDancers);
+    
+    return processedDancers;
   } catch (error) {
     console.error('Error fetching dancers:', error);
     return [];
@@ -31,7 +39,7 @@ export const getDancers = async () => {
 
 export const getFeaturedDancers = async () => {
   const query = `
-    *[_type == "dancer" && featured == true] | order(order asc, name asc) {
+    *[_type == "dancer" && featured == true] | order(order asc) {
       _id,
       name,
       role,
@@ -51,7 +59,7 @@ export const getFeaturedDancers = async () => {
   
   try {
     const dancers = await client.fetch(query);
-    return dancers;
+    return processNames(dancers);
   } catch (error) {
     console.error('Error fetching featured dancers:', error);
     return [];

@@ -8,12 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'nova-slim': ['"Nova Slim"', 'system-ui', 'sans-serif'],
-        'raleway': ['Raleway', 'sans-serif'],
-        'amarante': ['Amarante', 'serif'],
-        'inter-tight': ['"Inter Tight"', 'sans-serif'],
-        'work-sans': ['"Work Sans"', 'sans-serif'],
-        'share-tech': ['"Share Tech"', 'sans-serif']
+        'sans': ['"Work Sans"', '"Inter Tight"', '"Oswald"', '"Share Tech"', 'Arial', 'sans-serif'],
+        'heading': ['"Oswald"', '"Inter Tight"', '"Work Sans"', 'sans-serif'],
+        'body': ['"Work Sans"', '"Inter Tight"', 'sans-serif']
       },
       colors: {
         primary: {

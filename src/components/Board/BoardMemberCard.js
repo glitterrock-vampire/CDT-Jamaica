@@ -36,7 +36,7 @@ const BoardMemberCard = ({ boardMember, index }) => {
             </>
           ) : (
             <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
-              <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              <span className={`text-base ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 No headshot
               </span>
             </div>
@@ -45,21 +45,21 @@ const BoardMemberCard = ({ boardMember, index }) => {
         
         {/* Board Member Info */}
         <div className="p-4">
-          <h3 className={`font-bold text-lg mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>
+          <h3 className={`font-bold text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
             {boardMember.name}
           </h3>
           {boardMember.position && (
-            <p className={`text-sm font-medium mb-2 ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
+            <p className={`text-lg font-medium mb-2 ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
               {boardMember.position}
             </p>
           )}
           {boardMember.term && (
-            <p className={`text-xs mb-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p className={`text-sm mb-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               Term: {boardMember.term}
             </p>
           )}
           {boardMember.bio && (
-            <p className={`text-sm leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className={`text-base leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               {boardMember.bio}
             </p>
           )}

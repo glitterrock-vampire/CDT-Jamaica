@@ -1,8 +1,9 @@
-import { client } from './sanityClient';
+import { client } from './sanity';
+import { processNames } from './nameUtils';
 
 export const getBoardMembers = async () => {
   const query = `
-    *[_type == "boardMember"] | order(order asc, name asc) {
+    *[_type == "boardMember"] | order(order asc) {
       _id,
       name,
       position,
@@ -22,7 +23,7 @@ export const getBoardMembers = async () => {
   
   try {
     const boardMembers = await client.fetch(query);
-    return boardMembers;
+    return processNames(boardMembers);
   } catch (error) {
     console.error('Error fetching board members:', error);
     return [];
@@ -31,7 +32,7 @@ export const getBoardMembers = async () => {
 
 export const getFeaturedBoardMembers = async () => {
   const query = `
-    *[_type == "boardMember" && featured == true] | order(order asc, name asc) {
+    *[_type == "boardMember" && featured == true] | order(order asc) {
       _id,
       name,
       position,
@@ -51,7 +52,7 @@ export const getFeaturedBoardMembers = async () => {
   
   try {
     const boardMembers = await client.fetch(query);
-    return boardMembers;
+    return processNames(boardMembers);
   } catch (error) {
     console.error('Error fetching featured board members:', error);
     return [];

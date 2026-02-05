@@ -62,7 +62,7 @@ const Navbar = () => {
   const NavLink = ({ to, children }) => (
     <Link
       to={to}
-      className={`text-base font-medium ${
+      className={`text-lg font-medium ${
         location.pathname === to
           ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
           : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
@@ -78,7 +78,7 @@ const Navbar = () => {
       className="relative about-dropdown group"
     >
       <button
-        className={`text-base font-medium ${
+        className={`text-lg font-medium ${
           location.pathname === '/about' || location.pathname === '/company'
             ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
             : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
@@ -99,7 +99,7 @@ const Navbar = () => {
         <Link
           to="/about"
           onClick={() => setIsAboutDropdownOpen(false)}
-          className={`block px-4 py-3 text-sm font-medium rounded-t-lg border-b border-black/10 dark:border-white/10 ${
+          className={`block px-4 py-3 text-base font-medium rounded-t-lg border-b border-black/10 dark:border-white/10 ${
             location.pathname === '/about'
               ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
@@ -110,7 +110,7 @@ const Navbar = () => {
         <Link
           to="/company#dancers"
           onClick={() => setIsAboutDropdownOpen(false)}
-          className={`block px-4 py-3 text-sm font-medium border-b border-black/10 dark:border-white/10 ${
+          className={`block px-4 py-3 text-base font-medium border-b border-black/10 dark:border-white/10 ${
             location.pathname === '/company#dancers'
               ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
@@ -121,7 +121,7 @@ const Navbar = () => {
         <Link
           to="/company#board"
           onClick={() => setIsAboutDropdownOpen(false)}
-          className={`block px-4 py-3 text-sm font-medium rounded-b-lg ${
+          className={`block px-4 py-3 text-base font-medium rounded-b-lg ${
             location.pathname === '/company#board'
               ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
@@ -139,7 +139,7 @@ const Navbar = () => {
       className="relative company-dropdown group"
     >
       <button
-        className={`text-base font-medium ${
+        className={`text-lg font-medium ${
           location.pathname === '/repertoire' || location.pathname === '/about' || location.pathname === '/company'
             ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
             : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
@@ -160,7 +160,7 @@ const Navbar = () => {
         <Link
           to="/repertoire"
           onClick={() => setIsCompanyDropdownOpen(false)}
-          className={`block px-4 py-3 text-sm font-medium border-b border-black/10 dark:border-white/10 ${
+          className={`block px-4 py-3 text-base font-medium border-b border-black/10 dark:border-white/10 ${
             location.pathname === '/repertoire'
               ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
@@ -171,7 +171,7 @@ const Navbar = () => {
         {/* <Link
           to="/performances"
           onClick={() => setIsCompanyDropdownOpen(false)}
-          className={`block px-4 py-3 text-sm font-medium border-b border-black/10 dark:border-white/10 ${
+          className={`block px-4 py-3 text-base font-medium border-b border-black/10 dark:border-white/10 ${
             location.pathname === '/performances'
               ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
@@ -182,7 +182,7 @@ const Navbar = () => {
         <Link
           to="/about"
           onClick={() => setIsCompanyDropdownOpen(false)}
-          className={`block px-4 py-3 text-sm font-medium rounded-b-lg ${
+          className={`block px-4 py-3 text-base font-medium rounded-b-lg ${
             location.pathname === '/about'
               ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
@@ -200,7 +200,7 @@ const Navbar = () => {
       className="relative school-dropdown group"
     >
       <button
-        className={`text-base font-medium ${
+        className={`text-lg font-medium ${
           location.pathname === '/school'
             ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
             : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
@@ -244,7 +244,7 @@ const Navbar = () => {
   const MobileNavLink = ({ to, children }) => (
     <Link
       to={to}
-      className={`block px-3 py-2 rounded-md text-base font-medium ${
+      className={`block px-3 py-2 rounded-md text-lg font-medium ${
         location.pathname === to
           ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
           : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
@@ -298,7 +298,7 @@ const Navbar = () => {
               href="https://linktr.ee/cdtjamaica"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-base font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors font-semibold"
+              className="text-lg font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors font-semibold"
             >
               Give
             </a>

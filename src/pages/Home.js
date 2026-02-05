@@ -21,6 +21,30 @@ const Home = () => {
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
   const secondaryBg = isDarkMode ? 'bg-neutral-900' : 'bg-gray-50';
 
+  const heroWeekdayAbbrev = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
+
+  const formatHeroDate = (dateString) => {
+    if (!dateString) return '';
+    const dateObj = new Date(dateString);
+    if (Number.isNaN(dateObj.getTime())) return '';
+    const weekday = heroWeekdayAbbrev[dateObj.getDay()];
+    const day = dateObj.toLocaleDateString('en-US', { day: '2-digit' });
+    const month = dateObj.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
+    return `${weekday} ${day} ${month}`;
+  };
+
+  const weekdayAbbrev = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
+
+  const formatPerformanceDate = (dateString) => {
+    if (!dateString) return '';
+    const dateObj = new Date(dateString);
+    if (Number.isNaN(dateObj.getTime())) return '';
+    const weekday = weekdayAbbrev[dateObj.getDay()];
+    const day = dateObj.toLocaleDateString('en-US', { day: '2-digit' });
+    const month = dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    return `${weekday} ${day} ${month}`;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -169,33 +193,21 @@ const Home = () => {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {/* Hero Section with Full Width Performance */}
+      {/* Hero Section with Video Background */}
       <div className={`relative w-full min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} overflow-hidden`}>
-        {/* Full Width Hero Image */}
-        {featuredPerformance?.image && (
-          <div className="absolute inset-0 z-0">
-            <img
-              src={featuredPerformance.image?.asset?.url || featuredPerformance.image?.url}
-              alt={featuredPerformance.image.alt || 'Featured performance'}
-              className="w-full h-full object-cover contrast-110 transition-all duration-1000 ease-in-out"
-              style={{
-                filter: 'grayscale(0%)',
-              }}
-              onLoad={(e) => {
-                const handleScroll = () => {
-                  const scrollY = window.scrollY;
-                  const maxScroll = window.innerHeight;
-                  const grayscaleAmount = Math.min(scrollY / maxScroll, 1);
-                  e.target.style.filter = `grayscale(${grayscaleAmount * 100}%)`;
-                };
-                
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-          </div>
-        )}
+        {/* Video Background - Google Drive Video */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="https://drive.google.com/uc?export=download&id=1ijjUm1wpzthQ5UWfr_9gKfGuzb6y5jrl" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
+        </div>
 
         {/* Content Overlay */}
         <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex items-center">
@@ -208,19 +220,19 @@ const Home = () => {
               transition={{ duration: 0.8 }}
             >
               <motion.div
-                className={`font-nova-slim text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
+                className={`font-sans text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 {featuredPerformance 
-                  ? <span className="font-share-tech font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{new Date(featuredPerformance.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                  : <span className="font-share-tech font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
+                  ? <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
+                  : <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
                 }
               </motion.div>
               
               <motion.h1 
-                className="font-nova-slim text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
+                className="font-sans text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
                 style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -286,7 +298,6 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.32 }}
             >
               <div>
-                <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>On stage</div>
                 <div className="text-xl md:text-2xl uppercase">Upcoming Performances</div>
               </div>
               <motion.div
@@ -310,19 +321,15 @@ const Home = () => {
                       }, 300);
                     }
                   }}
-                  className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
+                  className={`text-sm tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
                 >
                   {showFullCalendar ? 'Hide calendar' : 'Full calendar'} {showFullCalendar ? '↑' : '↓'}
                 </button>
               </motion.div>
             </motion.div>
 
-            <div className="grid gap-5 md:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-3 auto-rows-fr">
               {upcomingPerformances.slice(0, 3).map((perf, index) => {
-                const dateObj = new Date(perf.date);
-                const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
-                const day = dateObj.getDate();
-                
                 console.log(`Home: Performance tile ${index}:`, {
                   title: perf.title,
                   slug: perf.slug?.current,
@@ -334,37 +341,35 @@ const Home = () => {
                   <Link
                     key={perf._id}
                     to={`/performance/${perf.slug?.current}`}
-                    className="block group"
+                    className="block group h-full"
                   >
                     <motion.div
-                      className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                      className={`h-full flex flex-col p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.38 + index * 0.04 }}
                     >
                       <motion.div
+                        className="flex flex-col flex-1"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                       >
-                        <div className="text-sm font-semibold uppercase mb-1 ml-1">{perf.title}</div>
-                        <div className={`text-[11px] ${mutedText} ml-1`}>{perf.venue} · {perf.location}</div>
-                        <div className={`mt-3 relative border-b ${borderColor} overflow-hidden`} style={{ aspectRatio: '3/4' }}>
+                        <div className="text-2xl md:text-3xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 ml-1 leading-none">
+                          {formatPerformanceDate(perf.date)}
+                        </div>
+                        <div className="text-2xl md:text-3xl font-semibold uppercase mb-2 ml-1">{perf.title}</div>
+                        <div className={`text-lg ${mutedText} ml-1 mb-4`}>{perf.venue} · {perf.location}</div>
+                        <div className={`relative border-b ${borderColor} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
                           <img
                             src={perf.image?.asset?.url || perf.image?.url}
                             alt={perf.image?.alt || perf.title}
                             className="w-full h-full object-cover transition-all duration-300"
                           />
-                          {/* Date Overlay */}
-                          <div className="absolute top-3 left-3">
-                            <span className="font-share-tech font-bold text-white text-6xl tracking-tight drop-shadow-lg">
-                              {month} {day}, 2026
-                            </span>
-                          </div>
                         </div>
                       </motion.div>
                       <motion.p
-                        className={`text-xs leading-snug ${mutedText}`}
+                        className={`text-base leading-snug ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
@@ -373,7 +378,7 @@ const Home = () => {
                       </motion.p>
                       <motion.button
                         type="button"
-                        className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
+                        className={`mt-auto inline-flex items-center justify-center w-full px-4 py-2 text-sm tracking-[0.16em] uppercase border ${borderColor} ${
                           isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
                         } transition-colors`}
                         initial={{ opacity: 0, y: 6 }}
@@ -400,46 +405,41 @@ const Home = () => {
                   className="mt-8"
                 >
                   {/* Additional Performances Grid - Show 2 more (items 4-5) */}
-                  <div className="grid gap-5 md:grid-cols-3">
+                  <div className="grid gap-5 md:grid-cols-3 auto-rows-fr">
                     {upcomingPerformances.slice(3, 5).map((perf, index) => {
-                      const dateObj = new Date(perf.date);
-                      const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
-                      const day = dateObj.getDate();
                       return (
                         <Link
                           key={perf._id}
                           to={`/performance/${perf.slug?.current}`}
-                          className="block group"
+                          className="block group h-full"
                         >
                           <motion.div
-                            className={`grid grid-rows-[auto,auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                            className={`h-full flex flex-col p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
                             initial={{ opacity: 0, y: 18 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.04 }}
                           >
                             <motion.div
+                              className="flex flex-col flex-1"
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                             >
-                              <div className="text-sm font-semibold uppercase mb-1">{perf.title}</div>
-                              <div className={`text-[11px] ${mutedText}`}>{perf.venue} · {perf.location}</div>
-                              <div className={`mt-3 relative border-b ${borderColor} overflow-hidden`} style={{ aspectRatio: '3/4' }}>
+                              <div className="text-4xl md:text-5xl font-bold tracking-[0.18em] uppercase text-orange-500 mb-3 leading-none">
+                                {formatPerformanceDate(perf.date)}
+                              </div>
+                              <div className="text-2xl md:text-3xl font-semibold uppercase mb-2">{perf.title}</div>
+                              <div className={`text-lg ${mutedText} mb-4`}>{perf.venue} · {perf.location}</div>
+                              <div className={`relative border-b ${borderColor} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
                                 <img
                                   src={perf.image?.asset?.url || perf.image?.url}
                                   alt={perf.image?.alt || perf.title}
                                   className="w-full h-full object-cover transition-all duration-300"
                                 />
-                                {/* Date Overlay */}
-                                <div className="absolute top-3 left-3">
-                                  <span className="font-share-tech font-bold text-white text-6xl tracking-tight drop-shadow-lg">
-                                    {month} {day}
-                                  </span>
-                                </div>
                               </div>
                             </motion.div>
                             <motion.p
-                              className={`text-xs leading-snug ${mutedText}`}
+                              className={`text-base leading-snug ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
                               initial={{ opacity: 0, y: 8 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
@@ -448,7 +448,7 @@ const Home = () => {
                             </motion.p>
                             <motion.button
                               type="button"
-                              className={`mt-1 inline-flex items-center justify-center w-full px-4 py-2 text-[10px] tracking-[0.16em] uppercase border ${borderColor} ${
+                              className={`mt-auto inline-flex items-center justify-center w-full px-4 py-2 text-sm tracking-[0.16em] uppercase border ${borderColor} ${
                                 isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
                               } transition-colors`}
                               initial={{ opacity: 0, y: 6 }}
@@ -485,13 +485,13 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.47 }}
             >
-              <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>The school</div>
-              <h2 className="text-2xl md:text-3xl uppercase">Training for all ages.</h2>
-              <p className={`text-sm md:text-base max-w-md leading-relaxed ${mutedText}`}>
+              <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>The school</div>
+              <h2 className="text-3xl md:text-4xl uppercase">Training for all ages.</h2>
+              <p className={`text-base md:text-lg max-w-md leading-relaxed ${mutedText}`}>
                 From first steps to pre-professional study, CDT Jamaica School offers programmes in contemporary, ballet,
                 and Jamaican folk forms led by working artists.
               </p>
-              <div className="space-y-2 text-sm mt-4">
+              <div className="space-y-2 text-base mt-4">
                 {[
                   { label: 'Juniors', meta: 'Ages 4–10' },
                   { label: 'Adults', meta: 'Evenings + weekends' }
@@ -501,7 +501,7 @@ const Home = () => {
                     className={`flex items-center justify-between pb-2 border-b ${borderColor}`}
                   >
                     <span>{item.label}</span>
-                    <span className={`text-[11px] tracking-[0.12em] uppercase ${mutedText}`}>{item.meta}</span>
+                    <span className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>{item.meta}</span>
                   </div>
                 ))}
               </div>
@@ -510,7 +510,7 @@ const Home = () => {
                   href="https://linktr.ee/cdtjamaica"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors`}
+                  className={`inline-flex items-center justify-center px-6 py-2 text-sm font-semibold tracking-[0.16em] uppercase border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors`}
                 >
                   Registration
                 </a>
@@ -567,12 +567,12 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.52 }}
             >
               <div>
-                <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Signals</div>
-                <div className="text-xl md:text-2xl uppercase">News + archive</div>
+                <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div>
+                <div className="text-2xl md:text-3xl uppercase">News + archive</div>
               </div>
               <motion.button
                 type="button"
-                className={`text-[10px] tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
+                className={`text-sm tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.56 }}
@@ -582,91 +582,27 @@ const Home = () => {
             </motion.div>
 
             <div className="grid gap-6 md:grid-cols-[2fr,1.2fr] items-start">
-              {/* Video card from Sanity */}
-              {newsArchiveVideos.length > 0 && newsArchiveVideos.map((video, index) => {
-                const dateObj = new Date(video.publishedAt);
-                const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
-                const day = dateObj.getDate();
-                return (
-                    <div
-                      key={video._key}
-                      className={`border ${borderColor} ${cardBg} rounded-lg overflow-hidden group cursor-pointer`}
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.58 + index * 0.1 }}
-                      onClick={() => {
-                        // Manual toggle play/pause with state check
-                        const videoElement = document.getElementById(`video-${video._key}`);
-                        if (videoElement) {
-                          if (videoElement.paused) {
-                            videoElement.play().catch(err => {
-                              console.log('Play failed:', err);
-                            });
-                          } else {
-                            videoElement.pause();
-                          }
-                        }
-                      }}
-                    >
-                      {/* Video Player - Full Cover */}
-                      <div className="relative w-full aspect-video">
-                        <video
-                          id={`video-${video._key}`}
-                          className="w-full h-full object-cover"
-                          poster={video.thumbnail?.asset?.url || ''}
-                          preload="metadata"
-                          muted={false}
-                          playsInline
-                        >
-                          <source src={video.videoFile.asset.url} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                        
-                        {/* Date Overlay */}
-                        <div className="absolute top-3 left-3">
-                          <span className="font-share-tech font-bold text-white text-lg tracking-tight drop-shadow-lg">
-                            {month} {day}
-                          </span>
-                        </div>
-                        
-                        {/* Mute/Unmute Button */}
-                        <button
-                          data-mute-button
-                          onClick={(e) => {
-                            e.stopPropagation(); // Prevent video click
-                            const videoElement = document.getElementById(`video-${video._key}`);
-                            if (videoElement) {
-                              videoElement.muted = !videoElement.muted;
-                              // Trigger volumechange event to update icon
-                              const event = new Event('volumechange');
-                              videoElement.dispatchEvent(event);
-                            }
-                          }}
-                          className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-                          title="Toggle mute"
-                        >
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                          </svg>
-                        </button>
-                        
-                        {/* Play Button Overlay - Only show when paused */}
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none">
-                          <div className="bg-white/90 rounded-full p-4">
-                            <svg className="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M8 5v14l11-7z"/>
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Title Only - No Grey Section */}
-                      <div className="p-4">
-                        <div className="text-lg font-bold uppercase">{video.title}</div>
-                      </div>
-                    </div>
-                );
-              })}
+              {/* YouTube Video */}
+              <motion.div
+                className={`border ${borderColor} ${cardBg} rounded-lg overflow-hidden`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.58 }}
+              >
+                <div className="relative w-full aspect-video">
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/D6wNlOtwi08?rel=0&autoplay=1&mute=1"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="p-4">
+                  <div className="text-lg font-bold uppercase">CDT Jamaica Performance</div>
+                </div>
+              </motion.div>
 
               {/* Side cards */}
               <div className="flex flex-col gap-4">
@@ -677,11 +613,11 @@ const Home = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.6 }}
                 >
-                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>Press</div>
-                  <div className="text-sm leading-snug">
+                  <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Press</div>
+                  <div className="text-base leading-snug">
                     "A bold reimagining of what Caribbean dance can be in the 21st century."
                   </div>
-                  <div className="text-xs mt-1">— The Jamaica Gleaner</div>
+                  <div className="text-sm mt-1">— The Jamaica Gleaner</div>
                 </motion.div>
 
                 {/* Announcement card */}
@@ -691,11 +627,11 @@ const Home = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.64 }}
                 >
-                  <div className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}>
+                  <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>
                     Announcement · Aug 12
                   </div>
-                  <div className="text-sm font-medium">New artistic director appointed</div>
-                  <div className={`text-xs leading-relaxed ${mutedText}`}>
+                  <div className="text-base font-medium">New artistic director appointed</div>
+                  <div className={`text-sm leading-relaxed ${mutedText}`}>
                     Choreographer James Bennett joins CDT Jamaica to lead the 2025–2028 seasons.
                   </div>
                 </motion.div>
@@ -738,7 +674,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.57 }}
             >
               <motion.div
-                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.59 }}
@@ -746,7 +682,7 @@ const Home = () => {
                 Philanthropy
               </motion.div>
               <motion.div
-                className="text-lg md:text-xl uppercase"
+                className="text-xl md:text-2xl uppercase"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.61 }}
@@ -754,7 +690,7 @@ const Home = () => {
                 Patron Programme
               </motion.div>
               <motion.p
-                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
+                className={`text-base max-w-md leading-relaxed ${mutedText}`}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.63 }}
@@ -764,7 +700,7 @@ const Home = () => {
               </motion.p>
               <motion.button
                 type="button"
-                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                className={`inline-flex items-center justify-center px-6 py-2 text-sm font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
                   isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
                 } transition-colors`}
                 initial={{ opacity: 0, y: 6 }}
@@ -785,7 +721,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.59 }}
             >
               <motion.div
-                className={`text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.61 }}
@@ -793,7 +729,7 @@ const Home = () => {
                 Education
               </motion.div>
               <motion.div
-                className="text-lg md:text-xl uppercase"
+                className="text-xl md:text-2xl uppercase"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.63 }}
@@ -801,7 +737,7 @@ const Home = () => {
                 Scholarship Fund
               </motion.div>
               <motion.p
-                className={`text-sm max-w-md leading-relaxed ${mutedText}`}
+                className={`text-base max-w-md leading-relaxed ${mutedText}`}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.65 }}
@@ -811,7 +747,7 @@ const Home = () => {
               </motion.p>
               <motion.button
                 type="button"
-                className={`inline-flex items-center justify-center px-6 py-2 text-[10px] font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                className={`inline-flex items-center justify-center px-6 py-2 text-sm font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
                   isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
                 } transition-colors`}
                 initial={{ opacity: 0, y: 6 }}

@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply bg-[var(--background)] text-[var(--foreground)] font-['Raleway'] font-normal;
+    @apply bg-[var(--background)] text-[var(--foreground)] font-sans font-normal text-lg;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
@@ -25,27 +25,27 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight text-gray-900 dark:text-gray-50;
+    @apply font-bold tracking-tight text-gray-900 dark:text-gray-50 font-heading;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl font-black text-gray-900 dark:text-gray-50;
+    @apply text-5xl md:text-6xl font-black text-gray-900 dark:text-gray-50;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-gray-50;
+    @apply text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-50;
   }
 
   h3 {
-    @apply text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-50;
+    @apply text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-50;
   }
 
   h4 {
-    @apply text-xl md:text-2xl font-semibold text-gray-900 dark:text-gray-50;
+    @apply text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-50;
   }
 
   p, li, a {
-    @apply text-base font-normal leading-relaxed text-gray-700 dark:text-gray-100;
+    @apply text-lg font-normal leading-relaxed text-gray-700 dark:text-gray-100;
   }
 
   .prose {
@@ -54,6 +54,27 @@
 
   .prose h2, .prose h3, .prose h4 {
     @apply text-gray-900 dark:text-gray-50 mt-8 mb-4;
+  }
+
+  .font-worksans {
+    font-family: "Work Sans", sans-serif;
+    font-optical-sizing: auto;
+  }
+
+  .font-intertight {
+    font-family: "Inter Tight", sans-serif;
+    font-optical-sizing: auto;
+  }
+
+  .font-sharetech {
+    font-family: "Share Tech", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .font-oswald {
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
   }
 }
 
@@ -157,26 +178,23 @@ blockquote footer span {
    ALVIN AILEY DANCE THEATER STYLES
    ============================================ */
 
-/* Import Inter font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 /* Ailey Typography */
 .ailey-hero-title {
-  font-size: clamp(3rem, 8vw, 8rem);
+  font-size: clamp(3.5rem, 8vw, 9rem);
   line-height: 0.85;
   font-weight: 700;
   letter-spacing: -0.05em;
   text-transform: uppercase;
-  font-family: 'Inter', sans-serif;
+  font-family: "Oswald", "Inter Tight", sans-serif;
   color: white !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .ailey-card-title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   line-height: 1.2;
-  font-family: 'Inter', sans-serif;
+  font-family: "Work Sans", "Inter Tight", sans-serif;
 }
 
 /* Hero Section Gradient */
@@ -205,7 +223,7 @@ blockquote footer span {
 }
 
 .ailey-nav-link {
-  @apply text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors duration-200 tracking-wide;
+  @apply text-base font-medium text-gray-900 hover:text-gray-600 transition-colors duration-200 tracking-wide;
 }
 
 /* Ailey Footer */
@@ -438,7 +456,7 @@ blockquote footer span {
 
 .menu-item {
   margin: 1.5rem 0;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   position: relative;
   overflow: hidden;
@@ -478,7 +496,7 @@ blockquote footer span {
 
 @media (max-width: 600px) {
   .menu-item {
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin: 1rem 0;
   }
 }

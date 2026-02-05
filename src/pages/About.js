@@ -4,19 +4,51 @@ import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import SectionNav from '../components/ailey/SectionNav';
 import IntroSection from '../components/ailey/IntroSection';
-import FounderSection from '../components/ailey/FounderSection';
-import MissionSection from '../components/ailey/MissionSection';
-import PeopleSection from '../components/ailey/PeopleSection';
-import CompanySection from '../components/ailey/CompanySection';
+import { getBoardMembers } from '../lib/boardMembers';
+import { getDancers } from '../lib/dancers';
+import BoardMemberCard from '../components/Board/BoardMemberCard';
+import DancerCard from '../components/Dancers/DancerCard';
 import { getSiteSettings } from '../lib/siteSettings';
 
 const About = () => {
   const { isDarkMode } = useTheme();
   const [siteSettings, setSiteSettings] = useState(null);
+  const [boardMembers, setBoardMembers] = useState([]);
+  const [dancers, setDancers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
+
+  // Fetch data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [siteData, boardData, dancersData] = await Promise.all([
+          getSiteSettings(),
+          getBoardMembers(),
+          getDancers()
+        ]);
+        
+        if (siteData) setSiteSettings(siteData);
+        if (boardData) setBoardMembers(boardData);
+        if (dancersData) {
+          console.log('Fetched dancers data:', dancersData);
+          console.log('Number of dancers:', dancersData.length);
+          
+          // Show all dancers, roles will be hidden in the component
+          setDancers(dancersData);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Smooth navbar transition on About page
   useEffect(() => {
@@ -134,10 +166,10 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2 md:gap-4 justify-center items-center">
             {[
-              { id: 'our-founder', label: 'Our Founder' },
-              { id: 'the-company', label: 'The Company' },
-              { id: 'our-mission', label: 'Our Mission' },
-              { id: 'our-people', label: 'Our People' }
+              { id: 'the-company', label: 'THE COMPANY' },
+              { id: 'board-of-directors', label: 'BOARD OF DIRECTORS' },
+              { id: 'management', label: 'MANAGEMENT' },
+              { id: 'dancers', label: 'DANCERS' }
             ].map((item, index) => (
               <button
                 key={item.id}
@@ -166,10 +198,68 @@ const About = () => {
 
       {/* Content Sections */}
       <IntroSection />
-      <FounderSection />
-      <CompanySection />
-      <MissionSection />
-      <PeopleSection />
+      
+      {/* Board of Directors Section */}
+      <section id="board-of-directors" className="py-12 md:py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-left mb-8">
+            <h2 className="text-3xl md:text-4xl uppercase mb-4">Board of Directors</h2>
+          </div>
+          {loading ? (
+            <div className="text-left py-12">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+              <p className={`mt-4 ${mutedText}`}>Loading board members...</p>
+            </div>
+          ) : boardMembers.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {boardMembers.map((member, index) => (
+                <BoardMemberCard key={member._id} boardMember={member} index={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-left py-12">
+              <p className={mutedText}>No board members found.</p>
+            </div>
+          )}
+        </div>
+      </section>
+      
+      {/* Management Section */}
+      <section id="management" className="py-12 md:py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-left mb-8">
+            <h2 className="text-3xl md:text-4xl uppercase mb-4">Management</h2>
+          </div>
+          <div className="text-left py-12">
+            <p className={mutedText}>Management team information coming soon.</p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Dancers Section */}
+      <section id="dancers" className="py-12 md:py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-left mb-8">
+            <h2 className="text-3xl md:text-4xl uppercase mb-4">Dancers</h2>
+          </div>
+          {loading ? (
+            <div className="text-left py-12">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+              <p className={`mt-4 ${mutedText}`}>Loading dancers...</p>
+            </div>
+          ) : dancers.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {dancers.map((dancer, index) => (
+                <DancerCard key={dancer._id} dancer={dancer} index={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-left py-12">
+              <p className={mutedText}>No dancers found.</p>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 };

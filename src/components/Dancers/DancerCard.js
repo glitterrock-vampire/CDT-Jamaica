@@ -36,7 +36,7 @@ const DancerCard = ({ dancer, index }) => {
             </>
           ) : (
             <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
-              <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              <span className={`text-base ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 No headshot
               </span>
             </div>
@@ -45,14 +45,9 @@ const DancerCard = ({ dancer, index }) => {
         
         {/* Dancer Info */}
         <div className="p-4">
-          <h3 className={`font-bold text-lg mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>
+          <h3 className={`font-bold text-xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
             {dancer.name}
           </h3>
-          {dancer.role && (
-            <p className={`text-sm font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
-              {dancer.role}
-            </p>
-          )}
         </div>
       </div>
     </motion.div>
