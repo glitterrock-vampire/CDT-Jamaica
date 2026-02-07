@@ -4,7 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import DancerCard from './DancerCard';
 import { getDancers, getFeaturedDancers } from '../../lib/dancers';
 
-const DancersGrid = ({ featuredOnly = false, title = "Our Dancers" }) => {
+const DancersGrid = ({ featuredOnly = false, title = "Our Dancers", aspectRatio = "aspect-square" }) => {
   const { isDarkMode } = useTheme();
   const [dancers, setDancers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,7 +63,7 @@ const DancersGrid = ({ featuredOnly = false, title = "Our Dancers" }) => {
         {/* Dancers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {dancers.map((dancer, index) => (
-            <DancerCard key={dancer._id} dancer={dancer} index={index} />
+            <DancerCard key={dancer._id} dancer={dancer} index={index} aspectRatio={aspectRatio} />
           ))}
         </div>
       </div>

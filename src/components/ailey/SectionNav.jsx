@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const navItems = [
@@ -6,11 +6,47 @@ const navItems = [
   { id: 'our-organization', label: 'Our Organization' },
   { id: 'our-mission', label: 'Our Mission' },
   { id: 'our-people', label: 'Our People' },
+  { id: 'upcoming-performances', label: 'Upcoming Performances' },
   { id: 'our-location', label: 'Our Location' },
   { id: 'resources', label: 'Resources' },
 ];
 
 export default function SectionNav() {
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => ({
+        id: item.id,
+        element: document.getElementById(item.id)
+      })).filter(section => section.element);
+
+      if (sections.length === 0) return;
+
+      // Find the section that's currently in view
+      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+      
+      let currentSection = sections[0].id;
+      
+      for (const section of sections) {
+        const element = section.element;
+        const { offsetTop, offsetHeight } = element;
+        
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          currentSection = section.id;
+          break;
+        }
+      }
+      
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -33,7 +69,11 @@ export default function SectionNav() {
               <li key={item.id}>
                 <button
                   onClick={() => scrollToSection(item.id)}
-                  className="text-white text-xs md:text-sm font-medium tracking-wider uppercase hover:text-white/70 transition-colors"
+                  className={`text-xs md:text-sm font-medium tracking-wider uppercase transition-colors ${
+                    activeSection === item.id 
+                      ? 'text-orange-300' 
+                      : 'text-white hover:text-white/70'
+                  }`}
                 >
                   {item.label}
                 </button>

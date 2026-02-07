@@ -6,15 +6,30 @@ import SectionNav from '../components/ailey/SectionNav';
 import IntroSection from '../components/ailey/IntroSection';
 import { getBoardMembers } from '../lib/boardMembers';
 import { getDancers } from '../lib/dancers';
+import { getUpcomingPerformances } from '../lib/performances';
 import BoardMemberCard from '../components/Board/BoardMemberCard';
 import DancerCard from '../components/Dancers/DancerCard';
 import { getSiteSettings } from '../lib/siteSettings';
+
+const weekdayAbbrev = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
+
+const formatPerformanceDate = (dateString) => {
+  if (!dateString) return '';
+  const dateObj = new Date(dateString);
+  if (Number.isNaN(dateObj.getTime())) return '';
+  const weekday = weekdayAbbrev[dateObj.getDay()];
+  const day = dateObj.toLocaleDateString('en-US', { day: '2-digit' });
+  const month = dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+  return `${weekday} ${month} ${day}`;
+};
 
 const About = () => {
   const { isDarkMode } = useTheme();
   const [siteSettings, setSiteSettings] = useState(null);
   const [boardMembers, setBoardMembers] = useState([]);
   const [dancers, setDancers] = useState([]);
+  const [upcomingPerformances, setUpcomingPerformances] = useState([]);
+  const [currentPerformanceIndex, setCurrentPerformanceIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
@@ -25,13 +40,14 @@ const About = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [siteData, boardData, dancersData] = await Promise.all([
+        const [siteSettings, boardData, dancersData, performancesData] = await Promise.all([
           getSiteSettings(),
           getBoardMembers(),
-          getDancers()
+          getDancers(),
+          getUpcomingPerformances()
         ]);
         
-        if (siteData) setSiteSettings(siteData);
+        if (siteSettings) setSiteSettings(siteSettings);
         if (boardData) setBoardMembers(boardData);
         if (dancersData) {
           console.log('Fetched dancers data:', dancersData);
@@ -39,6 +55,13 @@ const About = () => {
           
           // Show all dancers, roles will be hidden in the component
           setDancers(dancersData);
+        }
+        if (performancesData) {
+          console.log('Fetched performances data:', performancesData);
+          console.log('Number of performances:', performancesData.length);
+          console.log('Current performance index:', currentPerformanceIndex);
+        console.log('Upcoming performances length:', upcomingPerformances.length);
+          setUpcomingPerformances(performancesData || []);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -143,7 +166,7 @@ const About = () => {
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section - Using homepage Hero component */}
-      {siteSettings?.heroImage && (
+      {siteSettings && siteSettings.heroImage && (
         <Hero
           image={siteSettings.heroImage}
           title="The Company"
@@ -168,7 +191,9 @@ const About = () => {
               { id: 'the-company', label: 'THE COMPANY' },
               { id: 'board-of-directors', label: 'BOARD OF DIRECTORS' },
               { id: 'management', label: 'MANAGEMENT' },
-              { id: 'dancers', label: 'DANCERS' }
+              { id: 'dancers', label: 'DANCERS' },
+              { id: 'upcoming-performances', label: 'PERFORMANCES' },
+              { id: 'bookings', label: 'BOOKINGS' }
             ].map((item, index) => (
               <button
                 key={item.id}
@@ -196,7 +221,10 @@ const About = () => {
       </motion.div>
 
       {/* Content Sections */}
-      <IntroSection />
+      {/* THE COMPANY section (Intro) */}
+      <section id="the-company">
+        <IntroSection />
+      </section>
       
       {/* Board of Directors Section */}
       <section id="board-of-directors" className="py-12 md:py-16">
@@ -247,7 +275,7 @@ const About = () => {
               <p className={`mt-4 ${mutedText}`}>Loading dancers...</p>
             </div>
           ) : dancers.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {dancers.map((dancer, index) => (
                 <DancerCard key={dancer._id} dancer={dancer} index={index} />
               ))}
@@ -259,6 +287,168 @@ const About = () => {
           )}
         </div>
       </section>
+
+      {/* Performances Carousel */}
+      {upcomingPerformances.length > 0 && (
+        <motion.section
+          id="upcoming-performances"
+          className={`py-16 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="mb-12">
+              <motion.h2 
+                className="text-3xl md:text-4xl font-bold uppercase mb-4 font-heading"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                Upcoming Performances ({upcomingPerformances.length})
+              </motion.h2>
+              <div className="w-20 h-1 bg-orange-500"></div>
+            </div>
+
+            {/* Performances Horizontal Scroll */}
+            <div className="relative">
+              {/* Left Scroll Indicator */}
+              <motion.div
+                className="absolute -left-10 md:-left-16 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: [0.3, 0.8, 0.3], x: [-10, 0, -10] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <div className={`p-3 rounded-full ${isDarkMode ? 'bg-black/80' : 'bg-white/80'} backdrop-blur-sm border ${isDarkMode ? 'border-white/20' : 'border-black/20'}`}>
+                  <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </div>
+              </motion.div>
+
+              {/* Right Scroll Indicator */}
+              <motion.div
+                className="absolute -right-10 md:-right-16 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: [0.3, 0.8, 0.3], x: [10, 0, 10] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              >
+                <div className={`p-3 rounded-full ${isDarkMode ? 'bg-black/80' : 'bg-white/80'} backdrop-blur-sm border ${isDarkMode ? 'border-white/20' : 'border-black/20'}`}>
+                  <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </motion.div>
+
+              <div className="overflow-x-auto pb-4 no-scrollbar">
+                <div className="flex gap-6 md:gap-8" style={{ width: 'max-content' }}>
+                  {upcomingPerformances.map((performance, index) => (
+                    <motion.div
+                      key={performance._id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className={`border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex-shrink-0`}
+                      style={{ width: '320px', minWidth: '320px' }}
+                    >
+                      {/* Performance Image */}
+                      <div className={`relative border-b ${isDarkMode ? 'border-white/10' : 'border-black/10'} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
+                        <img
+                          src={performance.image?.asset?.url || performance.image?.url}
+                          alt={performance.image?.alt || performance.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      
+                      {/* Performance Info */}
+                      <div className="p-4 md:p-6">
+                        <div className="text-base md:text-lg font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 md:mb-3 font-sans">
+                          {formatPerformanceDate(performance.date)}
+                        </div>
+                        
+                        <h3 className="text-lg md:text-xl font-bold mb-2">
+                          {performance.title}
+                        </h3>
+                        
+                        <div className="space-y-1 text-sm md:text-base mb-3 md:mb-4">
+                          <div className="font-semibold">{performance.venue}</div>
+                          <div>{performance.location}</div>
+                        </div>
+                        
+                        {performance.description && (
+                          <p className={`text-xs md:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-3 md:mb-4 line-clamp-3`}>
+                            {performance.description}
+                          </p>
+                        )}
+                        
+                        {performance.ticketUrl && (
+                          <a
+                            href={performance.ticketUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center px-4 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                          >
+                            Get Tickets
+                          </a>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+      )}
+
+      {/* Booking Information - Always show */}
+      <motion.section
+        id="bookings"
+        className={`py-16 ${isDarkMode ? 'bg-black' : 'bg-white'} border-t ${isDarkMode ? 'border-white/10' : 'border-black/10'}`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+            {/* Left Column - Title */}
+            <motion.div
+              className="md:col-span-4"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="sticky top-24">
+                <div className={`text-3xl md:text-4xl font-bold uppercase mb-4 font-heading`}>Book CDT at Your Venue</div>
+                <div className="w-20 h-1 bg-orange-500 mx-auto"></div>
+              </div>
+            </motion.div>
+
+            {/* Right Column - Content */}
+            <motion.div
+              className="md:col-span-7 md:col-start-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className={`p-8 rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900/50' : 'border-black/10 bg-gray-50'}`}>
+                <div className="space-y-4 text-lg">
+                  <p className={mutedText}>
+                    To book CDT at your venue, please contact:
+                  </p>
+                  <div className="space-y-2 font-medium">
+                    <p>Dr. Sade Bully-Bell</p>
+                    <p>AISK, 2 College Green Avenue</p>
+                    <p>Kingston 6</p>
+                    <p>Jamaica</p>
+                    <p>876-463-7395 | company@cdtjamaica.org</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import DancersGrid from '../components/Dancers/DancersGrid';
 import BoardGrid from '../components/Board/BoardGrid';
-import { getSiteSettings } from '../lib/siteSettings';
+import { getSiteSettings } from '../lib/sanity';
 
 const Company = () => {
   const { isDarkMode } = useTheme();
@@ -138,7 +138,8 @@ const Company = () => {
       <div id="dancers">
         <DancersGrid 
           featuredOnly={false} 
-          title="Company Dancers" 
+          title="Company Dancers"
+          aspectRatio="aspect-[4/5]"
         />
       </div>
     </div>

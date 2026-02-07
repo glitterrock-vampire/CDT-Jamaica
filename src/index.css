@@ -190,6 +190,16 @@ blockquote footer span {
   @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200;
 }
 
+/* Utility: hide scrollbars but keep scrolling behavior (used for performances strip, etc.) */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;            /* Chrome, Safari, Opera */
+}
+
 /* ============================================
    ALVIN AILEY DANCE THEATER STYLES
    ============================================ */

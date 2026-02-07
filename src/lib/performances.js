@@ -56,7 +56,7 @@ export const getPerformances = async () => {
 
 export const getUpcomingPerformances = async () => {
   const query = `
-    *[_type == "performance" && isUpcoming == true && date >= now()] | order(date asc) {
+    *[_type == "performance"] | order(date asc) {
       _id,
       title,
       company,
@@ -78,7 +78,7 @@ export const getUpcomingPerformances = async () => {
       slug {
         current
       }
-    }[0...5]
+    }
   `;
   
   try {

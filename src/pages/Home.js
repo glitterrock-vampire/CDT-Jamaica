@@ -15,6 +15,8 @@ const Home = () => {
   const [newsArchiveVideos, setNewsArchiveVideos] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(2);
   const [showFullCalendar, setShowFullCalendar] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const [player, setPlayer] = useState(null);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -30,7 +32,7 @@ const Home = () => {
     const weekday = heroWeekdayAbbrev[dateObj.getDay()];
     const day = dateObj.toLocaleDateString('en-US', { day: '2-digit' });
     const month = dateObj.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
-    return `${weekday} ${day} ${month}`;
+    return `${weekday} ${month} ${day}`;
   };
 
   const weekdayAbbrev = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
@@ -42,19 +44,60 @@ const Home = () => {
     const weekday = weekdayAbbrev[dateObj.getDay()];
     const day = dateObj.toLocaleDateString('en-US', { day: '2-digit' });
     const month = dateObj.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-    return `${weekday} ${day} ${month}`;
+    return `${weekday} ${month} ${day}`;
   };
 
   useEffect(() => {
-    const video = document.querySelector('video');
-    if (video) {
-      video.addEventListener('loadstart', () => console.log('Video loading started'));
-      video.addEventListener('loadeddata', () => console.log('Video data loaded'));
-      video.addEventListener('canplay', () => console.log('Video can play'));
-      video.addEventListener('play', () => console.log('Video playing'));
-      video.addEventListener('error', (e) => console.error('Video error:', e));
-    }
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // This function creates an <iframe> (and YouTube player) after the API code downloads.
+    window.onYouTubeIframeAPIReady = () => {
+      const ytPlayer = new window.YT.Player('hero-video', {
+        videoId: 'zby-l0-XkBc',
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          loop: 1,
+          playlist: 'zby-l0-XkBc',
+          controls: 0,
+          showinfo: 0,
+          rel: 0,
+          modestbranding: 1,
+          autohide: 1,
+          disablekb: 1,
+          enablejsapi: 1,
+          origin: window.location.origin
+        },
+        events: {
+          onReady: (event) => {
+            setPlayer(event.target);
+            event.target.playVideo();
+          }
+        }
+      });
+    };
+
+    return () => {
+      if (window.onYouTubeIframeAPIReady) {
+        delete window.onYouTubeIframeAPIReady;
+      }
+    };
   }, []);
+
+  const toggleMute = () => {
+    if (player) {
+      if (isVideoMuted) {
+        player.unMute();
+      } else {
+        player.mute();
+      }
+      setIsVideoMuted(!isVideoMuted);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -208,14 +251,27 @@ const Home = () => {
       <div className={`relative w-full min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} overflow-hidden`}>
         {/* Video Background - YouTube Video */}
         <div className="absolute inset-0 z-0">
-          <iframe
-            src="https://www.youtube.com/embed/zby-l0-XkBc?autoplay=1&mute=1&loop=1&playlist=zby-l0-XkBc&controls=0&showinfo=0&rel=0&modestbranding=1"
-            className="w-full h-full object-cover"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            title="Company Dance Video"
-          />
+          <div id="hero-video" className="w-full h-full" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
+          
+          {/* Mute/Unmute Button */}
+          <button
+            onClick={toggleMute}
+            className="absolute bottom-8 right-8 z-20 p-3 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-colors"
+            aria-label={isVideoMuted ? 'Unmute video' : 'Mute video'}
+          >
+            {isVideoMuted ? (
+              // Muted icon
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+              </svg>
+            ) : (
+              // Unmuted icon
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+            )}
+          </button>
         </div>
 
         {/* Content Overlay */}
@@ -487,33 +543,37 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.47 }}
             >
               <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>The school</div>
-              <h2 className="text-3xl md:text-4xl uppercase font-heading">Training for all ages.</h2>
+              <h2 className="text-3xl md:text-4xl uppercase font-heading">THE CDT SCHOOL</h2>
               <p className={`text-base md:text-lg max-w-md leading-relaxed ${mutedText}`}>
-                From first steps to pre-professional study, CDT Jamaica School offers programmes in contemporary, ballet,
-                and Jamaican folk forms led by working artists.
+                From first steps to pre-professional study, The CDT School offers programmes in contemporary, ballet, and Jamaican folk forms led by working artists.
               </p>
-              <div className="space-y-2 text-base mt-4">
-                {[
-                  { label: 'Juniors', meta: 'Ages 4–10' },
-                  { label: 'Adults', meta: 'Evenings + weekends' }
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className={`flex items-center justify-between pb-2 border-b ${borderColor}`}
-                  >
-                    <span>{item.label}</span>
-                    <span className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>{item.meta}</span>
-                  </div>
-                ))}
+              <div className="space-y-4 text-base mt-6">
+                <div className="space-y-2">
+                  <div className="text-lg font-semibold">Juniors</div>
+                  <div className="text-base">Ages 3–17</div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="text-lg font-semibold">Adults</div>
+                  <div className="text-base">Evenings + weekends</div>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-3 mt-4">
+              <div className="flex flex-wrap gap-4 mt-8">
                 <a
-                  href="https://linktr.ee/cdtjamaica"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSgT-3dYhVvXf6n3vGj5cTq7Qv7cTq7Q"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center px-6 py-2 text-sm font-semibold tracking-[0.16em] uppercase border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors`}
+                  className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
                 >
-                  Registration
+                  Register – Juniors
+                </a>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSgT-3dYhVvXf6n3vGj5cTq7Qv7cTq7Q"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                >
+                  Register – Adults
                 </a>
               </div>
             </motion.div>
@@ -568,7 +628,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.52 }}
             >
               <div>
-                <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div>
+                {/* <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div> */}
                 <div className="text-2xl md:text-3xl uppercase font-heading">News + archive</div>
               </div>
               <motion.button
@@ -599,9 +659,6 @@ const Home = () => {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   ></iframe>
-                </div>
-                <div className="p-4">
-                  <div className="text-lg font-bold uppercase">CDT Jamaica Performance</div>
                 </div>
               </motion.div>
 

@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { builder } from '../../lib/sanityClient';
 
-const DancerCard = ({ dancer, index }) => {
+const DancerCard = ({ dancer, index, aspectRatio = 'aspect-[3/4]' }) => {
   const { isDarkMode } = useTheme();
   
   const getHeadshotUrl = (headshot) => {
     if (headshot?.asset?.url) {
-      return builder.image(headshot.asset).width(400).height(400).fit('crop').url();
+      return builder.image(headshot.asset).width(600).height(800).fit('crop').url();
     }
     return null;
   };
@@ -23,7 +23,7 @@ const DancerCard = ({ dancer, index }) => {
     >
       <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} transition-all duration-300 group-hover:border-orange-500/50 group-hover:shadow-lg`}>
         {/* Headshot Image */}
-        <div className="aspect-square overflow-hidden relative">
+        <div className={`${aspectRatio} overflow-hidden relative`}>
           {dancer.headshot ? (
             <>
               <img
