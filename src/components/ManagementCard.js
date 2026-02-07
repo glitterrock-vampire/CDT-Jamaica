@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTheme } from '../../context/ThemeContext';
-import { builder } from '../../lib/sanityClient';
+import { useTheme } from '../context/ThemeContext';
+import { builder } from '../lib/sanityClient';
 
-const BoardMemberCard = ({ boardMember, index }) => {
+const ManagementCard = ({ member, index }) => {
   const { isDarkMode } = useTheme();
   
   const getHeadshotUrl = (headshot) => {
     if (headshot?.asset?.url) {
-      return builder.image(headshot.asset).width(400).height(400).fit('crop').url();
+      return builder.image(headshot.asset).width(400).height(500).fit('crop').url();
     }
     return null;
   };
@@ -23,12 +23,12 @@ const BoardMemberCard = ({ boardMember, index }) => {
     >
       <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} transition-all duration-300 group-hover:border-orange-500/50 group-hover:shadow-lg`}>
         {/* Headshot Image */}
-        <div className="aspect-square overflow-hidden relative">
-          {boardMember.headshot ? (
+        <div className="aspect-[4/5] overflow-hidden relative">
+          {member.headshot ? (
             <>
               <img
-                src={getHeadshotUrl(boardMember.headshot)}
-                alt={boardMember.headshot.alt || boardMember.name}
+                src={getHeadshotUrl(member.headshot)}
+                alt={member.headshot.alt || member.name}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
               />
               {/* Subtle color overlay effect */}
@@ -43,19 +43,17 @@ const BoardMemberCard = ({ boardMember, index }) => {
           )}
         </div>
         
-        {/* Board Member Info */}
+        {/* Member Info */}
         <div className="p-4">
-          <h3 className={`font-bold text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
-            {boardMember.name}
+          <h3 className={`font-bold text-xl ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
+            {member.name}
           </h3>
-          {boardMember.position && (
-            <p className={`text-lg font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
-              {boardMember.position}
-            </p>
-          )}
-          {boardMember.bio && (
-            <p className={`text-base leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              {boardMember.bio}
+          <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+            {member.title}
+          </p>
+          {member.bio && (
+            <p className={`text-sm mt-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} leading-relaxed line-clamp-3`}>
+              {member.bio}
             </p>
           )}
         </div>
@@ -64,4 +62,4 @@ const BoardMemberCard = ({ boardMember, index }) => {
   );
 };
 
-export default BoardMemberCard;
+export default ManagementCard;

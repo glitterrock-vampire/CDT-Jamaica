@@ -4,12 +4,14 @@ import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import SectionNav from '../components/ailey/SectionNav';
 import IntroSection from '../components/ailey/IntroSection';
-import { getBoardMembers } from '../lib/boardMembers';
-import { getDancers } from '../lib/dancers';
 import { getUpcomingPerformances } from '../lib/performances';
+import { getDancers } from '../lib/dancers';
+import { getBoardMembers } from '../lib/boardMembers';
+import { getManagement } from '../lib/management';
+import { getSiteSettings } from '../lib/siteSettings';
 import BoardMemberCard from '../components/Board/BoardMemberCard';
 import DancerCard from '../components/Dancers/DancerCard';
-import { getSiteSettings } from '../lib/siteSettings';
+import ManagementCard from '../components/ManagementCard';
 
 const weekdayAbbrev = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
 
@@ -28,6 +30,7 @@ const About = () => {
   const [siteSettings, setSiteSettings] = useState(null);
   const [boardMembers, setBoardMembers] = useState([]);
   const [dancers, setDancers] = useState([]);
+  const [management, setManagement] = useState([]);
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
   const [currentPerformanceIndex, setCurrentPerformanceIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -40,10 +43,11 @@ const About = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [siteSettings, boardData, dancersData, performancesData] = await Promise.all([
+        const [siteSettings, boardData, dancersData, managementData, performancesData] = await Promise.all([
           getSiteSettings(),
           getBoardMembers(),
           getDancers(),
+          getManagement(),
           getUpcomingPerformances()
         ]);
         
@@ -55,6 +59,11 @@ const About = () => {
           
           // Show all dancers, roles will be hidden in the component
           setDancers(dancersData);
+        }
+        if (managementData) {
+          console.log('Fetched management data:', managementData);
+          console.log('Number of management members:', managementData.length);
+          setManagement(managementData || []);
         }
         if (performancesData) {
           console.log('Fetched performances data:', performancesData);
@@ -256,10 +265,24 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
             <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Management</h2>
+            <div className="w-20 h-1 bg-orange-500"></div>
           </div>
-          <div className="text-left py-12">
-            <p className={mutedText}>Management team information coming soon.</p>
-          </div>
+          {loading ? (
+            <div className="text-left py-12">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+              <p className={`mt-4 ${mutedText}`}>Loading management team...</p>
+            </div>
+          ) : management.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {management.map((member, index) => (
+                <ManagementCard key={member._id} member={member} index={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-left py-12">
+              <p className={mutedText}>No management team members found.</p>
+            </div>
+          )}
         </div>
       </section>
       
@@ -268,6 +291,7 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
             <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Dancers</h2>
+            <div className="w-20 h-1 bg-orange-500"></div>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -275,7 +299,7 @@ const About = () => {
               <p className={`mt-4 ${mutedText}`}>Loading dancers...</p>
             </div>
           ) : dancers.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {dancers.map((dancer, index) => (
                 <DancerCard key={dancer._id} dancer={dancer} index={index} />
               ))}
