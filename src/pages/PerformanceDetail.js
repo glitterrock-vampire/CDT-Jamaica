@@ -1,3 +1,5 @@
+// PerformanceDetail page temporarily disabled
+/*
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
@@ -18,4 +20,9 @@ const PerformanceDetail = () => {
   );
 };
 
+export default PerformanceDetail;
+*/
+
+// Placeholder export to prevent app from breaking
+const PerformanceDetail = () => null;
 export default PerformanceDetail;

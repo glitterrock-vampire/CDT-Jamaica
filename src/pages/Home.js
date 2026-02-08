@@ -388,58 +388,65 @@ const Home = () => {
                 });
                 
                 return (
-                  <Link
+                  <div
                     key={perf._id}
-                    to={`/performance/${perf.slug?.current}`}
                     className="block group h-full"
                   >
                     <motion.div
-                      className={`h-full flex flex-col p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                      className={`h-full flex flex-col p-4 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.38 + index * 0.04 }}
                     >
+                      {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
                       <motion.div
-                        className="flex flex-col flex-1"
+                        className="flex flex-col min-h-[180px]"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                       >
-                        <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 ml-1 leading-none font-sans">
+                        <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none">
                           {formatPerformanceDate(perf.date)}
                         </div>
-                        <div className={`text-base font-body ${mutedText} ml-1 mb-2`}>{perf.location}</div>
-                        <div className={`text-base font-body ${mutedText} ml-1 mb-2`}>{perf.venue}</div>
-                        <div className="text-xl md:text-2xl font-semibold uppercase mb-4 ml-1 font-sans">{perf.title}</div>
-                        <div className={`relative border-b ${borderColor} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
-                          <img
-                            src={perf.image?.asset?.url || perf.image?.url}
-                            alt={perf.image?.alt || perf.title}
-                            className="w-full h-full object-cover transition-all duration-300"
-                          />
-                        </div>
+                        <div className={`text-sm ${mutedText} mb-1`}>{perf.location}</div>
+                        <div className={`text-sm ${mutedText} mb-3`}>{perf.venue}</div>
+                        <div className="text-xl md:text-2xl font-semibold uppercase mb-4">{perf.title}</div>
                       </motion.div>
-                      <motion.p
-                        className={`text-base leading-snug font-body ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
-                      >
-                        {perf.description}
-                      </motion.p>
-                      <motion.button
-                        type="button"
-                        className={`mt-auto inline-flex items-center justify-center w-full px-4 py-2 text-sm tracking-[0.16em] uppercase border ${borderColor} ${
-                          isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                        } transition-colors`}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
-                      >
-                        Get Tickets
-                      </motion.button>
+
+                      {/* Middle section - Image (centered and consistent) */}
+                      <div className={`relative border ${borderColor} overflow-hidden mb-4`} style={{ aspectRatio: '3/4' }}>
+                        <img
+                          src={perf.image?.asset?.url || perf.image?.url}
+                          alt={perf.image?.alt || perf.title}
+                          className="w-full h-full object-cover transition-all duration-300"
+                        />
+                      </div>
+
+                      {/* Bottom section - Description and Button */}
+                      <div className="flex flex-col flex-grow">
+                        <motion.p
+                          className={`text-sm leading-relaxed ${mutedText} mb-4 line-clamp-3 flex-grow`}
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
+                        >
+                          {perf.description}
+                        </motion.p>
+                        {perf.ticketUrl && (
+                          <motion.button
+                            type="button"
+                            className="mt-auto inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
+                            onClick={() => window.open(perf.ticketUrl, '_blank', 'noopener,noreferrer')}
+                          >
+                            Get Tickets
+                          </motion.button>
+                        )}
+                      </div>
                     </motion.div>
-                  </Link>
+                  </div>
                 );
               })}
             </div>
@@ -459,57 +466,65 @@ const Home = () => {
                   <div className="grid gap-5 md:grid-cols-3 auto-rows-fr">
                     {upcomingPerformances.slice(3).map((perf, index) => {
                       return (
-                        <Link
+                        <div
                           key={perf._id}
-                          to={`/performance/${perf.slug?.current}`}
                           className="block group h-full"
                         >
                           <motion.div
-                            className={`h-full flex flex-col p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                            className={`h-full flex flex-col p-4 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
                             initial={{ opacity: 0, y: 18 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.04 }}
                           >
+                            {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
                             <motion.div
-                              className="flex flex-col flex-1"
+                              className="flex flex-col min-h-[180px]"
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                             >
-                              <div className="text-2xl md:text-3xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none font-heading">
+                              <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none">
                                 {formatPerformanceDate(perf.date)}
                               </div>
-                              <div className="text-2xl md:text-3xl font-semibold uppercase mb-2 font-heading">{perf.title}</div>
-                              <div className={`text-lg font-body ${mutedText} mb-4`}>{perf.venue} · {perf.location}</div>
-                              <div className={`relative border-b ${borderColor} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
-                                <img
-                                  src={perf.image?.asset?.url || perf.image?.url}
-                                  alt={perf.image?.alt || perf.title}
-                                  className="w-full h-full object-cover transition-all duration-300"
-                                />
-                              </div>
+                              <div className={`text-sm ${mutedText} mb-1`}>{perf.location}</div>
+                              <div className={`text-sm ${mutedText} mb-3`}>{perf.venue}</div>
+                              <div className="text-xl md:text-2xl font-semibold uppercase mb-4">{perf.title}</div>
                             </motion.div>
-                            <motion.p
-                              className={`text-base leading-snug font-body ${mutedText} flex-1 overflow-hidden line-clamp-4 mt-3`}
-                              initial={{ opacity: 0, y: 8 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
-                            >
-                              {perf.description}
-                            </motion.p>
-                            <motion.button
-                              type="button"
-                              className={`mt-auto inline-flex items-center justify-center w-full px-4 py-2 text-sm tracking-[0.16em] uppercase border ${borderColor} ${
-                                isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                              } transition-colors`}
-                              initial={{ opacity: 0, y: 6 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
-                            >
-                              Get Tickets
-                            </motion.button>
+
+                            {/* Middle section - Image (centered and consistent) */}
+                            <div className={`relative border ${borderColor} overflow-hidden mb-4`} style={{ aspectRatio: '3/4' }}>
+                              <img
+                                src={perf.image?.asset?.url || perf.image?.url}
+                                alt={perf.image?.alt || perf.title}
+                                className="w-full h-full object-cover transition-all duration-300"
+                              />
+                            </div>
+
+                            {/* Bottom section - Description and Button */}
+                            <div className="flex flex-col flex-grow">
+                              <motion.p
+                                className={`text-sm leading-relaxed ${mutedText} mb-4 line-clamp-3 flex-grow`}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
+                              >
+                                {perf.description}
+                              </motion.p>
+                              {perf.ticketUrl && (
+                                <motion.button
+                                  type="button"
+                                  className="mt-auto inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                                  initial={{ opacity: 0, y: 6 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
+                                  onClick={() => window.open(perf.ticketUrl, '_blank', 'noopener,noreferrer')}
+                                >
+                                  Get Tickets
+                                </motion.button>
+                              )}
+                            </div>
                           </motion.div>
-                        </Link>
+                        </div>
                       );
                     })}
                   </div>

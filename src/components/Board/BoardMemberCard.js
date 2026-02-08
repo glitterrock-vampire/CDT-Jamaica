@@ -8,7 +8,7 @@ const BoardMemberCard = ({ boardMember, index }) => {
   
   const getHeadshotUrl = (headshot) => {
     if (headshot?.asset?.url) {
-      return builder.image(headshot.asset).width(400).height(400).fit('crop').url();
+      return builder.image(headshot.asset).width(400).height(500).fit('crop').url();
     }
     return null;
   };
@@ -23,7 +23,7 @@ const BoardMemberCard = ({ boardMember, index }) => {
     >
       <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} transition-all duration-300 group-hover:border-orange-500/50 group-hover:shadow-lg`}>
         {/* Headshot Image */}
-        <div className="aspect-square overflow-hidden relative">
+        <div className="aspect-[4/5] overflow-hidden relative">
           {boardMember.headshot ? (
             <>
               <img
