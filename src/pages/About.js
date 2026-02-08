@@ -30,7 +30,6 @@ const About = () => {
   const [dancers, setDancers] = useState([]);
   const [management, setManagement] = useState([]);
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
-  const [currentPerformanceIndex, setCurrentPerformanceIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
@@ -51,25 +50,9 @@ const About = () => {
         
         if (siteSettings) setSiteSettings(siteSettings);
         if (boardData) setBoardMembers(boardData);
-        if (dancersData) {
-          console.log('Fetched dancers data:', dancersData);
-          console.log('Number of dancers:', dancersData.length);
-          
-          // Show all dancers, roles will be hidden in the component
-          setDancers(dancersData);
-        }
-        if (managementData) {
-          console.log('Fetched management data:', managementData);
-          console.log('Number of management members:', managementData.length);
-          setManagement(managementData || []);
-        }
-        if (performancesData) {
-          console.log('Fetched performances data:', performancesData);
-          console.log('Number of performances:', performancesData.length);
-          console.log('Current performance index:', currentPerformanceIndex);
-        console.log('Upcoming performances length:', upcomingPerformances.length);
-          setUpcomingPerformances(performancesData || []);
-        }
+        if (dancersData) setDancers(dancersData);
+        if (managementData) setManagement(managementData || []);
+        if (performancesData) setUpcomingPerformances(performancesData || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -93,13 +76,10 @@ const About = () => {
       if (navbar && secondaryNav && !isTransitioning) {
         const scrollY = window.scrollY;
         const secondaryNavTop = secondaryNav.offsetTop;
-        const threshold = secondaryNavTop - 150; // Start transition earlier
+        const threshold = secondaryNavTop - 150;
         
-        // Scrolling down and approaching secondary nav
         if (scrollY >= threshold && scrollY > lastScrollY) {
           isTransitioning = true;
-          
-          // Smooth fade out main navbar
           navbar.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
           navbar.style.opacity = '0';
           navbar.style.transform = 'translateY(-20px)';
@@ -108,12 +88,8 @@ const About = () => {
             navbar.style.display = 'none';
             isTransitioning = false;
           }, 300);
-        }
-        // Scrolling up and away from secondary nav
-        else if (scrollY < threshold - 50 || scrollY < lastScrollY) {
+        } else if (scrollY < threshold - 50 || scrollY < lastScrollY) {
           isTransitioning = true;
-          
-          // Show navbar with smooth fade in
           navbar.style.display = '';
           navbar.style.transition = 'opacity 0.3s ease-in, transform 0.3s ease-in';
           navbar.style.opacity = '0';
@@ -133,18 +109,15 @@ const About = () => {
       }
     };
 
-    // Delay the scroll listener to allow navbar to load first
     timeoutId = setTimeout(() => {
       window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll(); // Check initial position after delay
+      handleScroll();
     }, 500);
     
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      if (timeoutId) clearTimeout(timeoutId);
       window.removeEventListener('scroll', handleScroll);
-      // Reset navbar styles when leaving page
+      
       const navbar = document.querySelector('nav');
       if (navbar) {
         navbar.style.transition = '';
@@ -155,24 +128,9 @@ const About = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const settings = await getSiteSettings();
-        if (settings) {
-          setSiteSettings(settings);
-        }
-      } catch (error) {
-        console.error('Error fetching site settings:', error);
-      }
-    };
-
-    fetchSettings();
-  }, []);
-
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {/* Hero Section - Using homepage Hero component */}
+      {/* Hero Section */}
       {siteSettings && siteSettings.heroImage && (
         <Hero
           image={siteSettings.heroImage}
@@ -180,7 +138,7 @@ const About = () => {
         />
       )}
       
-      {/* Section Navigation - Replaces main navbar on scroll */}
+      {/* Section Navigation */}
       <motion.div
         data-secondary-nav
         initial={{ opacity: 0, y: 20 }}
@@ -201,15 +159,14 @@ const About = () => {
               { id: 'dancers', label: 'DANCERS' },
               { id: 'upcoming-performances', label: 'UPCOMING PERFORMANCES' },
               { id: 'bookings', label: 'BOOKINGS' }
-            ].map((item, index) => (
+            ].map((item) => (
               <button
                 key={item.id}
                 className="px-3 py-2 text-sm font-semibold tracking-[0.08em] uppercase hover:text-orange-500 transition-colors"
                 onClick={() => {
                   const element = document.getElementById(item.id);
                   if (element) {
-                    // Offset for sticky nav height
-                    const navHeight = 80; // Approximate height of sticky nav
+                    const navHeight = 80;
                     const elementPosition = element.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - navHeight;
 
@@ -227,11 +184,9 @@ const About = () => {
         </div>
       </motion.div>
 
-      {/* Content Sections */}
-      {/* THE COMPANY section (Intro) */}
+      {/* THE COMPANY section */}
       <section id="the-company" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          {/* Two Column Layout */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
             {/* Left Column - Header */}
             <motion.div
@@ -247,9 +202,9 @@ const About = () => {
               </div>
             </motion.div>
 
-            {/* Right Column - Content spanning to match grid below */}
-           <div className="md:col-span-8">
-              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} leading-relaxed text-justify`}>
+            {/* Right Column - Content */}
+            <div className="md:col-span-8">
+              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} leading-relaxed`}>
                 <motion.p 
                   className="text-2xl md:text-3xl"
                   initial={{ opacity: 0, x: 20 }}
@@ -272,7 +227,7 @@ const About = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the world!
+                  Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and <span className="italic text-orange-500">to the worl!</span>
                 </motion.p>
               </div>
             </div>
@@ -372,8 +327,7 @@ const About = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-               UPCOMING PERFORMANCES 
-               {/* ({upcomingPerformances.length}) */}
+                UPCOMING PERFORMANCES
               </motion.h2>
             </div>
 
@@ -410,13 +364,13 @@ const About = () => {
               <div 
                 className="overflow-x-auto pb-4"
                 style={{
-                  scrollbarWidth: 'none', /* Firefox */
-                  msOverflowStyle: 'none', /* IE and Edge */
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
                 }}
               >
                 <style jsx>{`
                   div::-webkit-scrollbar {
-                    display: none; /* Chrome, Safari, Opera */
+                    display: none;
                   }
                 `}</style>
                 <div className="flex gap-6 md:gap-8">
@@ -447,29 +401,21 @@ const About = () => {
                           {performance.title}
                         </h3>
                         
-                        <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-lg leading-relaxed`}>
-                          <motion.p
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: 0.2 }}
-                            className="text-xl font-semibold"
-                          >
-                            Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, the wider Caribbean, and North America.
-                          </motion.p>
-                          <motion.p
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: 0.3 }}
-                          >
-                            CDT Jamaica is a legacy company formed to honour the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
-                          </motion.p>
-                          <motion.p
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: 0.4 }}
-                          >
-                            Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the worl'!
-                          </motion.p>
+                        <div className="space-y-1 text-sm md:text-base mb-3 md:mb-4 flex-grow">
+                          <div className="font-semibold">{performance.venue}</div>
+                          <div>{performance.location}</div>
+                        </div>
+                        
+                        {performance.description && (
+                          <p className={`text-xs md:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-3 md:mb-4 line-clamp-3`}>
+                            {performance.description}
+                          </p>
+                        )}
+                        
+                        <div className="mt-auto">
+                          {performance.ticketUrl && (
+                            <TicketButton href={performance.ticketUrl} />
+                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -481,7 +427,7 @@ const About = () => {
         </motion.section>
       )}
 
-      {/* Booking Information - Always show */}
+      {/* Booking Information */}
       <motion.section
         id="bookings"
         className={`py-16 ${isDarkMode ? 'bg-black' : 'bg-white'} border-t ${isDarkMode ? 'border-white/10' : 'border-black/10'}`}
