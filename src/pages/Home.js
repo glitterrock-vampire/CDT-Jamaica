@@ -461,9 +461,9 @@ const Home = () => {
                   transition={{ duration: 0.3 }}
                   className="mt-8"
                 >
-                  {/* Additional Performances Grid - Show 2 more (items 4-5) */}
+                  {/* Additional Performances Grid - Show all remaining performances */}
                   <div className="grid gap-5 md:grid-cols-3 auto-rows-fr">
-                    {upcomingPerformances.slice(3, 5).map((perf, index) => {
+                    {upcomingPerformances.slice(3).map((perf, index) => {
                       return (
                         <Link
                           key={perf._id}
@@ -560,7 +560,7 @@ const Home = () => {
               </div>
               <div className="flex flex-wrap gap-4 mt-8">
                 <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSgT-3dYhVvXf6n3vGj5cTq7Qv7cTq7Q"
+                  href="https://forms.gle/zASuCqPRZn2EZ3Ba7"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
@@ -568,7 +568,7 @@ const Home = () => {
                   Register – Juniors
                 </a>
                 <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSgT-3dYhVvXf6n3vGj5cTq7Qv7cTq7Q"
+                  href="https://forms.gle/aqQ5kRxFjcrEmyrB7"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"

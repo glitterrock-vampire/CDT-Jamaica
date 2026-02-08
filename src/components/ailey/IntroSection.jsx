@@ -35,7 +35,7 @@ export default function IntroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className={`space-y-8 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-2xl leading-relaxed`}>
+              <div className={`space-y-8 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-2xl leading-relaxed text-left`}>
                 <p className="text-3xl font-semibold mb-6">
                   Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
                 </p>
@@ -105,7 +105,7 @@ export function CDTSchoolSection() {
                 
                 <div className="flex flex-wrap gap-4 mt-8">
                   <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSgT-3dYhVvXf6n3vGj5cTq7Qv7cTq7Q"
+                    href="https://forms.gle/zASuCqPRZn2EZ3Ba7"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
@@ -113,7 +113,7 @@ export function CDTSchoolSection() {
                     Register – Juniors
                   </a>
                   <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSgT-3dYhVvXf6n3vGj5cTq7Qv7cTq7Q"
+                    href="https://forms.gle/aqQ5kRxFjcrEmyrB7"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"

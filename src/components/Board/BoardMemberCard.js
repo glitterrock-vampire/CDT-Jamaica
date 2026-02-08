@@ -53,11 +53,6 @@ const BoardMemberCard = ({ boardMember, index }) => {
               {boardMember.position}
             </p>
           )}
-          {boardMember.bio && (
-            <p className={`text-base leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              {boardMember.bio}
-            </p>
-          )}
         </div>
       </div>
     </motion.div>

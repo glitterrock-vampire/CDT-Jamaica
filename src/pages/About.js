@@ -239,7 +239,7 @@ const About = () => {
       <section id="board-of-directors" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em] font-body">Board of Directors</h2>
+            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Board of Directors</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -264,7 +264,7 @@ const About = () => {
       <section id="management" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Management</h2>
+            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Management</h2>
             <div className="w-20 h-1 bg-orange-500"></div>
           </div>
           {loading ? (
@@ -290,7 +290,7 @@ const About = () => {
       <section id="dancers" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-heading">Dancers</h2>
+            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Dancers</h2>
             <div className="w-20 h-1 bg-orange-500"></div>
           </div>
           {loading ? (
@@ -324,7 +324,7 @@ const About = () => {
           <div className="container mx-auto px-4">
             <div className="mb-12">
               <motion.h2 
-                className="text-3xl md:text-4xl font-bold uppercase mb-4 font-heading"
+                className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -386,7 +386,7 @@ const About = () => {
                       
                       {/* Performance Info */}
                       <div className="p-4 md:p-6">
-                        <div className="text-base md:text-lg font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 md:mb-3 font-sans">
+                        <div className="text-base md:text-lg font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 md:mb-3">
                           {formatPerformanceDate(performance.date)}
                         </div>
                         
@@ -410,7 +410,9 @@ const About = () => {
                             href={performance.ticketUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center px-4 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                            className={`inline-flex items-center justify-center px-4 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
+                              isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
+                            } transition-colors`}
                           >
                             Get Tickets
                           </a>
@@ -443,7 +445,7 @@ const About = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="sticky top-24">
-                <div className={`text-3xl md:text-4xl font-bold uppercase mb-4 font-heading`}>Book CDT at Your Venue</div>
+                <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Book CDT at Your Venue</h2>
                 <div className="w-20 h-1 bg-orange-500 mx-auto"></div>
               </div>
             </motion.div>
