@@ -15,7 +15,7 @@ const Home = () => {
   const [siteSettings, setSiteSettings] = useState(null);
   const [newsArchiveVideos, setNewsArchiveVideos] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(2);
-  const [showFullCalendar, setShowFullCalendar] = useState(false);
+  const [showFullCalendar, setShowFullCalendar] = useState(true);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [player, setPlayer] = useState(null);
 

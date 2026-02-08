@@ -3,9 +3,8 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import SectionNav from '../components/ailey/SectionNav';
-import IntroSection from '../components/ailey/IntroSection';
-import { getUpcomingPerformances, getDancers, getBoardMembers, getManagement, getSiteSettings } from '../lib/performances';
-import { getSiteSettings as getSiteSettingsFromLib } from '../lib/siteSettings';
+import { getUpcomingPerformances, getDancers, getBoardMembers, getManagement } from '../lib/performances';
+import { getSiteSettings } from '../lib/siteSettings';
 import { urlFor } from '../lib/sanity';
 import BoardMemberCard from '../components/Board/BoardMemberCard';
 import DancerCard from '../components/Dancers/DancerCard';
@@ -200,7 +199,7 @@ const About = () => {
               { id: 'board-of-directors', label: 'BOARD OF DIRECTORS' },
               { id: 'management', label: 'MANAGEMENT' },
               { id: 'dancers', label: 'DANCERS' },
-              { id: 'upcoming-performances', label: 'PERFORMANCES' },
+              { id: 'upcoming-performances', label: 'UPCOMING PERFORMANCES' },
               { id: 'bookings', label: 'BOOKINGS' }
             ].map((item, index) => (
               <button
@@ -230,15 +229,52 @@ const About = () => {
 
       {/* Content Sections */}
       {/* THE COMPANY section (Intro) */}
-      <section id="the-company">
-        <IntroSection />
+      <section id="the-company" className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
+            {/* Left Column - Header */}
+            <motion.div
+              className="md:col-span-4"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="sticky top-24">
+                <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">
+                  THE COMPANY
+                </h2>
+              </div>
+            </motion.div>
+
+            {/* Right Column - Content spanning to match grid below */}
+            <motion.div
+              className="md:col-span-8"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-lg leading-relaxed`}>
+                <p className="text-xl font-semibold">
+                  Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
+                </p>
+                <p>
+                  CDT Jamaica is a legacy company formed to honor the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
+                </p>
+                <p>
+                  Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the world!
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </section>
       
       {/* Board of Directors Section */}
       <section id="board-of-directors" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Board of Directors</h2>
+            <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">BOARD OF DIRECTORS</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -263,8 +299,7 @@ const About = () => {
       <section id="management" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Management</h2>
-            <div className="w-20 h-1 bg-orange-500"></div>
+            <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">MANAGEMENT</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -289,8 +324,7 @@ const About = () => {
       <section id="dancers" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Dancers</h2>
-            <div className="w-20 h-1 bg-orange-500"></div>
+            <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">DANCERS</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -323,14 +357,14 @@ const About = () => {
           <div className="container mx-auto px-4">
             <div className="mb-12">
               <motion.h2 
-                className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]"
+                className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                Upcoming Performances ({upcomingPerformances.length})
+               UPCOMING PERFORMANCES 
+               {/* ({upcomingPerformances.length}) */}
               </motion.h2>
-              <div className="w-20 h-1 bg-orange-500"></div>
             </div>
 
             {/* Performances Horizontal Scroll */}
@@ -363,16 +397,26 @@ const About = () => {
                 </div>
               </motion.div>
 
-              <div className="overflow-x-auto pb-4 no-scrollbar">
-                <div className="flex gap-6 md:gap-8" style={{ width: 'max-content' }}>
+              <div 
+                className="overflow-x-auto pb-4"
+                style={{
+                  scrollbarWidth: 'none', /* Firefox */
+                  msOverflowStyle: 'none', /* IE and Edge */
+                }}
+              >
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none; /* Chrome, Safari, Opera */
+                  }
+                `}</style>
+                <div className="flex gap-6 md:gap-8">
                   {upcomingPerformances.map((performance, index) => (
                     <motion.div
                       key={performance._id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className={`border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex-shrink-0`}
-                      style={{ width: '320px', minWidth: '320px' }}
+                      className={`border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex flex-col flex-shrink-0 w-[280px] md:w-[320px]`}
                     >
                       {/* Performance Image */}
                       <div className={`relative border-b ${isDarkMode ? 'border-white/10' : 'border-black/10'} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
@@ -384,7 +428,7 @@ const About = () => {
                       </div>
                       
                       {/* Performance Info */}
-                      <div className="p-4 md:p-6">
+                      <div className="p-4 md:p-6 flex flex-col flex-grow">
                         <div className="text-base md:text-lg font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 md:mb-3">
                           {formatPerformanceDate(performance.date)}
                         </div>
@@ -393,7 +437,7 @@ const About = () => {
                           {performance.title}
                         </h3>
                         
-                        <div className="space-y-1 text-sm md:text-base mb-3 md:mb-4">
+                        <div className="space-y-1 text-sm md:text-base mb-3 md:mb-4 flex-grow">
                           <div className="font-semibold">{performance.venue}</div>
                           <div>{performance.location}</div>
                         </div>
@@ -404,9 +448,11 @@ const About = () => {
                           </p>
                         )}
                         
-                        {performance.ticketUrl && (
-                          <TicketButton href={performance.ticketUrl} />
-                        )}
+                        <div className="mt-auto">
+                          {performance.ticketUrl && (
+                            <TicketButton href={performance.ticketUrl} />
+                          )}
+                        </div>
                       </div>
                     </motion.div>
                   ))}
@@ -435,8 +481,7 @@ const About = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="sticky top-24">
-                <h2 className="text-3xl md:text-4xl uppercase mb-4 font-semibold tracking-[0.08em]">Book CDT at Your Venue</h2>
-                <div className="w-20 h-1 bg-orange-500 mx-auto"></div>
+                <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">BOOKINGS</h2>
               </div>
             </motion.div>
 
