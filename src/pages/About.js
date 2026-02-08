@@ -248,24 +248,34 @@ const About = () => {
             </motion.div>
 
             {/* Right Column - Content spanning to match grid below */}
-            <motion.div
-              className="md:col-span-8"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-lg leading-relaxed`}>
-                <p className="text-xl font-semibold">
+           <div className="md:col-span-8">
+              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} leading-relaxed`}>
+                <motion.p 
+                  className="text-2xl md:text-3xl"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
-                </p>
-                <p>
+                </motion.p>
+                <motion.p 
+                  className="text-lg"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   CDT Jamaica is a legacy company formed to honor the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
-                </p>
-                <p>
+                </motion.p>
+                <motion.p 
+                  className="text-lg"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
                   Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the world!
-                </p>
+                </motion.p>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -437,21 +447,29 @@ const About = () => {
                           {performance.title}
                         </h3>
                         
-                        <div className="space-y-1 text-sm md:text-base mb-3 md:mb-4 flex-grow">
-                          <div className="font-semibold">{performance.venue}</div>
-                          <div>{performance.location}</div>
-                        </div>
-                        
-                        {performance.description && (
-                          <p className={`text-xs md:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-3 md:mb-4 line-clamp-3`}>
-                            {performance.description}
-                          </p>
-                        )}
-                        
-                        <div className="mt-auto">
-                          {performance.ticketUrl && (
-                            <TicketButton href={performance.ticketUrl} />
-                          )}
+                        <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-lg leading-relaxed`}>
+                          <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.2 }}
+                            className="text-xl font-semibold"
+                          >
+                            Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
+                          </motion.p>
+                          <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                          >
+                            CDT Jamaica is a legacy company formed to honor the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
+                          </motion.p>
+                          <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.4 }}
+                          >
+                            Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the world!
+                          </motion.p>
                         </div>
                       </div>
                     </motion.div>
