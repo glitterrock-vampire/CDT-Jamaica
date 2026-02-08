@@ -249,7 +249,7 @@ const About = () => {
 
             {/* Right Column - Content spanning to match grid below */}
            <div className="md:col-span-8">
-              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} leading-relaxed`}>
+              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} leading-relaxed text-justify`}>
                 <motion.p 
                   className="text-2xl md:text-3xl"
                   initial={{ opacity: 0, x: 20 }}
@@ -454,21 +454,21 @@ const About = () => {
                             transition={{ duration: 0.4, delay: 0.2 }}
                             className="text-xl font-semibold"
                           >
-                            Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
+                            Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, the wider Caribbean, and North America.
                           </motion.p>
                           <motion.p
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.3 }}
                           >
-                            CDT Jamaica is a legacy company formed to honor the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
+                            CDT Jamaica is a legacy company formed to honour the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
                           </motion.p>
                           <motion.p
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.4 }}
                           >
-                            Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the world!
+                            Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and to the worl'!
                           </motion.p>
                         </div>
                       </div>

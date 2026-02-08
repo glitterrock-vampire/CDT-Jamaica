@@ -45,11 +45,11 @@ const BoardMemberCard = ({ boardMember, index }) => {
         
         {/* Board Member Info */}
         <div className="p-4">
-          <h3 className={`font-bold text-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
+          <h3 className={`font-bold text-xl ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
             {boardMember.name}
           </h3>
           {boardMember.position && (
-            <p className={`text-lg font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
+            <p className={`font-bold text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
               {boardMember.position}
             </p>
           )}
