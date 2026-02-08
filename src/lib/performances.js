@@ -423,3 +423,78 @@ export const getVideoBySlug = async (slug) => {
     return null;
   }
 };
+
+export const getDancers = async () => {
+  const query = `*[_type == "dancer"] | order(order asc) {
+    _id,
+    name,
+    title,
+    bio,
+    headshot {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    },
+    order
+  }`;
+
+  try {
+    const dancers = await client.fetch(query);
+    return dancers || [];
+  } catch (error) {
+    console.error('Error fetching dancers:', error);
+    return [];
+  }
+};
+
+export const getBoardMembers = async () => {
+  const query = `*[_type == "boardMember"] | order(order asc) {
+    _id,
+    name,
+    position,
+    bio,
+    headshot {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    },
+    order
+  }`;
+
+  try {
+    const boardMembers = await client.fetch(query);
+    return boardMembers || [];
+  } catch (error) {
+    console.error('Error fetching board members:', error);
+    return [];
+  }
+};
+
+export const getManagement = async () => {
+  const query = `*[_type == "management"] | order(order asc) {
+    _id,
+    name,
+    title,
+    bio,
+    headshot {
+      asset-> {
+        _id,
+        url
+      },
+      alt
+    },
+    order
+  }`;
+
+  try {
+    const management = await client.fetch(query);
+    return management || [];
+  } catch (error) {
+    console.error('Error fetching management:', error);
+    return [];
+  }
+};

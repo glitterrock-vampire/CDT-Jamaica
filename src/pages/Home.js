@@ -6,6 +6,7 @@ import { Hero } from '../components/Hero';
 import { getUpcomingPerformances, getFeaturedPerformance, getVideosByCategory, getAllVideos } from '../lib/performances';
 import { getSiteSettings, urlFor } from '../lib/sanity';
 import Calendar from '../components/Calendar/Calendar';
+import TicketButton from '../components/TicketButton';
 
 const Home = () => {
   const { isDarkMode } = useTheme();
@@ -321,14 +322,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <a
-                  href={featuredPerformance?.ticketUrl || "https://www.miramarculturalcenter.org/Events-directory/Streams"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-3 text-sm font-semibold tracking-[0.16em] uppercase border border-transparent bg-orange-500 text-white hover:bg-orange-400 transition-colors"
-                >
-                  Buy Tickets
-                </a>
+                <TicketButton href={featuredPerformance?.ticketUrl || "https://www.miramarculturalcenter.org/Events-directory/Streams"} />
               </motion.div>
             </motion.div>
 

@@ -4,14 +4,13 @@ import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import SectionNav from '../components/ailey/SectionNav';
 import IntroSection from '../components/ailey/IntroSection';
-import { getUpcomingPerformances } from '../lib/performances';
-import { getDancers } from '../lib/dancers';
-import { getBoardMembers } from '../lib/boardMembers';
-import { getManagement } from '../lib/management';
-import { getSiteSettings } from '../lib/siteSettings';
+import { getUpcomingPerformances, getDancers, getBoardMembers, getManagement, getSiteSettings } from '../lib/performances';
+import { getSiteSettings as getSiteSettingsFromLib } from '../lib/siteSettings';
+import { urlFor } from '../lib/sanity';
 import BoardMemberCard from '../components/Board/BoardMemberCard';
 import DancerCard from '../components/Dancers/DancerCard';
 import ManagementCard from '../components/ManagementCard';
+import TicketButton from '../components/TicketButton';
 
 const weekdayAbbrev = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
 
@@ -406,16 +405,7 @@ const About = () => {
                         )}
                         
                         {performance.ticketUrl && (
-                          <a
-                            href={performance.ticketUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`inline-flex items-center justify-center px-4 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
-                              isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                            } transition-colors`}
-                          >
-                            Get Tickets
-                          </a>
+                          <TicketButton href={performance.ticketUrl} />
                         )}
                       </div>
                     </motion.div>

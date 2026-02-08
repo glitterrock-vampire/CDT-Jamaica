@@ -30,12 +30,12 @@ export default function IntroSection() {
 
             {/* Right Column - Content */}
             <motion.div
-              className="md:col-span-8 md:col-start-5"
+              className="md:col-span-8"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className={`space-y-8 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-2xl leading-relaxed text-left`}>
+              <div className={`space-y-8 ${isDarkMode ? 'text-white/90' : 'text-black/90'} text-2xl leading-relaxed text-left w-full`}>
                 <p className="text-3xl font-semibold mb-6">
                   Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
                 </p>
