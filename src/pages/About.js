@@ -196,9 +196,8 @@ const About = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="sticky top-24">
-                <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">
-                  THE COMPANY
-                </h2>
+                <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>About</div>
+                <div className={`text-2xl md:text-3xl uppercase ${textColor}`}>The Company</div>
               </div>
             </motion.div>
 
