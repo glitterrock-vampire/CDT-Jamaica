@@ -204,7 +204,7 @@ const About = () => {
 
             {/* Right Column - Content */}
             <div className="md:col-span-8">
-              <div className={`space-y-6 ${isDarkMode ? 'text-white/80' : 'text-black/80'} leading-relaxed`}>
+              <div className={`space-y-6 ${isDarkMode ? 'text-white/80' : 'text-black/80'} leading-relaxed text-justify`}>
                 <motion.p 
                   className="text-2xl md:text-3xl"
                   initial={{ opacity: 0, x: 20 }}
