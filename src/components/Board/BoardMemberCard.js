@@ -49,7 +49,7 @@ const BoardMemberCard = ({ boardMember, index }) => {
             {boardMember.name}
           </h3>
           {boardMember.position && (
-            <p className={`font-bold text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+            <p className={`font-bold text-sm ${isDarkMode ? 'text-orange-400' : 'text-orange-600'} leading-relaxed`}>
               {boardMember.position}
             </p>
           )}

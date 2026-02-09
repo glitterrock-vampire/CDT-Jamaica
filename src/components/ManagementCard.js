@@ -48,7 +48,7 @@ const ManagementCard = ({ member, index }) => {
           <h3 className={`font-bold text-xl ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
             {member.name}
           </h3>
-          <p className={`font-bold text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+          <p className={`font-bold text-sm ${isDarkMode ? 'text-orange-400' : 'text-orange-600'} leading-relaxed`}>
             {member.title}
           </p>
           {member.bio && (
