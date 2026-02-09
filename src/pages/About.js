@@ -34,6 +34,7 @@ const About = () => {
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const textColor = isDarkMode ? 'text-white' : 'text-black';
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
   // Fetch data
