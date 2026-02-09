@@ -204,7 +204,7 @@ const About = () => {
 
             {/* Right Column - Content */}
             <div className="md:col-span-8">
-              <div className={`space-y-6 ${isDarkMode ? 'text-white/90' : 'text-black/90'} leading-relaxed`}>
+              <div className={`space-y-6 ${isDarkMode ? 'text-white/80' : 'text-black/80'} leading-relaxed`}>
                 <motion.p 
                   className="text-2xl md:text-3xl"
                   initial={{ opacity: 0, x: 20 }}
@@ -401,9 +401,9 @@ const About = () => {
                           {performance.title}
                         </h3>
                         
-                        <div className="space-y-1 text-sm md:text-base mb-3 md:mb-4 flex-grow">
+                        <div className="space-y-1 text-lg md:text-xl mb-3 md:mb-4 flex-grow">
                           <div className="font-semibold">{performance.venue}</div>
-                          <div>{performance.location}</div>
+                          <div className="text-lg md:text-xl">{performance.location}</div>
                         </div>
                         
                         {performance.description && (
