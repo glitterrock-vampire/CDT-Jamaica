@@ -286,29 +286,29 @@ const Home = () => {
               transition={{ duration: 0.8 }}
             >
               <motion.div
-                className={`font-heading text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
+                className={`text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 {featuredPerformance 
-                  ? <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
-                  : <span className="font-sans font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
+                  ? <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
+                  : <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
                 }
               </motion.div>
               
               <motion.h1 
-                className="font-sans text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
+                className="text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
                 style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {featuredPerformance?.title || 'Featured Performance'}
+                {featuredPerformance ? featuredPerformance.title : 'Featured Performance'}
               </motion.h1>
               
               <motion.p
-                className={`font-body text-xl md:text-2xl max-w-2xl leading-relaxed text-white/90`}
+                className={`text-xl md:text-2xl max-w-2xl leading-relaxed text-white/90`}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
@@ -348,7 +348,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.32 }}
             >
               <div>
-                <div className="text-2xl md:text-3xl uppercase font-heading">Upcoming Performances</div>
+                <div className="text-2xl md:text-3xl uppercase">Upcoming Performances</div>
               </div>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
@@ -409,8 +409,8 @@ const Home = () => {
                           {formatPerformanceDate(perf.date)}
                         </div>
                         <div className={`text-sm ${mutedText} mb-1`}>{perf.location}</div>
-                        <div className={`text-sm ${mutedText} mb-3`}>{perf.venue}</div>
-                        <div className="text-xl md:text-2xl font-semibold uppercase mb-4">{perf.title}</div>
+                        <div className={`text-xl md:text-2xl font-semibold text-black mb-3`}>{perf.venue}</div>
+                        <div className="text-lg md:text-xl font-semibold uppercase mb-4 text-gray-600">{perf.title}</div>
                       </motion.div>
 
                       {/* Middle section - Image (centered and consistent) */}
@@ -487,8 +487,8 @@ const Home = () => {
                                 {formatPerformanceDate(perf.date)}
                               </div>
                               <div className={`text-sm ${mutedText} mb-1`}>{perf.location}</div>
-                              <div className={`text-sm ${mutedText} mb-3`}>{perf.venue}</div>
-                              <div className="text-xl md:text-2xl font-semibold uppercase mb-4">{perf.title}</div>
+                              <div className={`text-xl md:text-2xl font-semibold text-black mb-3`}>{perf.venue}</div>
+                              <div className="text-xl md:text-2xl font-semibold uppercase mb-4 text-gray-600">{perf.title}</div>
                             </motion.div>
 
                             {/* Middle section - Image (centered and consistent) */}
@@ -552,7 +552,7 @@ const Home = () => {
               transition={{ duration: 0.5, delay: 0.47 }}
             >
               <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>The school</div>
-              <h2 className="text-3xl md:text-4xl uppercase font-heading">THE CDT SCHOOL</h2>
+              <h2 className="text-3xl md:text-4xl uppercase">THE CDT SCHOOL</h2>
               <p className={`text-base md:text-lg max-w-md leading-relaxed ${mutedText}`}>
                 From first steps to pre-professional study, The CDT School offers programmes in contemporary, ballet, and Jamaican folk forms led by working artists.
               </p>
@@ -638,7 +638,7 @@ const Home = () => {
             >
               <div>
                 {/* <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div> */}
-                <div className="text-2xl md:text-3xl uppercase font-heading">News + archive</div>
+                <div className="text-2xl md:text-3xl uppercase">News + archive</div>
               </div>
               <motion.button
                 type="button"
@@ -697,7 +697,7 @@ const Home = () => {
                   <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>
                     Announcement · Aug 12
                   </div>
-                  <div className="text-base font-medium font-body">New artistic director appointed</div>
+                  <div className="text-base font-medium">New artistic director appointed</div>
                   <div className={`text-sm leading-relaxed ${mutedText}`}>
                     Choreographer James Bennett joins CDT Jamaica to lead the 2025–2028 seasons.
                   </div>
@@ -749,12 +749,12 @@ const Home = () => {
                 Philanthropy
               </motion.div>
               <motion.div
-                className="text-xl md:text-2xl uppercase font-heading"
+                className="text-xl md:text-2xl uppercase"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.61 }}
               >
-                Patron Programme
+                Philanthropy
               </motion.div>
               <motion.p
                 className={`text-base max-w-md leading-relaxed ${mutedText}`}

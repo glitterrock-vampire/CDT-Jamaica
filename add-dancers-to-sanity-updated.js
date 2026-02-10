@@ -9,37 +9,28 @@ const client = createClient({
   token: 'skEkeCZV1xAygAcJoYvMoMkYxovWNKON6cvNSMMgPL6xX8l0KMdkNXrChzKHfKdjJyPwBsUa2rI9i7asRoxP1jWMB1HphLzaSBKre5m8PhufGHxjIoNsfHTvbQayOhUW9xtLsBWA54cCAF0xYg4YOy5mIgm3KiopuCHdPfhDrIpe7By4q4tr'
 });
 
-const dancers = [
-  { firstName: 'ABIGAIL', lastName: 'BERRY' },
-  { firstName: 'ANDREW', lastName: 'BAILEY' },
-  { firstName: 'ASSANTEWAA', lastName: 'ALBERTS' },
-  { firstName: 'GINA', lastName: 'STRACHAN' },
-  { firstName: 'JANNA', lastName: 'NESBETH' },
-  { firstName: 'JEVON', lastName: 'FERRIL' },
-  { firstName: 'JOSHUA', lastName: 'CRAIGIE' },
-  { firstName: 'KAELAH', lastName: 'MCKOY' },
-  { firstName: 'KAILEY', lastName: 'HO' },
-  { firstName: 'KENYA', lastName: 'HARVEY' },
-  { firstName: 'KISHAN', lastName: 'CARNEGIE' },
-  { firstName: 'MATTHEW', lastName: 'JOHNSON' },
-  { firstName: 'NAIMA', lastName: 'SCOTT' },
-  { firstName: 'NAOMI', lastName: 'CAMPBELL' },
-  { firstName: 'NATHAN', lastName: 'CAMPBELL' },
-  { firstName: 'RAINA', lastName: 'VAZ' },
-  { firstName: 'SHAUNA', lastName: 'CUMMINGS' },
-  { firstName: 'SHAMITHA', lastName: 'CHINDEPALLI' },
-  { firstName: 'SHILOH', lastName: 'REID' },
-  { firstName: 'SIERRA', lastName: 'MOSS-SOLOMON' },
-  { firstName: 'TAKIYA', lastName: 'BROWNE' },
-  { firstName: 'UTON', lastName: 'VASSELL' },
-  { firstName: 'VIVETTE', lastName: 'MILLER' },
-  { firstName: 'ZHANE', lastName: 'PADMORE' }
-];
+async function getDancersFromSanity() {
+  console.log('Fetching dancers from Sanity...');
+  
+  try {
+    const dancers = await client.fetch(
+      '*[_type == "dancer"] | order(order asc)'
+    );
+    
+    console.log(`✅ Fetched ${dancers.length} dancers from Sanity`);
+    return dancers;
+  } catch (error) {
+    console.error('❌ Error fetching dancers from Sanity:', error.message);
+    return [];
+  }
+}
 
 async function addDancersToSanity() {
   console.log('Adding dancers to Sanity...');
   
   try {
+    const dancers = await getDancersFromSanity();
+    
     for (let i = 0; i < dancers.length; i++) {
       const dancer = dancers[i];
       const fullName = `${dancer.firstName} ${dancer.lastName}`;
@@ -72,12 +63,10 @@ async function addDancersToSanity() {
     
     console.log('\n🎉 Dancer migration completed!');
     console.log(`Added ${dancers.length} dancers to Sanity`);
-    console.log('First 6 dancers are marked as featured for the home page');
-    
   } catch (error) {
-    console.error('❌ Migration failed:', error);
+    console.error('❌ Error in addDancersToSanity:', error.message);
   }
 }
 
-// Run the migration
+// Run the function
 addDancersToSanity();

@@ -45,10 +45,10 @@ const ManagementCard = ({ member, index }) => {
         
         {/* Member Info */}
         <div className="p-4">
-          <h3 className={`font-bold text-xl ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
+          <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
             {member.name}
           </h3>
-          <p className={`font-bold text-sm ${isDarkMode ? 'text-orange-400' : 'text-orange-600'} leading-relaxed`}>
+          <p className={`text-lg font-normal ${isDarkMode ? 'text-orange-400' : 'text-orange-600'} leading-relaxed`}>
             {member.title}
           </p>
           {member.bio && (

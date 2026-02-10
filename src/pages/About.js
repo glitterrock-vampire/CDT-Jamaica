@@ -204,9 +204,9 @@ const About = () => {
 
             {/* Right Column - Content */}
             <div className="md:col-span-8">
-              <div className={`space-y-6 ${isDarkMode ? 'text-white/80' : 'text-black/80'} leading-relaxed text-justify`}>
+              <div className={`space-y-6 leading-relaxed text-justify`}>
                 <motion.p 
-                  className="text-2xl md:text-3xl"
+                  className={`text-2xl md:text-3xl ${textColor}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
@@ -214,15 +214,15 @@ const About = () => {
                   Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
                 </motion.p>
                 <motion.p 
-                  className="text-lg"
+                  className={`text-lg ${textColor}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  CDT Jamaica is a legacy company formed to honor the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to the Jamaican stage and beyond.
+                  CDT Jamaica is a legacy company formed to honor late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to Jamaican stage and beyond.
                 </motion.p>
                 <motion.p 
-                  className="text-lg"
+                  className={`text-lg ${textColor}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -239,7 +239,7 @@ const About = () => {
       <section id="board-of-directors" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">BOARD OF DIRECTORS</h2>
+            <h2 className={`text-xl md:text-2xl uppercase ${textColor}`}>BOARD OF DIRECTORS</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -264,7 +264,7 @@ const About = () => {
       <section id="management" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">MANAGEMENT</h2>
+            <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>MANAGEMENT</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -289,7 +289,7 @@ const About = () => {
       <section id="dancers" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">DANCERS</h2>
+            <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>DANCERS</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -322,7 +322,7 @@ const About = () => {
           <div className="container mx-auto px-4">
             <div className="mb-12">
               <motion.h2 
-                className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]"
+                className={`text-2xl md:text-3xl uppercase ${textColor}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -362,59 +362,56 @@ const About = () => {
               </motion.div>
 
               <div 
-                className="overflow-x-auto pb-4"
+                className="overflow-x-auto pb-4 no-scrollbar"
                 style={{
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none',
                 }}
               >
-                <style jsx>{`
-                  div::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}</style>
-                <div className="flex gap-6 md:gap-8">
+                <div className="flex gap-5" style={{ minWidth: 'max-content' }}>
                   {upcomingPerformances.map((performance, index) => (
                     <motion.div
                       key={performance._id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className={`border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex flex-col flex-shrink-0 w-[280px] md:w-[320px]`}
+                      className={`flex-shrink-0 w-[320px] md:w-[360px] h-full flex flex-col p-4 border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} hover:border-orange-500/50 transition-all duration-300`}
                     >
-                      {/* Performance Image */}
-                      <div className={`relative border-b ${isDarkMode ? 'border-white/10' : 'border-black/10'} overflow-hidden flex-shrink-0`} style={{ aspectRatio: '3/4' }}>
+                      {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
+                      <div className="flex flex-col min-h-[180px]">
+                        <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none">
+                          {formatPerformanceDate(performance.date)}
+                        </div>
+                        <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>{performance.location}</div>
+                        <div className={`text-xl md:text-2xl font-semibold text-black mb-3`}>{performance.venue}</div>
+                        <div className="text-lg md:text-xl font-semibold uppercase mb-4 text-gray-600">{performance.title}</div>
+                      </div>
+
+                      {/* Middle section - Image (centered and consistent) */}
+                      <div className={`relative border ${isDarkMode ? 'border-white/10' : 'border-black/10'} overflow-hidden mb-4`} style={{ aspectRatio: '3/4' }}>
                         <img
                           src={performance.image?.asset?.url || performance.image?.url}
                           alt={performance.image?.alt || performance.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-all duration-300"
                         />
                       </div>
-                      
-                      {/* Performance Info */}
-                      <div className="p-4 md:p-6 flex flex-col flex-grow">
-                        <div className="text-base md:text-lg font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 md:mb-3">
-                          {formatPerformanceDate(performance.date)}
-                        </div>
-                        
-                        <h3 className="text-lg md:text-xl font-bold mb-2">
-                          {performance.title}
-                        </h3>
-                        
-                        <div className="space-y-1 text-lg md:text-xl mb-3 md:mb-4 flex-grow">
-                          <div className="font-semibold">{performance.venue}</div>
-                          <div className="text-lg md:text-xl">{performance.location}</div>
-                        </div>
-                        
+
+                      {/* Bottom section - Description and Button */}
+                      <div className="flex flex-col flex-grow">
                         {performance.description && (
-                          <p className={`text-xs md:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-3 md:mb-4 line-clamp-3`}>
+                          <p className={`text-sm leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-4 line-clamp-3 flex-grow`}>
                             {performance.description}
                           </p>
                         )}
-                        
                         <div className="mt-auto">
                           {performance.ticketUrl && (
-                            <TicketButton href={performance.ticketUrl} />
+                            <button
+                              type="button"
+                              className="mt-auto inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                              onClick={() => window.open(performance.ticketUrl, '_blank', 'noopener,noreferrer')}
+                            >
+                              Get Tickets
+                            </button>
                           )}
                         </div>
                       </div>
@@ -445,7 +442,7 @@ const About = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="sticky top-24">
-                <h2 className="text-2xl md:text-3xl uppercase mb-4 font-semibold tracking-[0.08em]">BOOKINGS</h2>
+                <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>BOOKINGS</h2>
               </div>
             </motion.div>
 

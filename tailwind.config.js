@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['"Avenir"', '"Gotham"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif'],
-        'heading': ['"Avenir"', '"Gotham"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif'],
-        'body': ['"Avenir"', '"Gotham"', '"Inter Tight"', '"Work Sans"', '"Open Sans"', 'system-ui', 'sans-serif']
+        'sans': ['"Avenir"', 'system-ui', 'sans-serif'],
+        'heading': ['"Avenir"', 'system-ui', 'sans-serif'],
+        'body': ['"Avenir"', 'system-ui', 'sans-serif']
       },
       colors: {
         primary: {

@@ -45,7 +45,7 @@ const DancerCard = ({ dancer, index, aspectRatio = 'aspect-[3/4]' }) => {
         
         {/* Dancer Info */}
         <div className="p-4">
-          <h3 className={`font-bold text-xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
+          <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-black'}`}>
             {dancer.name}
           </h3>
         </div>
