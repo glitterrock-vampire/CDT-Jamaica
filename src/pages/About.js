@@ -378,7 +378,7 @@ const About = () => {
                       className={`flex-shrink-0 w-[320px] md:w-[360px] h-full flex flex-col p-4 border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} hover:border-orange-500/50 transition-all duration-300`}
                     >
                       {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
-                      <div className="flex flex-col min-h-[180px]">
+                      <div className="flex flex-col h-[180px]">
                         <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none">
                           {formatPerformanceDate(performance.date)}
                         </div>
@@ -399,7 +399,7 @@ const About = () => {
                       {/* Bottom section - Description and Button */}
                       <div className="flex flex-col flex-grow">
                         {performance.description && (
-                          <p className={`text-sm leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-4 line-clamp-3 flex-grow`}>
+                          <p className={`text-lg leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-4 line-clamp-3 flex-grow`}>
                             {performance.description}
                           </p>
                         )}

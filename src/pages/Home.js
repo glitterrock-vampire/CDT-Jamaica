@@ -400,7 +400,7 @@ const Home = () => {
                     >
                       {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
                       <motion.div
-                        className="flex flex-col min-h-[180px]"
+                        className="flex flex-col h-[180px]"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
@@ -425,7 +425,7 @@ const Home = () => {
                       {/* Bottom section - Description and Button */}
                       <div className="flex flex-col flex-grow">
                         <motion.p
-                          className={`text-sm leading-relaxed ${mutedText} mb-4 line-clamp-3 flex-grow`}
+                          className={`text-lg leading-relaxed ${mutedText} mb-4 line-clamp-3 flex-grow`}
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
@@ -478,7 +478,7 @@ const Home = () => {
                           >
                             {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
                             <motion.div
-                              className="flex flex-col min-h-[180px]"
+                              className="flex flex-col h-[180px]"
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
@@ -503,7 +503,7 @@ const Home = () => {
                             {/* Bottom section - Description and Button */}
                             <div className="flex flex-col flex-grow">
                               <motion.p
-                                className={`text-sm leading-relaxed ${mutedText} mb-4 line-clamp-3 flex-grow`}
+                                className={`text-lg leading-relaxed ${mutedText} mb-4 line-clamp-3 flex-grow`}
                                 initial={{ opacity: 0, y: 8 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.4, delay: 0.44 + index * 0.04 }}
@@ -551,7 +551,6 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.47 }}
             >
-              <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>The school</div>
               <h2 className="text-3xl md:text-4xl uppercase">THE CDT SCHOOL</h2>
               <p className={`text-base md:text-lg max-w-md leading-relaxed ${mutedText}`}>
                 From first steps to pre-professional study, The CDT School offers programmes in contemporary, ballet, and Jamaican folk forms led by working artists.
