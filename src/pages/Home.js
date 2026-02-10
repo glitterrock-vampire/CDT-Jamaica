@@ -488,7 +488,7 @@ const Home = () => {
                               </div>
                               <div className={`text-sm ${mutedText} mb-1`}>{perf.location}</div>
                               <div className={`text-xl md:text-2xl font-semibold text-black mb-3`}>{perf.venue}</div>
-                              <div className="text-xl md:text-2xl font-semibold uppercase mb-4 text-gray-600">{perf.title}</div>
+                              <div className="text-lg md:text-xl font-semibold uppercase mb-4 text-gray-600">{perf.title}</div>
                             </motion.div>
 
                             {/* Middle section - Image (centered and consistent) */}
