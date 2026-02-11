@@ -396,24 +396,24 @@ const Home = () => {
                     className="block group h-full"
                   >
                     <motion.div
-                      className={`h-full flex flex-col p-4 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                      className={`h-full flex flex-col p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.38 + index * 0.04 }}
                     >
                       {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
                       <motion.div
-                        className="flex flex-col h-[180px]"
+                        className="flex flex-col h-[160px]"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                       >
-                        <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none">
+                        <div className="text-lg md:text-xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 leading-none">
                           {formatPerformanceDate(perf.date)}
                         </div>
-                        <div className={`text-sm ${mutedText} mb-1`}>{perf.location}</div>
-                        <div className={`text-xl md:text-2xl font-semibold text-black mb-3`}>{perf.venue}</div>
-                        <div className="text-lg md:text-xl font-semibold uppercase mb-4 text-gray-600">{perf.title}</div>
+                        <div className={`text-xs ${mutedText} mb-1`}>{perf.location}</div>
+                        <div className={`text-lg md:text-xl font-semibold text-black mb-2`}>{perf.venue}</div>
+                        <div className="text-base md:text-lg font-semibold uppercase mb-3 text-gray-600">{perf.title}</div>
                       </motion.div>
 
                       {/* Middle section - Image (centered and consistent) */}
@@ -447,6 +447,18 @@ const Home = () => {
                             Get Tickets
                           </motion.button>
                         )}
+                        {perf.learnMoreUrl && (
+                          <motion.button
+                            type="button"
+                            className="mt-auto inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
+                            onClick={() => window.open(perf.learnMoreUrl, '_blank', 'noopener,noreferrer')}
+                          >
+                            Learn More
+                          </motion.button>
+                        )}
                       </div>
                     </motion.div>
                   </div>
@@ -474,24 +486,24 @@ const Home = () => {
                           className="block group h-full"
                         >
                           <motion.div
-                            className={`h-full flex flex-col p-4 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
+                            className={`h-full flex flex-col p-3 border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-all duration-300 cursor-pointer`}
                             initial={{ opacity: 0, y: 18 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.04 }}
                           >
                             {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
                             <motion.div
-                              className="flex flex-col h-[180px]"
+                              className="flex flex-col h-[160px]"
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                             >
-                              <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none">
+                              <div className="text-lg md:text-xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 leading-none">
                                 {formatPerformanceDate(perf.date)}
                               </div>
-                              <div className={`text-sm ${mutedText} mb-1`}>{perf.location}</div>
-                              <div className={`text-xl md:text-2xl font-semibold text-black mb-3`}>{perf.venue}</div>
-                              <div className="text-lg md:text-xl font-semibold uppercase mb-4 text-gray-600">{perf.title}</div>
+                              <div className={`text-xs ${mutedText} mb-1`}>{perf.location}</div>
+                              <div className={`text-lg md:text-xl font-semibold text-black mb-2`}>{perf.venue}</div>
+                              <div className="text-base md:text-lg font-semibold uppercase mb-3 text-gray-600">{perf.title}</div>
                             </motion.div>
 
                             {/* Middle section - Image (centered and consistent) */}
@@ -523,6 +535,18 @@ const Home = () => {
                                   onClick={() => window.open(perf.ticketUrl, '_blank', 'noopener,noreferrer')}
                                 >
                                   Get Tickets
+                                </motion.button>
+                              )}
+                              {perf.learnMoreUrl && (
+                                <motion.button
+                                  type="button"
+                                  className="mt-auto inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                                  initial={{ opacity: 0, y: 6 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.4, delay: 0.46 + index * 0.04 }}
+                                  onClick={() => window.open(perf.learnMoreUrl, '_blank', 'noopener,noreferrer')}
+                                >
+                                  Learn More
                                 </motion.button>
                               )}
                             </div>
