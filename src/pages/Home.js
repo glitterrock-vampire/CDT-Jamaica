@@ -296,6 +296,16 @@ const Home = () => {
                   : <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
                 }
               </motion.div>
+              {featuredPerformance && (
+                <motion.div
+                  className={`text-6xl md:text-7xl lg:text-8xl font-semibold text-white`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                >
+                  {featuredPerformance.venue}
+                </motion.div>
+              )}
               
               <motion.h1 
                 className="text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
