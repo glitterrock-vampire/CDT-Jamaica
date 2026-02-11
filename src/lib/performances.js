@@ -37,6 +37,7 @@ export const getPerformances = async () => {
       description,
       category,
       ticketUrl,
+      learnMoreUrl,
       isUpcoming
     }
   `;
@@ -74,6 +75,7 @@ export const getUpcomingPerformances = async () => {
       description,
       category,
       ticketUrl,
+      learnMoreUrl,
       isUpcoming,
       slug {
         current
@@ -107,6 +109,7 @@ export const getFeaturedPerformance = async () => {
       venue,
       location,
       description,
+      learnMoreUrl,
       isFeatured,
       image {
         asset-> {
@@ -164,6 +167,7 @@ export const getPerformanceBySlug = async (slug) => {
       description,
       category,
       ticketUrl,
+      learnMoreUrl,
       isUpcoming
     }
   `;

@@ -1095,6 +1095,33 @@
         "title": "Ticket URL"
       },
       {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Optional link for additional information",
+        "name": "learnMoreUrl",
+        "type": "url",
+        "title": "Learn More URL"
+      },
+      {
         "initialValue": true,
         "description": "Whether this performance should be shown in upcoming performances",
         "name": "isUpcoming",

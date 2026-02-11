@@ -118,6 +118,12 @@ export default {
       description: 'Optional link to purchase tickets'
     },
     {
+      name: 'learnMoreUrl',
+      title: 'Learn More URL',
+      type: 'url',
+      description: 'Optional link for additional information'
+    },
+    {
       name: 'isUpcoming',
       title: 'Is Upcoming',
       type: 'boolean',
