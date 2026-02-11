@@ -642,6 +642,15 @@ const Home = () => {
                 {/* <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div> */}
                 <div className="text-2xl md:text-3xl uppercase">News + archive</div>
               </div>
+              <motion.button
+                type="button"
+                className={`text-sm tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.56 }}
+              >
+                <Link to="/news">Open archive index →</Link>
+              </motion.button>
             </motion.div>
 
             <div className="grid gap-6 md:grid-cols-[2fr,1.2fr] items-start">
@@ -742,20 +751,6 @@ const Home = () => {
                       </a>
                     </div>
                   </div>
-                </motion.div>
-
-                {/* Open Archive Button */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.72 }}
-                >
-                  <Link
-                    to="/news"
-                    className={`block text-center px-4 py-3 text-sm font-semibold tracking-[0.12em] uppercase border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-colors`}
-                  >
-                    Open archive index →
-                  </Link>
                 </motion.div>
               </div>
             </div>
