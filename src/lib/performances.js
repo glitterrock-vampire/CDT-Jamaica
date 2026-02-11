@@ -106,6 +106,7 @@ export const getFeaturedPerformance = async () => {
       time,
       venue,
       location,
+      description,
       isFeatured,
       image {
         asset-> {

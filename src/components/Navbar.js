@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
@@ -14,6 +14,19 @@ const Navbar = () => {
   const [siteSettings, setSiteSettings] = useState(null);
   const location = useLocation();
   const { isDarkMode, toggleDarkMode } = useTheme();
+  
+  // Debounce ref to prevent rapid state changes
+  const debounceRef = useRef(null);
+
+  // Debounced state setter to prevent rapid changes
+  const debouncedSetState = useCallback((setter, value) => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
+      setter(value);
+    }, 50);
+  }, []);
 
   // Fetch site settings (logos)
   useEffect(() => {
@@ -28,13 +41,45 @@ const Navbar = () => {
     fetchSettings();
   }, []);
 
-  // Close mobile menu when route changes
+  // Close mobile menu when route changes (but keep dropdowns stable)
   useEffect(() => {
-    setIsMenuOpen(false);
-    setIsAboutDropdownOpen(false);
-    setIsCompanyDropdownOpen(false);
-    setIsSchoolDropdownOpen(false);
-  }, [location]);
+    debouncedSetState(setIsMenuOpen, false);
+    // Only close dropdowns if navigating away from dropdown-related pages
+    const isDropdownRelatedPage = ['/about', '/company'].includes(location.pathname);
+    if (!isDropdownRelatedPage) {
+      debouncedSetState(setIsAboutDropdownOpen, false);
+      debouncedSetState(setIsCompanyDropdownOpen, false);
+      debouncedSetState(setIsSchoolDropdownOpen, false);
+    }
+  }, [location, debouncedSetState]);
+
+  // Cleanup function to prevent state conflicts
+  useEffect(() => {
+    return () => {
+      setIsMenuOpen(false);
+      setIsAboutDropdownOpen(false);
+      setIsCompanyDropdownOpen(false);
+      setIsSchoolDropdownOpen(false);
+    };
+  }, []);
+
+  // Handle scroll events
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 10);
+    };
+
+    // Add scroll event listener with passive option for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial scroll check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // Close mobile menu on Escape key
   useEffect(() => {
@@ -291,6 +336,7 @@ const Navbar = () => {
           <nav className="flex-1 flex justify-center items-center">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
+            <NavLink to="/" className="font-semibold tracking-[0.08em] uppercase text-sm">Home</NavLink>
             <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm"> The Company</NavLink>
             {/* <NavLink to="/performances">Performances</NavLink> */}
             <NavLink to="/repertoire" className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</NavLink>
@@ -337,6 +383,7 @@ const Navbar = () => {
             </svg>
           </button>
           <ul className="menu-items">
+            <li className="menu-item"><Link to="/" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Home</Link></li>
             <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
             {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
             <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</Link></li>

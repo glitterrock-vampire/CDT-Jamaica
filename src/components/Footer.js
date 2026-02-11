@@ -48,6 +48,16 @@ const Footer = () => {
                   <li><a href="/repertoire" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</a></li>
                   <li><a href="/about" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">About Us</a></li>
                   <li><a href="/contact" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">Contact Us</a></li>
+                  <li>
+                    <a
+                      href="https://drive.google.com/file/d/1QFtkeI2cGyEXoaCnQoChasgnZ87Q6njT/view"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300"
+                    >
+                      Press Kit
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>

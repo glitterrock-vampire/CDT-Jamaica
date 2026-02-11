@@ -11,6 +11,7 @@ import PerformanceDetail from './pages/PerformanceDetail';
 import VideoDetail from './pages/VideoDetail';
 import Contact from './pages/Contact';
 import Performances from './pages/Performances';
+import News from './pages/News';
 import { getSiteSettings } from './lib/siteSettings';
 
 function App() {
@@ -93,6 +94,13 @@ function App() {
           <Layout>
             <PageScrollReveal>
               <Contact />
+            </PageScrollReveal>
+          </Layout>
+        } />
+        <Route path="/news" element={
+          <Layout>
+            <PageScrollReveal>
+              <News />
             </PageScrollReveal>
           </Layout>
         } />

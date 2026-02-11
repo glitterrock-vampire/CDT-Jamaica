@@ -323,7 +323,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
-                CDT presents "Streams", a contemporary Caribbean dance performance that honors the legacy of Mr. Tony Wilson, OD, while exploring movement, memory, and identity through expressive choreography.
+                {featuredPerformance?.description || 'CDT presents exceptional contemporary Caribbean dance performances that honor our cultural heritage while exploring movement, memory, and identity through expressive choreography.'}
               </motion.p>
               
               <motion.div
@@ -390,13 +390,6 @@ const Home = () => {
 
             <div className="grid gap-5 md:grid-cols-3 auto-rows-fr">
               {upcomingPerformances.slice(0, 3).map((perf, index) => {
-                console.log(`Home: Performance tile ${index}:`, {
-                  title: perf.title,
-                  slug: perf.slug?.current,
-                  _id: perf._id,
-                  fullPerf: perf
-                });
-                
                 return (
                   <div
                     key={perf._id}
@@ -649,15 +642,6 @@ const Home = () => {
                 {/* <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div> */}
                 <div className="text-2xl md:text-3xl uppercase">News + archive</div>
               </div>
-              <motion.button
-                type="button"
-                className={`text-sm tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText}`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.56 }}
-              >
-                Open archive index →
-              </motion.button>
             </motion.div>
 
             <div className="grid gap-6 md:grid-cols-[2fr,1.2fr] items-start">
@@ -680,53 +664,99 @@ const Home = () => {
                 </div>
               </motion.div>
 
-              {/* Side cards */}
+              {/* Side cards - Featured Stories */}
               <div className="flex flex-col gap-4">
-                {/* Press card */}
+                {/* SIR 2024 - Featured */}
                 <motion.div
                   className={`p-4 border ${borderColor} ${cardBg} flex flex-col gap-2`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.6 }}
                 >
-                  <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Press</div>
-                  <div className="text-base leading-snug">
-                    "A bold reimagining of what Caribbean dance can be in the 21st century."
+                  <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>SIR 2024</div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <div className="text-base font-medium">Jamaica Gleaner</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">11/10/2024</div>
+                      </div>
+                      <a
+                        href="https://jamaica-gleaner.com/article/entertainment/20241110/dance-companies-pay-joyful-tribute-tony-wilson#slideshow-2"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-orange-600 dark:text-orange-400 hover:underline"
+                      >
+                        Read →
+                      </a>
+                    </div>
                   </div>
-                  <div className="text-sm mt-1">— The Jamaica Gleaner</div>
                 </motion.div>
 
-                {/* Announcement card */}
+                {/* JUNE GALA 2024 - Featured */}
                 <motion.div
                   className={`p-4 border ${borderColor} ${cardBg} flex flex-col gap-2`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.64 }}
                 >
-                  <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>
-                    Announcement · Aug 12
-                  </div>
-                  <div className="text-base font-medium">New artistic director appointed</div>
-                  <div className={`text-sm leading-relaxed ${mutedText}`}>
-                    Choreographer James Bennett joins CDT Jamaica to lead the 2025–2028 seasons.
+                  <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>JUNE GALA 2024</div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <div className="text-base font-medium">Jamaica Observer</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">06/20/2024</div>
+                      </div>
+                      <a
+                        href="https://www.jamaicaobserver.com/2024/06/16/cdt-gala-bravo/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-orange-600 dark:text-orange-400 hover:underline"
+                      >
+                        Read →
+                      </a>
+                    </div>
                   </div>
                 </motion.div>
 
-                {/* Download brochure button */}
-                <motion.a
-                  href="https://drive.google.com/file/d/1QFtkeI2cGyEXoaCnQoChasgnZ87Q6njT/view"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-between px-3 py-2 text-sm border ${borderColor} ${cardBg} ${
-                    isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                  } transition-colors cursor-pointer`}
-                  initial={{ opacity: 0, y: 8 }}
+                {/* IGNITE 2023 - Featured */}
+                <motion.div
+                  className={`p-4 border ${borderColor} ${cardBg} flex flex-col gap-2`}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.68 }}
                 >
-                  <span>Download Brochure</span>
-                  <span className="text-xs">⤓</span>
-                </motion.a>
+                  <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>IGNITE 2023</div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <div className="text-base font-medium">CVM @ Sunrise</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">11/9/2023</div>
+                      </div>
+                      <a
+                        href="https://www.youtube.com/watch?v=Z_3oLcaza2A"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-orange-600 dark:text-orange-400 hover:underline"
+                      >
+                        Watch →
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Open Archive Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.72 }}
+                >
+                  <Link
+                    to="/news"
+                    className={`block text-center px-4 py-3 text-sm font-semibold tracking-[0.12em] uppercase border ${borderColor} ${cardBg} hover:border-orange-500/50 transition-colors`}
+                  >
+                    Open archive index →
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </div>
