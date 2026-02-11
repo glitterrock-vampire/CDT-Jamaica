@@ -340,6 +340,7 @@ const Navbar = () => {
             <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm"> The Company</NavLink>
             {/* <NavLink to="/performances">Performances</NavLink> */}
             <NavLink to="/repertoire" className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</NavLink>
+            <NavLink to="/news" className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</NavLink>
             <NavLink to="/contact" className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</NavLink>
             <a
               href="https://linktr.ee/cdtjamaica"
@@ -387,6 +388,7 @@ const Navbar = () => {
             <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
             {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
             <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</Link></li>
+            <li className="menu-item"><Link to="/news" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</Link></li>
             <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</Link></li>
             <li className="menu-item">
               <a

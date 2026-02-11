@@ -664,7 +664,7 @@ const Home = () => {
             >
               <div>
                 {/* <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>Signals</div> */}
-                <div className="text-2xl md:text-3xl uppercase">News + archive</div>
+                <div className="text-2xl md:text-3xl uppercase">News + Press</div>
               </div>
               <motion.button
                 type="button"

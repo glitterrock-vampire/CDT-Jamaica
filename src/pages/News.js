@@ -244,7 +244,7 @@ const News = () => {
       {siteSettings?.heroImage && (
         <Hero
           image={siteSettings.heroImage}
-          title="News + Archive"
+          title="News + Press"
           subtitle="Press coverage and media appearances"
         />
       )}
