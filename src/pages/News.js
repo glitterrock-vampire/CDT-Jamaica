@@ -28,34 +28,34 @@ const News = () => {
     {
       season: "SIR 2024",
       items: [
-        {
-          publication: "Jamaica Gleaner",
-          date: "November 10, 2024",
-          type: "article",
-          url: "https://jamaica-gleaner.com/article/entertainment/20241110/dance-companies-pay-joyful-tribute-tony-wilson#slideshow-2",
-          headline: "Dance companies pay joyful tribute to Tony Wilson"
-        },
-        {
-          publication: "CVM @ Sunrise",
-          date: "November 6, 2024",
-          type: "video",
-          url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
-          headline: "CVM Sunrise Interview"
-        },
-        {
-          publication: "CVM @ Sunrise",
-          date: "November 6, 2024",
-          type: "video",
-          url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
-          headline: "CVM Sunrise Performance"
-        },
-        {
-          publication: "CVM @ Sunrise",
-          date: "November 6, 2024",
-          type: "video",
-          url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
-          headline: "Abigail Berry and Andrew Bailey Blueprint"
-        }
+        // {
+        //   publication: "Jamaica Gleaner",
+        //   date: "November 10, 2024",
+        //   type: "article",
+        //   url: "https://jamaica-gleaner.com/article/entertainment/20241110/dance-companies-pay-joyful-tribute-tony-wilson#slideshow-2",
+        //   headline: "Dance companies pay joyful tribute to Tony Wilson"
+        // },
+        // {
+        //   publication: "CVM @ Sunrise",
+        //   date: "November 6, 2024",
+        //   type: "video",
+        //   url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
+        //   headline: "CVM Sunrise Interview"
+        // },
+        // {
+        //   publication: "CVM @ Sunrise",
+        //   date: "November 6, 2024",
+        //   type: "video",
+        //   url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
+        //   headline: "CVM Sunrise Performance"
+        // },
+        // {
+        //   publication: "CVM @ Sunrise",
+        //   date: "November 6, 2024",
+        //   type: "video",
+        //   url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
+        //   headline: "Abigail Berry and Andrew Bailey Blueprint"
+        // }
       ]
     },
     {
@@ -68,13 +68,13 @@ const News = () => {
           url: "https://www.jamaicaobserver.com/2024/06/16/cdt-gala-bravo/",
           headline: "CDT Gala Bravo"
         },
-        {
-          publication: "Jamaica Gleaner",
-          date: "June 13, 2024",
-          type: "article",
-          url: "https://jamaica-gleaner.com/article/lifestyle/20240613/something-extra-thursday#google_vignette",
-          headline: "Something Extra Thursday"
-        },
+        // {
+        //   publication: "Jamaica Gleaner",
+        //   date: "June 13, 2024",
+        //   type: "article",
+        //   url: "https://jamaica-gleaner.com/article/lifestyle/20240613/something-extra-thursday#google_vignette",
+        //   headline: "Something Extra Thursday"
+        // },
         {
           publication: "Google Drive",
           date: "June 13, 2024",
@@ -94,13 +94,13 @@ const News = () => {
     {
       season: "IGNITE 2023",
       items: [
-        {
-          publication: "CVM @ Sunrise",
-          date: "November 9, 2023",
-          type: "video",
-          url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
-          headline: "Interview"
-        },
+        // {
+        //   publication: "CVM @ Sunrise",
+        //   date: "November 9, 2023",
+        //   type: "video",
+        //   url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
+        //   headline: "Interview"
+        // },
         {
           publication: "TVJ Smile Jamaica",
           date: "October 26, 2023",
@@ -144,27 +144,27 @@ const News = () => {
     {
       season: "LEGACY 2022",
       items: [
-        {
-          publication: "Loop News",
-          date: "November 28, 2022",
-          type: "article",
-          url: "http://jamaica.loopnews.com/content/sunday-well-spent-company-dance-theatre-635376",
-          headline: "Sunday well spent at Company Dance Theatre"
-        },
-        {
-          publication: "Jamaica Observer",
-          date: "November 27, 2022",
-          type: "article",
-          url: "https://www.jamaicaobserver.com/entertainment/a-true-legacy-of-dance/amp/",
-          headline: "A true legacy of dance"
-        },
-        {
-          publication: "Jamaica Gleaner",
-          date: "November 24, 2022",
-          type: "article",
-          url: "https://jamaica-gleaner.com/article/entertainment/20221124/legacy-provided-two-hours-joyful-dance",
-          headline: "Legacy provided two hours of joyful dance"
-        },
+        // {
+        //   publication: "Loop News",
+        //   date: "November 28, 2022",
+        //   type: "article",
+        //   url: "http://jamaica.loopnews.com/content/sunday-well-spent-company-dance-theatre-635376",
+        //   headline: "Sunday well spent at Company Dance Theatre"
+        // },
+        // {
+        //   publication: "Jamaica Observer",
+        //   date: "November 27, 2022",
+        //   type: "article",
+        //   url: "https://www.jamaicaobserver.com/entertainment/a-true-legacy-of-dance/amp/",
+        //   headline: "A true legacy of dance"
+        // },
+        // {
+        //   publication: "Jamaica Gleaner",
+        //   date: "November 24, 2022",
+        //   type: "article",
+        //   url: "https://jamaica-gleaner.com/article/entertainment/20221124/legacy-provided-two-hours-joyful-dance",
+        //   headline: "Legacy provided two hours of joyful dance"
+        // },
         {
           publication: "Jamaica Observer",
           date: "November 20, 2022",
@@ -186,13 +186,13 @@ const News = () => {
           url: "https://drive.google.com/file/d/1e0M3HR5-FPhGQPK8jXGf-h_iRqyJ_irO/view?usp=sharing",
           headline: "Legacy Coverage File 2"
         },
-        {
-          publication: "Jamaica Gleaner",
-          date: "November 16, 2022",
-          type: "article",
-          url: "https://jamaica-gleaner.com/article/entertainment/20221116/legacy-season-debut-dance-company",
-          headline: "Legacy season debut for dance company"
-        },
+        // {
+        //   publication: "Jamaica Gleaner",
+        //   date: "November 16, 2022",
+        //   type: "article",
+        //   url: "https://jamaica-gleaner.com/article/entertainment/20221116/legacy-season-debut-dance-company",
+        //   headline: "Legacy season debut for dance company"
+        // },
         {
           publication: "TVJ Smile Jamaica",
           date: "November 15, 2022",
