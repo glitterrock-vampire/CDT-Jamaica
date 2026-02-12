@@ -211,6 +211,33 @@ const Home = () => {
     };
   }, [newsArchiveVideos]); // Re-run when videos change
 
+  // Handle hash scroll for school section
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#school') {
+      // Check if we just navigated to this page (performance.navigation.type === 1)
+      // or if we came from a different page
+      const navigationType = performance.getEntriesByType('navigation')[0]?.type;
+      if (navigationType === 'navigate' || navigationType === 'reload') {
+        // Small delay to ensure the page is fully loaded
+        setTimeout(() => {
+          const element = document.getElementById('school');
+          if (element) {
+            const navHeight = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+            // Clear the hash after scrolling to prevent re-scroll on reload
+            window.history.replaceState(null, null, window.location.pathname);
+          }
+        }, 100);
+      }
+    }
+  }, []);
+
   // Update mute button icons based on video state
   useEffect(() => {
     const updateMuteButtons = () => {
@@ -565,6 +592,7 @@ const Home = () => {
 
         {/* SCHOOL / TRAINING */}
         <motion.section
+          id="school"
           className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -804,7 +832,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.59 }}
               >
-                Philanthropy
+                Partner With Us
               </motion.div>
               <motion.div
                 className="text-xl md:text-2xl uppercase"
@@ -831,6 +859,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.65 }}
+                onClick={() => window.open('https://drive.google.com/file/d/1QFtkeI2cGyEXoaCnQoChasgnZ87Q6njT/view', '_blank', 'noopener,noreferrer')}
               >
                 Learn more
               </motion.button>
@@ -872,12 +901,11 @@ const Home = () => {
               </motion.p>
               <motion.button
                 type="button"
-                className={`inline-flex items-center justify-center px-6 py-2 text-sm font-semibold tracking-[0.16em] uppercase border ${borderColor} ${
-                  isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-100'
-                } transition-colors`}
+                className={`inline-flex items-center justify-center px-6 py-2 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors`}
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.67 }}
+                onClick={() => window.open('https://www.paypal.com/paypalme/cdtjamaica', '_blank', 'noopener,noreferrer')}
               >
                 Donate now
               </motion.button>

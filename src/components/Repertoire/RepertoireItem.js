@@ -43,10 +43,10 @@ const RepertoireItem = ({ item }) => {
         <span>Repertoire</span>
         <span>{year}</span>
       </motion.div>
-      <div className={`h-40 border ${borderColor} overflow-hidden`}>
+      <div className={`h-56 border ${borderColor} overflow-hidden`}>
         {imageUrl ? (
           <img
-            src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
+            src={`${imageUrl}?w=800&h=600&fit=crop&auto=format`}
             alt={imageAlt}
             className="w-full h-full object-cover"
             loading="lazy"

@@ -339,11 +339,29 @@ const Navbar = () => {
             <NavLink to="/" className="font-semibold tracking-[0.08em] uppercase text-sm">Home</NavLink>
             <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm"> The Company</NavLink>
             {/* <NavLink to="/performances">Performances</NavLink> */}
-            <NavLink to="/repertoire" className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</NavLink>
+            <a
+              href="/#school"
+              className="font-semibold tracking-[0.08em] uppercase text-sm hover:text-orange-500 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                // Navigate to homepage first, then scroll to school
+                window.location.href = '/#school';
+              }}
+            >
+              The School
+            </a>
             <NavLink to="/news" className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</NavLink>
             <NavLink to="/contact" className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</NavLink>
             <a
-              href="https://linktr.ee/cdtjamaica"
+              href="https://bredsfoundation.org/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAOP5EBleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAadBWYsEy_yt9bdmCM5xe0lSlDf_G1MD1Qych57nJLXKKbywQ1QcOR1TO7YJPQ_aem_V7u0mQ6zISPvkV5ZJCXXrQ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold tracking-[0.08em] uppercase text-sm text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors"
+            >
+              Hurricane Melissa Relief
+            </a>
+            <a
+              href="https://www.paypal.com/paypalme/cdtjamaica"
               target="_blank"
               rel="noopener noreferrer"
               className="text-lg font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors"
@@ -387,12 +405,36 @@ const Navbar = () => {
             <li className="menu-item"><Link to="/" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Home</Link></li>
             <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
             {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
-            <li className="menu-item"><Link to="/repertoire" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</Link></li>
+            <li className="menu-item">
+              <a
+                href="/#school"
+                className="font-semibold tracking-[0.08em] uppercase text-sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(false);
+                  // Navigate to homepage first, then scroll to school
+                  window.location.href = '/#school';
+                }}
+              >
+                The School
+              </a>
+            </li>
             <li className="menu-item"><Link to="/news" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</Link></li>
             <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</Link></li>
             <li className="menu-item">
               <a
-                href="https://linktr.ee/cdtjamaica"
+                href="https://bredsfoundation.org/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAOP5EBleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAadBWYsEy_yt9bdmCM5xe0lSlDf_G1MD1Qych57nJLXKKbywQ1QcOR1TO7YJPQ_aem_V7u0mQ6zISPvkV5ZJCXXrQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 dark:text-orange-400 hover:bg-gray-100 dark:hover:bg-gray-800 font-semibold"
+              >
+                Hurricane Melissa Relief
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                href="https://www.paypal.com/paypalme/cdtjamaica"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMenuOpen(false)}

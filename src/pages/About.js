@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import SectionNav from '../components/ailey/SectionNav';
 import { getUpcomingPerformances, getDancers, getBoardMembers, getManagement } from '../lib/performances';
-import { getSiteSettings } from '../lib/siteSettings';
+import { getSiteSettings, getRepertoireItems } from '../lib/sanity';
 import { urlFor } from '../lib/sanity';
 import BoardMemberCard from '../components/Board/BoardMemberCard';
 import DancerCard from '../components/Dancers/DancerCard';
@@ -23,13 +24,41 @@ const formatPerformanceDate = (dateString) => {
   return `${weekday} ${month} ${day}`;
 };
 
+// Helper function to safely render description
+const renderDescription = (description) => {
+  if (!description) return '';
+  
+  // If it's a string, return as-is
+  if (typeof description === 'string') {
+    return description;
+  }
+  
+  // If it's a Sanity rich text object, extract plain text
+  if (description && typeof description === 'object' && description.children) {
+    return description.children
+      .map(child => {
+        if (typeof child === 'object' && child.text) {
+          return child.text;
+        }
+        return '';
+      })
+      .filter(text => text !== '')
+      .join(' ');
+  }
+  
+  // Fallback for other types
+  return String(description);
+};
+
 const About = () => {
   const { isDarkMode } = useTheme();
+  const navigate = useNavigate();
   const [siteSettings, setSiteSettings] = useState(null);
   const [boardMembers, setBoardMembers] = useState([]);
   const [dancers, setDancers] = useState([]);
   const [management, setManagement] = useState([]);
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
+  const [repertoire, setRepertoire] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
@@ -41,12 +70,13 @@ const About = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [siteSettings, boardData, dancersData, managementData, performancesData] = await Promise.all([
+        const [siteSettings, boardData, dancersData, managementData, performancesData, repertoireData] = await Promise.all([
           getSiteSettings(),
           getBoardMembers(),
           getDancers(),
           getManagement(),
-          getUpcomingPerformances()
+          getUpcomingPerformances(),
+          getRepertoireItems()
         ]);
         
         if (siteSettings) setSiteSettings(siteSettings);
@@ -54,6 +84,7 @@ const About = () => {
         if (dancersData) setDancers(dancersData);
         if (managementData) setManagement(managementData || []);
         if (performancesData) setUpcomingPerformances(performancesData || []);
+        if (repertoireData) setRepertoire(repertoireData || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -159,6 +190,7 @@ const About = () => {
               { id: 'management', label: 'MANAGEMENT' },
               { id: 'dancers', label: 'DANCERS' },
               { id: 'upcoming-performances', label: 'UPCOMING PERFORMANCES' },
+              { id: 'repertoire', label: 'OUR REPERTOIRE' },
               { id: 'bookings', label: 'BOOKINGS' }
             ].map((item) => (
               <button
@@ -403,14 +435,23 @@ const About = () => {
                             {performance.description}
                           </p>
                         )}
-                        <div className="mt-auto">
+                        <div className="mt-auto space-y-2">
                           {performance.ticketUrl && (
                             <button
                               type="button"
-                              className="mt-auto inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                              className="w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
                               onClick={() => window.open(performance.ticketUrl, '_blank', 'noopener,noreferrer')}
                             >
                               Get Tickets
+                            </button>
+                          )}
+                          {performance.learnMoreUrl && (
+                            <button
+                              type="button"
+                              className="w-full px-4 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+                              onClick={() => window.open(performance.learnMoreUrl, '_blank', 'noopener,noreferrer')}
+                            >
+                              Learn More
                             </button>
                           )}
                         </div>
@@ -423,6 +464,132 @@ const About = () => {
           </div>
         </motion.section>
       )}
+
+      {/* Repertoire Preview */}
+      <motion.section
+        id="repertoire"
+        className={`py-16 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="mb-12">
+            <div className="flex items-center justify-between">
+              <motion.h2 
+                className={`text-2xl md:text-3xl uppercase ${textColor}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                OUR REPERTOIRE
+              </motion.h2>
+              <motion.button
+                type="button"
+                className={`text-sm tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.56 }}
+              >
+                <Link to="/repertoire">View full repertoire →</Link>
+              </motion.button>
+            </div>
+          </div>
+
+          {/* Repertoire Grid */}
+          <div className="grid gap-6 md:grid-cols-3">
+            {repertoire && repertoire.length > 0 && repertoire.slice(0, 3).map((item, index) => {
+              // Debug logging to see what image data we have
+              console.log('Repertoire item image data:', {
+                title: item.title,
+                thumbnail: item.thumbnail,
+                heroImage: item.heroImage,
+                image: item.image,
+                thumbnailAsset: item.thumbnail?.asset,
+                heroImageAsset: item.heroImage?.asset
+              });
+              
+              // Try multiple image field approaches
+              let imageUrl = null;
+              
+              // Try thumbnail first (direct URL)
+              if (item.thumbnail?.url) {
+                imageUrl = item.thumbnail.url;
+              }
+              // Try heroImage (direct URL)
+              else if (item.heroImage?.url) {
+                imageUrl = item.heroImage.url;
+              }
+              // Try image field (if it exists)
+              else if (item.image?.url) {
+                imageUrl = item.image.url;
+              }
+              
+              const imageAlt = item.thumbnail?.alt || item.heroImage?.alt || item.image?.alt || item.title;
+              
+              const handleClick = () => {
+                console.log('Repertoire item clicked:', { _id: item._id, title: item.title });
+                if (item._id) {
+                  navigate(`/dance/${item._id}`);
+                } else {
+                  console.error('No _id available for repertoire item:', item);
+                  // Fallback to general repertoire page
+                  navigate('/repertoire');
+                }
+              };
+              
+              return (
+              <motion.div 
+                key={item._id}
+                className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
+                onClick={handleClick}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
+              >
+                <motion.div
+                  className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.05 }}
+                >
+                  <span>Repertoire</span>
+                  <span>{item.year}</span>
+                </motion.div>
+                <div className={`h-56 border ${borderColor} overflow-hidden`}>
+                  {imageUrl ? (
+                    <img
+                      src={`${imageUrl}?w=800&h=600&fit=crop&auto=format`}
+                      alt={imageAlt}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className={`w-full h-full flex items-center justify-center ${mutedText} text-xs`}>
+                      No Image
+                    </div>
+                  )}
+                </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                >
+                  <div className="text-lg font-bold uppercase mb-1 font-heading">{item.title}</div>
+                  <div className={`text-sm font-semibold font-body ${mutedText}`}>{item.choreographer}</div>
+                  <div className={`text-sm font-semibold font-body ${mutedText}`}>{item.year}</div>
+                </motion.div>
+              </motion.div>
+            );
+            })}
+            {!repertoire || repertoire.length === 0 && (
+              <div className="col-span-3 text-center py-12">
+                <p className={`text-lg ${mutedText}`}>
+                  No repertoire items available at the moment.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.section>
 
       {/* Booking Information */}
       <motion.section
