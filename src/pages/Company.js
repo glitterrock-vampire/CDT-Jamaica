@@ -13,6 +13,15 @@ const Company = () => {
   const [siteSettings, setSiteSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Force scroll to top when component mounts (only if no hash)
+  useEffect(() => {
+    if (!location.hash) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
+    }
+  }, [location.hash]);
+
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
 
   // Handle hash scrolling

@@ -233,7 +233,7 @@ const News = () => {
   const getActionText = (type) => {
     switch (type) {
       case 'video': return 'Watch Video';
-      case 'file': return 'View Document';
+      case 'file': return 'SEE MORE';
       default: return 'Read Article';
     }
   };

@@ -11,11 +11,29 @@ const DancersGrid = ({ featuredOnly = false, title = "Our Dancers", aspectRatio 
 
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
 
+  // Additional dancers to add to the grid
+  const additionalDancers = [
+    'Assantewaa Alberts',
+    'Gina Strachan', 
+    'Janna Nesbeth',
+    'Kaelah Mckoy',
+    'Kenya Harvey',
+    'Kishan Carnegie',
+    'Matthew Johnson',
+    'Nathan Campbell',
+    'Nneka Alvaranga',
+    'Shamitha Chindepalli',
+    'Shiloh Tracey',
+    'Sierra Moss-Solomon'
+  ];
+
   useEffect(() => {
     const fetchDancers = async () => {
       try {
         const data = featuredOnly ? await getFeaturedDancers() : await getDancers();
-        setDancers(data);
+        // Add additional dancers to the end if not featuredOnly
+        const allDancers = featuredOnly ? data : [...data, ...additionalDancers];
+        setDancers(allDancers);
       } catch (error) {
         console.error('Error fetching dancers:', error);
       } finally {

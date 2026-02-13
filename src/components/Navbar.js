@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { getSiteSettings } from '../lib/siteSettings';
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [siteSettings, setSiteSettings] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const { isDarkMode, toggleDarkMode } = useTheme();
   
   // Debounce ref to prevent rapid state changes
@@ -336,22 +337,11 @@ const Navbar = () => {
           <nav className="flex-1 flex justify-center items-center">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
-            <NavLink to="/" className="font-semibold tracking-[0.08em] uppercase text-sm">Home</NavLink>
-            <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm"> The Company</NavLink>
+            <NavLink to="/" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}}>Home</NavLink>
+            <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}}> The Company</NavLink>
             {/* <NavLink to="/performances">Performances</NavLink> */}
-            <a
-              href="/#school"
-              className="font-semibold tracking-[0.08em] uppercase text-sm hover:text-orange-500 transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                // Navigate to homepage first, then scroll to school
-                window.location.href = '/#school';
-              }}
-            >
-              The School
-            </a>
-            <NavLink to="/news" className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</NavLink>
-            <NavLink to="/contact" className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</NavLink>
+            <NavLink to="/news" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => window.scrollTo(0, 0)}>News + Press</NavLink>
+            <NavLink to="/contact" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => window.scrollTo(0, 0)}>Contact</NavLink>
             <a
               href="https://bredsfoundation.org/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAOP5EBleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAadBWYsEy_yt9bdmCM5xe0lSlDf_G1MD1Qych57nJLXKKbywQ1QcOR1TO7YJPQ_aem_V7u0mQ6zISPvkV5ZJCXXrQ"
               target="_blank"
@@ -402,25 +392,11 @@ const Navbar = () => {
             </svg>
           </button>
           <ul className="menu-items">
-            <li className="menu-item"><Link to="/" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Home</Link></li>
-            <li className="menu-item"><Link to="/about" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
+            <li className="menu-item"><Link to="/" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">Home</Link></li>
+            <li className="menu-item"><Link to="/about" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
             {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
-            <li className="menu-item">
-              <a
-                href="/#school"
-                className="font-semibold tracking-[0.08em] uppercase text-sm"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsMenuOpen(false);
-                  // Navigate to homepage first, then scroll to school
-                  window.location.href = '/#school';
-                }}
-              >
-                The School
-              </a>
-            </li>
-            <li className="menu-item"><Link to="/news" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</Link></li>
-            <li className="menu-item"><Link to="/contact" onClick={() => setIsMenuOpen(false)} className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</Link></li>
+            <li className="menu-item"><Link to="/news" onClick={() => {setIsMenuOpen(false); window.scrollTo(0, 0);}} className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</Link></li>
+            <li className="menu-item"><Link to="/contact" onClick={() => {setIsMenuOpen(false); window.scrollTo(0, 0);}} className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</Link></li>
             <li className="menu-item">
               <a
                 href="https://bredsfoundation.org/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAOP5EBleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAadBWYsEy_yt9bdmCM5xe0lSlDf_G1MD1Qych57nJLXKKbywQ1QcOR1TO7YJPQ_aem_V7u0mQ6zISPvkV5ZJCXXrQ"

@@ -491,7 +491,7 @@ const About = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.56 }}
               >
-                <Link to="/repertoire">View full repertoire →</Link>
+                <Link to="/repertoire">View more →</Link>
               </motion.button>
             </div>
           </div>
@@ -508,6 +508,9 @@ const About = () => {
                 thumbnailAsset: item.thumbnail?.asset,
                 heroImageAsset: item.heroImage?.asset
               });
+              
+              // Format title as "Title (Year)"
+              const formattedTitle = item.year ? `${item.title} (${item.year})` : item.title;
               
               // Try multiple image field approaches
               let imageUrl = null;
@@ -541,20 +544,11 @@ const About = () => {
               return (
               <motion.div 
                 key={item._id}
-                className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
+                className={`grid grid-rows-[1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
                 onClick={handleClick}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
               >
-                <motion.div
-                  className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.05 }}
-                >
-                  <span>Repertoire</span>
-                  <span>{item.year}</span>
-                </motion.div>
                 <div className={`h-56 border ${borderColor} overflow-hidden`}>
                   {imageUrl ? (
                     <img
@@ -573,9 +567,8 @@ const About = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                 >
-                  <div className="text-lg font-bold uppercase mb-1 font-heading">{item.title}</div>
-                  <div className={`text-sm font-semibold font-body ${mutedText}`}>{item.choreographer}</div>
-                  <div className={`text-sm font-semibold font-body ${mutedText}`}>{item.year}</div>
+                  <div className="text-lg font-bold uppercase mb-1 font-heading">{formattedTitle}</div>
+                  <div className={`text-base font-semibold font-body ${mutedText}`}>{item.choreographer}</div>
                 </motion.div>
               </motion.div>
             );

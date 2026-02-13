@@ -11,6 +11,9 @@ const RepertoireItem = ({ item }) => {
   
   const { _id, title, choreographer, year, thumbnail, heroImage } = item;
   
+  // Format title as "Title (Year)"
+  const formattedTitle = year ? `${title} (${year})` : title;
+  
   const imageUrl = thumbnail?.asset?.url || heroImage?.asset?.url;
   const imageAlt = thumbnail?.alt || heroImage?.alt || title;
 
@@ -29,20 +32,11 @@ const RepertoireItem = ({ item }) => {
 
   return (
     <motion.div 
-      className={`grid grid-rows-[auto,1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
+      className={`grid grid-rows-[1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
       onClick={handleClick}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
     >
-      <motion.div
-        className={`flex justify-between text-[10px] tracking-[0.12em] uppercase ${mutedText}`}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.05 }}
-      >
-        <span>Repertoire</span>
-        <span>{year}</span>
-      </motion.div>
       <div className={`h-56 border ${borderColor} overflow-hidden`}>
         {imageUrl ? (
           <img
@@ -62,9 +56,8 @@ const RepertoireItem = ({ item }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
-        <div className="text-lg font-bold uppercase mb-1 font-heading">{title}</div>
-        <div className={`text-sm font-semibold font-body ${mutedText}`}>{choreographer}</div>
-        <div className={`text-sm font-semibold font-body ${mutedText}`}>{year}</div>
+        <div className="text-lg font-bold uppercase mb-1 font-heading">{formattedTitle}</div>
+        <div className={`text-base font-semibold font-body ${mutedText}`}>{choreographer}</div>
       </motion.div>
     </motion.div>
   );

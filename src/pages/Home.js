@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
@@ -9,6 +10,7 @@ import Calendar from '../components/Calendar/Calendar';
 import TicketButton from '../components/TicketButton';
 
 const Home = () => {
+  const location = useLocation();
   const { isDarkMode } = useTheme();
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
@@ -18,6 +20,13 @@ const Home = () => {
   const [showFullCalendar, setShowFullCalendar] = useState(true);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [player, setPlayer] = useState(null);
+
+  // Force scroll to top when component mounts
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }, []);
 
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
@@ -210,33 +219,6 @@ const Home = () => {
       });
     };
   }, [newsArchiveVideos]); // Re-run when videos change
-
-  // Handle hash scroll for school section
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === '#school') {
-      // Check if we just navigated to this page (performance.navigation.type === 1)
-      // or if we came from a different page
-      const navigationType = performance.getEntriesByType('navigation')[0]?.type;
-      if (navigationType === 'navigate' || navigationType === 'reload') {
-        // Small delay to ensure the page is fully loaded
-        setTimeout(() => {
-          const element = document.getElementById('school');
-          if (element) {
-            const navHeight = 80;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-            // Clear the hash after scrolling to prevent re-scroll on reload
-            window.history.replaceState(null, null, window.location.pathname);
-          }
-        }, 100);
-      }
-    }
-  }, []);
 
   // Update mute button icons based on video state
   useEffect(() => {
@@ -701,7 +683,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.56 }}
               >
-                <Link to="/news">Open archive index →</Link>
+                <Link to="/news">SEE MORE</Link>
               </motion.button>
             </motion.div>
 
@@ -745,7 +727,7 @@ const Home = () => {
                         href="https://jamaica-gleaner.com/article/entertainment/20241110/dance-companies-pay-joyful-tribute-tony-wilson#slideshow-2"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-orange-600 dark:text-orange-400 hover:underline"
+                        className="text-sm text-orange-600 dark:text-orange-400 hover:underline"
                       >
                         Read →
                       </a>
@@ -771,7 +753,7 @@ const Home = () => {
                         href="https://www.jamaicaobserver.com/2024/06/16/cdt-gala-bravo/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-orange-600 dark:text-orange-400 hover:underline"
+                        className="text-sm text-orange-600 dark:text-orange-400 hover:underline"
                       >
                         Read →
                       </a>
@@ -797,7 +779,7 @@ const Home = () => {
                         href="https://www.youtube.com/watch?v=Z_3oLcaza2A"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-orange-600 dark:text-orange-400 hover:underline"
+                        className="text-sm text-orange-600 dark:text-orange-400 hover:underline"
                       >
                         Watch →
                       </a>
