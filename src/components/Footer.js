@@ -45,8 +45,8 @@ const Footer = () => {
               <div>
                 <ul className="space-y-2">
                   <li><a href="/" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">Home</a></li>
-                  <li><a href="/#school" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">The School</a></li>
                   <li><a href="/about" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">The Company</a></li>
+                  <li><a href="/#school" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">The School</a></li>
                   <li><a href="/news" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0;}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">News + Press</a></li>
                   <li><a href="/contact" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0;}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">Contact</a></li>
                   {/* <li><a href="/news" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">News + Press</a></li> */}
