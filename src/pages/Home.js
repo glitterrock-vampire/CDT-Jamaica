@@ -21,6 +21,55 @@ const Home = () => {
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [player, setPlayer] = useState(null);
 
+  // Scroll bounce effect for school section
+  useEffect(() => {
+    const schoolSection = document.getElementById('school');
+    if (!schoolSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Center the school section with bounce effect
+            const elementTop = entry.target.offsetTop;
+            const elementHeight = entry.target.offsetHeight;
+            const windowHeight = window.innerHeight;
+            const scrollTo = elementTop - (windowHeight / 2) + (elementHeight / 2);
+
+            window.scrollTo({
+              top: scrollTo,
+              behavior: 'smooth'
+            });
+
+            // Optional: Add a slight bounce effect
+            setTimeout(() => {
+              const bounceScroll = scrollTo - 20;
+              window.scrollTo({
+                top: bounceScroll,
+                behavior: 'smooth'
+              });
+
+              setTimeout(() => {
+                window.scrollTo({
+                  top: scrollTo,
+                  behavior: 'smooth'
+                });
+              }, 150);
+            }, 300);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '-100px 0px -100px 0px'
+      }
+    );
+
+    observer.observe(schoolSection);
+
+    return () => observer.disconnect();
+  }, []);
+
   // Force scroll to top when component mounts
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -32,6 +81,7 @@ const Home = () => {
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
   const secondaryBg = isDarkMode ? 'bg-neutral-900' : 'bg-gray-50';
+  const textColor = isDarkMode ? 'text-white' : 'text-black';
 
   const heroWeekdayAbbrev = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
 
@@ -893,6 +943,72 @@ const Home = () => {
               </motion.button>
             </motion.div>
           </div>
+          </div>
+        </motion.section>
+
+        {/* THE CDT SCHOOL Section */}
+        <motion.section
+          id="school"
+          className={`py-16 md:py-24 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.h2
+                className={`text-3xl md:text-5xl font-bold mb-6 font-heading ${textColor}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                THE CDT SCHOOL
+              </motion.h2>
+              <motion.p
+                className={`text-lg md:text-xl leading-relaxed mb-12 max-w-3xl mx-auto ${mutedText}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                From first steps to pre-professional study, The CDT School offers programmes in contemporary, ballet, and Jamaican folk forms led by working artists.
+              </motion.p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
+                {/* Juniors */}
+                <motion.div
+                  className={`p-8 border ${borderColor} ${cardBg} rounded-lg`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                >
+                  <h3 className={`text-2xl md:text-3xl font-bold mb-4 font-heading ${textColor}`}>Juniors</h3>
+                  <p className={`text-lg mb-6 ${mutedText}`}>Ages 3–17</p>
+                  <button
+                    type="button"
+                    className={`w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors rounded`}
+                  >
+                    Register – Juniors
+                  </button>
+                </motion.div>
+
+                {/* Adults */}
+                <motion.div
+                  className={`p-8 border ${borderColor} ${cardBg} rounded-lg`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                >
+                  <h3 className={`text-2xl md:text-3xl font-bold mb-4 font-heading ${textColor}`}>Adults</h3>
+                  <p className={`text-lg mb-6 ${mutedText}`}>Evenings + weekends</p>
+                  <button
+                    type="button"
+                    className={`w-full inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-[0.16em] uppercase bg-orange-500 text-white hover:bg-orange-400 transition-colors rounded`}
+                  >
+                    Register – Adults
+                  </button>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </motion.section>
 

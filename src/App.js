@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import PageScrollReveal from './components/PageScrollReveal';
 import Home from './pages/Home';
@@ -15,6 +15,7 @@ import { getSiteSettings } from './lib/siteSettings';
 
 function App() {
   const [siteSettings, setSiteSettings] = useState(null);
+  const location = useLocation();
 
   // Fetch site settings
   useEffect(() => {
@@ -29,6 +30,11 @@ function App() {
 
     fetchSiteSettings();
   }, []);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">

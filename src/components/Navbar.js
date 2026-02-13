@@ -339,6 +339,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
             <NavLink to="/" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}}>Home</NavLink>
             <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}}> The Company</NavLink>
+            <a href="/#school" className="font-semibold tracking-[0.08em] uppercase text-sm hover:text-orange-500 transition-colors">The School</a>
             {/* <NavLink to="/performances">Performances</NavLink> */}
             <NavLink to="/news" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => window.scrollTo(0, 0)}>News + Press</NavLink>
             <NavLink to="/contact" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => window.scrollTo(0, 0)}>Contact</NavLink>
@@ -394,6 +395,7 @@ const Navbar = () => {
           <ul className="menu-items">
             <li className="menu-item"><Link to="/" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">Home</Link></li>
             <li className="menu-item"><Link to="/about" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
+            <li className="menu-item"><Link to="/about" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">The School</Link></li>
             {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
             <li className="menu-item"><Link to="/news" onClick={() => {setIsMenuOpen(false); window.scrollTo(0, 0);}} className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</Link></li>
             <li className="menu-item"><Link to="/contact" onClick={() => {setIsMenuOpen(false); window.scrollTo(0, 0);}} className="font-semibold tracking-[0.08em] uppercase text-sm">Contact</Link></li>
