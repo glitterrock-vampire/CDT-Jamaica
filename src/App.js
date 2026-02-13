@@ -5,7 +5,6 @@ import PageScrollReveal from './components/PageScrollReveal';
 import Home from './pages/Home';
 import Repertoire from './pages/Repertoire';
 import About from './pages/About';
-import Company from './pages/Company';
 import DanceDetail from './pages/DanceDetail';
 import PerformanceDetail from './pages/PerformanceDetail';
 import VideoDetail from './pages/VideoDetail';
@@ -59,13 +58,6 @@ function App() {
           <Layout>
             <PageScrollReveal>
               <About />
-            </PageScrollReveal>
-          </Layout>
-        } />
-        <Route path="/company" element={
-          <Layout>
-            <PageScrollReveal>
-              <Company />
             </PageScrollReveal>
           </Layout>
         } />

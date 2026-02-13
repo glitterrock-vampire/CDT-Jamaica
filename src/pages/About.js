@@ -166,7 +166,7 @@ const About = () => {
       {siteSettings && siteSettings.heroImage && (
         <Hero
           image={siteSettings.heroImage}
-          title="The Company"
+          title="THE COMPANY"
         />
       )}
       
@@ -271,7 +271,7 @@ const About = () => {
       <section id="board-of-directors" className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="text-left mb-8">
-            <h2 className={`text-xl md:text-2xl uppercase ${textColor}`}>BOARD OF DIRECTORS</h2>
+            <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>BOARD OF DIRECTORS</h2>
           </div>
           {loading ? (
             <div className="text-left py-12">
@@ -341,6 +341,66 @@ const About = () => {
           )}
         </div>
       </section>
+
+      {/* Additional Dancers Panel */}
+      <motion.section
+        className={`py-12 md:py-16 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className={`rounded-lg border ${
+              isDarkMode
+                ? 'bg-gray-900/50 border-gray-800'
+                : 'bg-gray-50 border-gray-200'
+            } p-8 md:p-12`}>
+              <h3 className={`text-2xl font-bold mb-6 font-heading ${
+                isDarkMode ? 'text-white' : 'text-black'
+              }`}>
+                Additional Dancers
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  'Assantewaa Alberts',
+                  'Gina Strachan',
+                  'Janna Nesbeth',
+                  'Kaelah Mckoy',
+                  'Kenya Harvey',
+                  'Kishan Carnegie',
+                  'Matthew Johnson',
+                  'Nathan Campbell',
+                  'Nneka Alvaranga',
+                  'Shamitha Chindepalli',
+                  'Shiloh Tracey',
+                  'Sierra Moss-Solomon'
+                ].map((name, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 rounded-lg border ${
+                      isDarkMode
+                        ? 'bg-gray-800/50 border-gray-700 text-white'
+                        : 'bg-white border-gray-200 text-black'
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-bold ${
+                        isDarkMode
+                          ? 'bg-orange-500/20 text-orange-400'
+                          : 'bg-orange-100 text-orange-600'
+                      }`}>
+                        {index + 1}
+                      </span>
+                      <span className="font-medium">{name}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Performances Carousel */}
       {upcomingPerformances.length > 0 && (
