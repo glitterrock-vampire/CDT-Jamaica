@@ -350,54 +350,71 @@ const About = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className={`rounded-lg border ${
-              isDarkMode
-                ? 'bg-gray-900/50 border-gray-800'
-                : 'bg-gray-50 border-gray-200'
-            } p-8 md:p-12`}>
-              <h3 className={`text-2xl font-bold mb-6 font-heading ${
-                isDarkMode ? 'text-white' : 'text-black'
-              }`}>
-                Additional Dancers
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[
-                  'Assantewaa Alberts',
-                  'Gina Strachan',
-                  'Janna Nesbeth',
-                  'Kaelah Mckoy',
-                  'Kenya Harvey',
-                  'Kishan Carnegie',
-                  'Matthew Johnson',
-                  'Nathan Campbell',
-                  'Nneka Alvaranga',
-                  'Shamitha Chindepalli',
-                  'Shiloh Tracey',
-                  'Sierra Moss-Solomon'
-                ].map((name, index) => (
-                  <div
-                    key={index}
-                    className={`p-4 rounded-lg border ${
-                      isDarkMode
-                        ? 'bg-gray-800/50 border-gray-700 text-white'
-                        : 'bg-white border-gray-200 text-black'
-                    }`}
-                  >
-                    <div className="flex items-center">
-                      <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-bold ${
-                        isDarkMode
-                          ? 'bg-orange-500/20 text-orange-400'
-                          : 'bg-orange-100 text-orange-600'
-                      }`}>
-                        {index + 1}
-                      </span>
-                      <span className="font-medium">{name}</span>
-                    </div>
-                  </div>
-                ))}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+            {/* Left Column - Title */}
+            <motion.div
+              className="md:col-span-4"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="sticky top-24">
+                <h3 className={`text-2xl md:text-3xl uppercase font-heading ${textColor}`}>
+                  Additional Dancers
+                </h3>
               </div>
-            </div>
+            </motion.div>
+
+            {/* Right Column - Content */}
+            <motion.div
+              className="md:col-span-7 md:col-start-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className={`p-8 md:p-12 rounded-lg border ${
+                isDarkMode
+                  ? 'bg-gray-900/50 border-gray-800'
+                  : 'bg-gray-50 border-gray-200'
+              }`}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {[
+                    'Assantewaa Alberts',
+                    'Gina Strachan',
+                    'Janna Nesbeth',
+                    'Kaelah Mckoy',
+                    'Kenya Harvey',
+                    'Kishan Carnegie',
+                    'Matthew Johnson',
+                    'Nathan Campbell',
+                    'Nneka Alvaranga',
+                    'Shamitha Chindepalli',
+                    'Shiloh Tracey',
+                    'Sierra Moss-Solomon'
+                  ].map((name, index) => (
+                    <div
+                      key={index}
+                      className={`p-4 rounded-lg border ${
+                        isDarkMode
+                          ? 'bg-gray-800/50 border-gray-700 text-white'
+                          : 'bg-white border-gray-200 text-black'
+                      }`}
+                    >
+                      <div className="flex items-center">
+                        <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-bold ${
+                          isDarkMode
+                            ? 'bg-orange-500/20 text-orange-400'
+                            : 'bg-orange-100 text-orange-600'
+                        }`}>
+                          {index + 1}
+                        </span>
+                        <span className="font-medium">{name}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </motion.section>
