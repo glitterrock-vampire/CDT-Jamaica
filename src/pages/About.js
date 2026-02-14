@@ -679,7 +679,7 @@ const About = () => {
 
                     {/* Jamaica Inquiries */}
                     <div className="space-y-2">
-                      <p className="font-semibold text-orange-600 dark:text-orange-400">For Jamaica inquiries:</p>
+                      <p className="font-semibold text-orange-600 dark:text-orange-400">For Caribbean inquiries:</p>
                       <div className="font-medium">
                         <p>Dr. Sade Bully-Bell</p>
                         <p>AISK, 2 College Green Avenue</p>
