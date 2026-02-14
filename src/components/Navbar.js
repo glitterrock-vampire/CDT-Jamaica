@@ -108,11 +108,7 @@ const Navbar = () => {
   const NavLink = ({ to, children }) => (
     <Link
       to={to}
-      className={`text-lg font-medium ${
-        location.pathname === to
-          ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
-          : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-      } transition-colors`}
+      className={`text-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors`}
     >
       {children}
     </Link>
@@ -124,11 +120,7 @@ const Navbar = () => {
       className="relative about-dropdown group"
     >
       <button
-        className={`text-lg font-medium ${
-          location.pathname === '/about' || location.pathname === '/company'
-            ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
-            : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-        } transition-colors flex items-center gap-1`}
+        className={`text-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center gap-1`}
       >
         The Company
         <svg 
@@ -185,11 +177,7 @@ const Navbar = () => {
       className="relative company-dropdown group"
     >
       <button
-        className={`text-lg font-medium ${
-          location.pathname === '/repertoire' || location.pathname === '/about' || location.pathname === '/company'
-            ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
-            : 'text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-        } transition-colors flex items-center gap-1`}
+        className={`text-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center gap-1`}
       >
         CDT Company
         <svg 
@@ -339,7 +327,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-10 xl:space-x-16 2xl:space-x-20">
             <NavLink to="/" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}}>Home</NavLink>
             <NavLink to="/about" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}}> The Company</NavLink>
-            <a href="/#school" className="font-semibold tracking-[0.08em] uppercase text-sm hover:text-orange-500 transition-colors">The School</a>
+            <NavLink to="/#school" className="font-semibold tracking-[0.08em] uppercase text-sm">The School</NavLink>
             {/* <NavLink to="/performances">Performances</NavLink> */}
             <NavLink to="/news" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => window.scrollTo(0, 0)}>News + Press</NavLink>
             <NavLink to="/contact" className="font-semibold tracking-[0.08em] uppercase text-sm" onClick={() => window.scrollTo(0, 0)}>Contact</NavLink>

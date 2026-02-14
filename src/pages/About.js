@@ -342,79 +342,48 @@ const About = () => {
         </div>
       </section>
 
-      {/* Additional Dancers Panel */}
+      {/* Additional Dancers List */}
       <motion.section
-        className={`py-12 md:py-16 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+        className={`py-8 ${isDarkMode ? 'bg-black' : 'bg-white'}`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            {/* Left Column - Title */}
-            <motion.div
-              className="md:col-span-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div className="sticky top-24">
-                <h3 className={`text-2xl md:text-3xl uppercase font-heading ${textColor}`}>
-                  Additional Dancers
-                </h3>
-              </div>
-            </motion.div>
-
-            {/* Right Column - Content */}
-            <motion.div
-              className="md:col-span-7 md:col-start-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className={`p-8 md:p-12 rounded-lg border ${
-                isDarkMode
-                  ? 'bg-gray-900/50 border-gray-800'
-                  : 'bg-gray-50 border-gray-200'
-              }`}>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {[
-                    'Assantewaa Alberts',
-                    'Gina Strachan',
-                    'Janna Nesbeth',
-                    'Kaelah Mckoy',
-                    'Kenya Harvey',
-                    'Kishan Carnegie',
-                    'Matthew Johnson',
-                    'Nathan Campbell',
-                    'Nneka Alvaranga',
-                    'Shamitha Chindepalli',
-                    'Shiloh Tracey',
-                    'Sierra Moss-Solomon'
-                  ].map((name, index) => (
-                    <div
-                      key={index}
-                      className={`p-4 rounded-lg border ${
-                        isDarkMode
-                          ? 'bg-gray-800/50 border-gray-700 text-white'
-                          : 'bg-white border-gray-200 text-black'
-                      }`}
-                    >
-                      <div className="flex items-center">
-                        <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full mr-3 text-sm font-bold ${
-                          isDarkMode
-                            ? 'bg-orange-500/20 text-orange-400'
-                            : 'bg-orange-100 text-orange-600'
-                        }`}>
-                          {index + 1}
-                        </span>
-                        <span className="font-medium">{name}</span>
-                      </div>
-                    </div>
-                  ))}
+          <div className="w-full max-w-4xl">
+            <div className={`p-6 rounded-lg border ${
+              isDarkMode
+                ? 'bg-gray-900/50 border-gray-800'
+                : 'bg-gray-50 border-gray-200'
+            }`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                'Assantewaa Alberts',
+                'Nneka Alvaranga',
+                'Nathan Campbell',
+                'Kishan Carnegie',
+                'Shamitha Chindepalli',
+                'Kenya Harvey',
+                'Matthew Johnson',
+                'Kaelah Mckoy',
+                'Sierra Moss-Solomon',
+                'Janna Nesbeth',
+                'Gina Strachan',
+                'Shiloh Tracey'
+              ].map((name, index) => (
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg border ${
+                    isDarkMode
+                      ? 'bg-gray-800/50 border-gray-700 text-white'
+                      : 'bg-white border-gray-200 text-black'
+                  }`}
+                >
+                  <span className="font-medium">{name}</span>
                 </div>
-              </div>
-            </motion.div>
+              ))}
+            </div>
+            </div>
           </div>
         </div>
       </motion.section>
@@ -695,12 +664,30 @@ const About = () => {
                   <p className={mutedText}>
                     To book CDT at your venue, please contact:
                   </p>
-                  <div className="space-y-2 font-medium">
-                    <p>Dr. Sade Bully-Bell</p>
-                    <p>AISK, 2 College Green Avenue</p>
-                    <p>Kingston 6</p>
-                    <p>Jamaica</p>
-                    <p>876-463-7395 | company@cdtjamaica.org</p>
+                  <div className="space-y-6">
+                    {/* US Inquiries */}
+                    <div className="space-y-2">
+                      <p className="font-semibold text-orange-600 dark:text-orange-400">For US inquiries:</p>
+                      <div className="font-medium">
+                        <p>Colin Blackwood</p>
+                        <p>100 Southeast 2nd Street, Suite 2000</p>
+                        <p>Miami, Florida 33131 USA</p>
+                        <p>(954) 361-5370</p>
+                        <p>thecompany@cdtjamaica.org</p>
+                      </div>
+                    </div>
+
+                    {/* Jamaica Inquiries */}
+                    <div className="space-y-2">
+                      <p className="font-semibold text-orange-600 dark:text-orange-400">For Jamaica inquiries:</p>
+                      <div className="font-medium">
+                        <p>Dr. Sade Bully-Bell</p>
+                        <p>AISK, 2 College Green Avenue</p>
+                        <p>Kingston 6</p>
+                        <p>Jamaica</p>
+                        <p>876-463-7395 | company@cdtjamaica.org</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
