@@ -263,6 +263,23 @@ const About = () => {
                   Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and <span className="italic text-orange-500">to di worl!</span>
                 </motion.p>
               </div>
+
+              {/* Founder Information Box */}
+              <motion.div
+                className={`mt-8 p-6 rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900/50' : 'border-black/10 bg-gray-50'}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <div className="text-center">
+                  <h3 className={`text-lg font-bold uppercase tracking-wide ${textColor} mb-2`}>
+                    Mr. Tony Wilson, OD
+                  </h3>
+                  <p className={`text-sm font-medium ${mutedText} uppercase tracking-[0.12em]`}>
+                    Founder of The Company Dance Theatre
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
