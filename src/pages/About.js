@@ -165,8 +165,9 @@ const About = () => {
       {/* Hero Section */}
       {siteSettings && siteSettings.heroImage && (
         <Hero
+        
           image={siteSettings.heroImage}
-          title="THE COMPANY"
+          title="The Company"
         />
       )}
       
@@ -665,27 +666,27 @@ const About = () => {
                     To book CDT at your venue, please contact:
                   </p>
                   <div className="space-y-6">
-                    {/* US Inquiries */}
-                    <div className="space-y-2">
-                      <p className="font-semibold text-orange-600 dark:text-orange-400">For US inquiries:</p>
-                      <div className="font-medium">
-                        <p>Colin Blackwood</p>
-                        <p>100 Southeast 2nd Street, Suite 2000</p>
-                        <p>Miami, Florida 33131 USA</p>
-                        <p>(954) 361-5370</p>
-                        <p>thecompany@cdtjamaica.org</p>
-                      </div>
-                    </div>
 
-                    {/* Jamaica Inquiries */}
+                   {/* Jamaica Inquiries */}
                     <div className="space-y-2">
-                      <p className="font-semibold text-orange-600 dark:text-orange-400">For Caribbean inquiries:</p>
+                      <p className="font-semibold text-orange-600 dark:text-orange-400">For Jamaica inquiries:</p>
                       <div className="font-medium">
                         <p>Dr. Sade Bully-Bell</p>
                         <p>AISK, 2 College Green Avenue</p>
                         <p>Kingston 6</p>
                         <p>Jamaica</p>
-                        <p>876-463-7395 | company@cdtjamaica.org</p>
+                        <p>(876) 463-7395 | thecompany@cdtjamaica.org</p>
+                      </div>
+                    </div>
+
+                    {/* US Inquiries */}
+                    <div className="space-y-2">
+                      <p className="font-semibold text-orange-600 dark:text-orange-400">For Global inquiries:</p>
+                      <div className="font-medium">
+                        <p>Colin Blackwood</p>
+                        <p>100 Southeast 2nd Street, Suite 2000</p>
+                        <p>Miami, Florida 33131 USA</p>
+                        <p>(954) 361-5370 | thecompany@cdtjamaica.org</p>
                       </div>
                     </div>
                   </div>

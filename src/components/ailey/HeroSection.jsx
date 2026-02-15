@@ -28,7 +28,7 @@ export default function HeroSection() {
         className="absolute bottom-24 left-8 md:left-16 z-30"
       >
         <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black text-white tracking-tight leading-none font-sans">
-         THE COMPANY
+         The Company
         </h1>
       </motion.div>
       

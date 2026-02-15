@@ -26,8 +26,8 @@ const News = () => {
 
   const archiveData = [
     {
-      season: "SIR 2024",
-      items: [
+   //   season: "SIR 2024",
+    //  items: [
         // {
         //   publication: "Jamaica Gleaner",
         //   date: "November 10, 2024",
@@ -56,9 +56,9 @@ const News = () => {
         //   url: "https://www.youtube.com/watch?v=Z_3oLcaza2A",
         //   headline: "Abigail Berry and Andrew Bailey Blueprint"
         // }
-      ]
-    },
-    {
+    //  ]
+ //   },
+ //   {
       season: "JUNE GALA 2024",
       items: [
         {
@@ -245,7 +245,6 @@ const News = () => {
         <Hero
           image={siteSettings.heroImage}
           title="News + Press"
-          subtitle="Press coverage and media appearances"
         />
       )}
 
@@ -264,7 +263,7 @@ const News = () => {
                 <span className="text-lg font-bold tracking-widest uppercase text-orange-600 dark:text-orange-400">Press Archive</span>
               </div>
               <h1 className={`text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight mb-4 ${isDarkMode ? 'text-white' : 'text-black'}`}>
-                CDT Jamaica in the News
+                CDT in the News
               </h1>
               <p className={`text-lg md:text-xl max-w-3xl mx-auto ${mutedText} leading-relaxed`}>
                 A comprehensive collection of media coverage, interviews, and features documenting our journey through contemporary Caribbean dance
@@ -351,7 +350,7 @@ const News = () => {
                 "Through movement, we tell stories that transcend borders and celebrate the rich tapestry of Caribbean culture."
               </p>
               <p className={`text-xs ${mutedText} mt-2`}>
-                Archive last updated: November 2024
+                Archive last updated: June 2024
               </p>
             </motion.div>
           </div>

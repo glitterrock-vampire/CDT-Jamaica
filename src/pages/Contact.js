@@ -39,7 +39,6 @@ const Contact = () => {
         <Hero
           image={siteSettings.heroImage}
           title="Get In Touch"
-          subtitle="Connect with CDT Jamaica"
         />
       )}
 
