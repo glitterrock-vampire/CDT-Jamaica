@@ -678,7 +678,7 @@ const About = () => {
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            {/* Left Column - Title and Founder Image */}
+            {/* Left Column - Title */}
             <div className="md:col-span-4">
               <motion.div
                 className="sticky top-24"
@@ -686,44 +686,7 @@ const About = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <h2 className={`text-2xl md:text-3xl uppercase ${textColor} mb-6`}>
-                  THE COMPANY
-                </h2>
-                
-                {/* Tony Wilson Image */}
-                {management && management.length > 0 && (
-                  <div className="mb-6">
-                    <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} shadow-lg`}>
-                      <div className="aspect-[4/5] overflow-hidden relative">
-                        {management[0].headshot ? (
-                          <>
-                            <img
-                              src={urlFor(management[0].headshot).width(400).height(500).fit('crop').url()}
-                              alt={management[0].headshot.alt || management[0].name}
-                              className="w-full h-full object-cover"
-                            />
-                            {/* Subtle overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent"></div>
-                          </>
-                        ) : (
-                          <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
-                            <span className={`text-base ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                              No image
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-4 text-center">
-                        <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
-                          {management[0].name}
-                        </h3>
-                        <p className={`text-sm font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
-                          {management[0].title}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>BOOKINGS</h2>
               </motion.div>
             </div>
 
