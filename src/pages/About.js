@@ -222,25 +222,17 @@ const About = () => {
       <section id="the-company" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
-            {/* Left Column - Header */}
-            <motion.div
-              className="md:col-span-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div className="sticky top-24">
-                <div className={`text-sm tracking-[0.12em] uppercase ${mutedText}`}>About</div>
-                <div className={`text-2xl md:text-3xl uppercase ${textColor}`}>The Company</div>
-              </div>
-            </motion.div>
-
-            {/* Right Column - Content */}
+            {/* Left Column - Title and Content */}
             <div className="md:col-span-8">
+              <div className="text-left mb-8">
+                <div className={`text-sm tracking-[0.12em] uppercase ${mutedText} mb-2`}>About</div>
+                <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>THE COMPANY</h2>
+              </div>
+
               <div className={`space-y-6 leading-relaxed text-justify`}>
                 <motion.p 
                   className={`text-2xl md:text-3xl ${textColor}`}
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
@@ -248,7 +240,7 @@ const About = () => {
                 </motion.p>
                 <motion.p 
                   className={`text-lg ${textColor}`}
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
@@ -256,29 +248,57 @@ const About = () => {
                 </motion.p>
                 <motion.p 
                   className={`text-lg ${textColor}`}
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
                   Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and <span className="italic text-orange-500">to di worl!</span>
                 </motion.p>
               </div>
+            </div>
 
-              {/* Founder Information Box */}
+            {/* Right Column - Founder Image */}
+            <div className="md:col-span-4">
               <motion.div
-                className={`mt-8 p-6 rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900/50' : 'border-black/10 bg-gray-50'}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
+                className="sticky top-24"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <div className="text-center">
-                  <h3 className={`text-lg font-bold uppercase tracking-wide ${textColor} mb-2`}>
-                    Mr. Tony Wilson, OD
-                  </h3>
-                  <p className={`text-sm font-medium ${mutedText} uppercase tracking-[0.12em]`}>
-                    Founder of The Company Dance Theatre
-                  </p>
-                </div>
+                {/* Tony Wilson Image */}
+                {management && management.length > 0 && (
+                  <div className="mb-6">
+                    <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} shadow-lg`}>
+                      <div className="aspect-[4/5] overflow-hidden relative">
+                        {management[0].headshot ? (
+                          <>
+                            <img
+                              src={urlFor(management[0].headshot).width(400).height(500).fit('crop').url()}
+                              alt={management[0].headshot.alt || management[0].name}
+                              className="w-full h-full object-cover"
+                            />
+                            {/* Subtle overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent"></div>
+                          </>
+                        ) : (
+                          <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
+                            <span className={`text-base ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                              No image
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4 text-center">
+                        <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
+                          {management[0].name}
+                        </h3>
+                        <p className={`text-sm font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
+                          {management[0].title}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </div>
           </div>
@@ -323,7 +343,7 @@ const About = () => {
             </div>
           ) : management.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {management.map((member, index) => (
+              {management.slice(1).map((member, index) => (
                 <ManagementCard key={member._id} member={member} index={index} />
               ))}
             </div>
@@ -658,17 +678,54 @@ const About = () => {
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            {/* Left Column - Title */}
-            <motion.div
-              className="md:col-span-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div className="sticky top-24">
-                <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>BOOKINGS</h2>
-              </div>
-            </motion.div>
+            {/* Left Column - Title and Founder Image */}
+            <div className="md:col-span-4">
+              <motion.div
+                className="sticky top-24"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <h2 className={`text-2xl md:text-3xl uppercase ${textColor} mb-6`}>
+                  THE COMPANY
+                </h2>
+                
+                {/* Tony Wilson Image */}
+                {management && management.length > 0 && (
+                  <div className="mb-6">
+                    <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} shadow-lg`}>
+                      <div className="aspect-[4/5] overflow-hidden relative">
+                        {management[0].headshot ? (
+                          <>
+                            <img
+                              src={urlFor(management[0].headshot).width(400).height(500).fit('crop').url()}
+                              alt={management[0].headshot.alt || management[0].name}
+                              className="w-full h-full object-cover"
+                            />
+                            {/* Subtle overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent"></div>
+                          </>
+                        ) : (
+                          <div className={`w-full h-full flex items-center justify-center ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
+                            <span className={`text-base ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                              No image
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4 text-center">
+                        <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
+                          {management[0].name}
+                        </h3>
+                        <p className={`text-sm font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
+                          {management[0].title}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            </div>
 
             {/* Right Column - Content */}
             <motion.div
