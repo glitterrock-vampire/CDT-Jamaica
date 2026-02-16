@@ -138,7 +138,7 @@ const Footer = () => {
           <p className="text-sm text-center">
             &copy; {new Date().getFullYear()} CDT Arts Ltd. All rights reserved.
             <span className="block sm:inline-block mt-1 sm:mt-0 sm:ml-2 text-sm">
-              Developed by Andre Walters
+              Developed by Andre Walters.
             </span>
           </p>
         </div>

@@ -511,12 +511,12 @@ const Home = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                       >
-                        <div className="text-lg md:text-xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 leading-none">
+                        <div className="text-lg md:text-xl font-bold tracking-[0.08em] uppercase text-orange-500 dark:text-orange-400 mb-2 leading-none">
                           {formatPerformanceDate(perf.date)}
                         </div>
                         <div className={`text-xs ${mutedText} mb-1`}>{perf.location}</div>
-                        <div className={`text-lg md:text-xl font-semibold text-black mb-2`}>{perf.venue}</div>
-                        <div className="text-base md:text-lg font-semibold uppercase mb-3 text-gray-600">{perf.title}</div>
+                        <div className={`text-lg md:text-xl font-semibold text-black dark:text-white mb-2`}>{perf.venue}</div>
+                        <div className="text-base md:text-lg font-semibold uppercase mb-3 text-gray-600 dark:text-white">{perf.title}</div>
                       </motion.div>
 
                       {/* Middle section - Image (centered and consistent) */}
@@ -601,12 +601,12 @@ const Home = () => {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.4, delay: 0.42 + index * 0.04 }}
                             >
-                              <div className="text-lg md:text-xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-2 leading-none">
+                              <div className="text-lg md:text-xl font-bold tracking-[0.08em] uppercase text-orange-500 dark:text-orange-400 mb-2 leading-none">
                                 {formatPerformanceDate(perf.date)}
                               </div>
                               <div className={`text-xs ${mutedText} mb-1`}>{perf.location}</div>
-                              <div className={`text-lg md:text-xl font-semibold text-black mb-2`}>{perf.venue}</div>
-                              <div className="text-base md:text-lg font-semibold uppercase mb-3 text-gray-600">{perf.title}</div>
+                              <div className={`text-lg md:text-xl font-semibold text-black dark:text-white mb-2`}>{perf.venue}</div>
+                              <div className="text-base md:text-lg font-semibold uppercase mb-3 text-gray-600 dark:text-white">{perf.title}</div>
                             </motion.div>
 
                             {/* Middle section - Image (centered and consistent) */}

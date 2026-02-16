@@ -495,12 +495,12 @@ const About = () => {
                     >
                       {/* Top section - Date, Location, Venue, Title - Fixed height for alignment */}
                       <div className="flex flex-col h-[180px]">
-                        <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 mb-3 leading-none">
+                        <div className="text-xl md:text-2xl font-bold tracking-[0.08em] uppercase text-orange-500 dark:text-orange-400 mb-3 leading-none">
                           {formatPerformanceDate(performance.date)}
                         </div>
                         <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>{performance.location}</div>
-                        <div className={`text-xl md:text-2xl font-semibold text-black mb-3`}>{performance.venue}</div>
-                        <div className="text-lg md:text-xl font-semibold uppercase mb-4 text-gray-600">{performance.title}</div>
+                        <div className={`text-xl md:text-2xl font-semibold text-black dark:text-white mb-3`}>{performance.venue}</div>
+                        <div className="text-lg md:text-xl font-semibold uppercase mb-4 text-gray-600 dark:text-white">{performance.title}</div>
                       </div>
 
                       {/* Middle section - Image (centered and consistent) */}
