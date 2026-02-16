@@ -79,6 +79,21 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Handle hash navigation for sections
+  useEffect(() => {
+    if (location.hash === '#school') {
+      const schoolSection = document.getElementById('school');
+      if (schoolSection) {
+        setTimeout(() => {
+          schoolSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
+
   const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
   const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
   const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
