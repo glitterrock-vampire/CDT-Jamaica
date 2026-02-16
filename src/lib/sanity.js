@@ -6,34 +6,37 @@ const config = {
   projectId: process.env.REACT_APP_SANITY_PROJECT_ID || 'sbvvl9vs',
   dataset: process.env.REACT_APP_SANITY_DATASET || 'production',
   apiVersion: '2023-05-03',
-  useCdn: process.env.NODE_ENV === 'production',
+  useCdn: true,
   ignoreBrowserTokenWarning: true,
-  withCredentials: false,
-  // Add CORS headers
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET',
-    'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type, Authorization'
-  }
 };
 
 // Create a Sanity client
 export const client = createClient(config);
 
-// Verify the client configuration
-console.log('Sanity client configured with:', {
-  projectId: config.projectId ? '✅ Set' : '❌ Missing',
-  dataset: config.dataset,
-  apiVersion: config.apiVersion,
-  useCdn: config.useCdn,
-  hasToken: false, // We're using public read access
-  endpoint: `https://${config.projectId}.api.sanity.io/v${config.apiVersion}/data/query/${config.dataset}`,
-});
-
 // Helper function to generate image URLs
 const builder = imageUrlBuilder(client);
 
 export const urlFor = (source) => builder.image(source);
+
+// Fetch site settings
+export const getSiteSettings = async () => {
+  const query = `*[_type == "siteSettings"][0]{
+    title,
+    description,
+    lightLogo,
+    darkLogo,
+    heroImage,
+    seasonPoster
+  }`;
+  
+  try {
+    const settings = await client.fetch(query);
+    return settings;
+  } catch (error) {
+    console.error('Error fetching site settings:', error);
+    return null;
+  }
+};
 
 // Fetch all repertoire items
 export const getRepertoireItems = async () => {
@@ -44,7 +47,6 @@ export const getRepertoireItems = async () => {
       _id,
       title,
       slug,
-     // composer,
       runTime,
       year,
       youtubeId,
@@ -113,8 +115,9 @@ export const getRepertoireItemById = async (id) => {
   }
 
   try {
-    // Ensure the ID is in the correct format (add 'drafts.' prefix if it's a draft)
-    const docId = id.startsWith('drafts.') ? id : `drafts.${id}`;
+    // Check if the ID is already a draft ID
+    const isDraft = id.startsWith('drafts.');
+    const draftId = isDraft ? id : `drafts.${id}`;
     
     const query = `*[_type == "repertoireItem" && (_id == $id || _id == $draftId)][0]{
       _id,
@@ -123,26 +126,17 @@ export const getRepertoireItemById = async (id) => {
       title,
       subtitle,
       slug,
-      // composer,
       runTime,
       year,
       youtubeId,
-      // youtubeUrl,
       description,
-      // instruments,
-      // style,
       choreographer,
       companyPremiere,
       worldPremiere,
       music,
       costumeDesign,
       lighting,
-      // genre,
-      // stylePeriod,
       premieredBy,
-      // dedicatedTo,
-      // movements,
-      // durations,
       mediaReviews[] {
         _key,
         _type,
@@ -201,15 +195,13 @@ export const getRepertoireItemById = async (id) => {
         alt,
         crop,
         hotspot
-      },
-      // notableRecordings,
-      // status
+      }
     }`;
     
-    console.log(`Fetching repertoire item with ID: ${id} (also checking ${docId})`);
+    console.log(`Fetching repertoire item with ID: ${id} (also checking ${draftId})`);
     const item = await client.fetch(query, { 
       id,
-      draftId: docId 
+      draftId 
     });
     
     if (!item) {

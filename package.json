@@ -47,7 +47,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "vercel-build": "npm install && npm run build"
+    "vercel-build": "npm install && npm run build",
+    "performances:list": "node scripts/manage-performances.js list",
+    "performances:add-miramar": "node scripts/manage-performances.js add-miramar",
+    "performances:delete": "node scripts/manage-performances.js delete",
+    "dancers:check": "node scripts/cleanup-dancers.js --check",
+    "dancers:update-names": "node scripts/cleanup-dancers.js --update-names",
+    "dancers:cleanup": "node scripts/cleanup-dancers.js --delete"
   },
   "eslintConfig": {
     "extends": [

@@ -1,12 +1,32 @@
 import React from 'react';
 import { urlFor } from '../lib/sanity';
+import { useTheme } from '../context/ThemeContext';
 
 export const Hero = ({ image, title, subtitle, children }) => {
+  const { isDarkMode } = useTheme();
   const [imageLoaded, setImageLoaded] = React.useState(false);
+  
+  // Function to get image URL - handles both Sanity assets and regular URLs
+  const getImageUrl = (img, width = 1200) => {
+    if (!img) return '';
+    
+    // If it's a regular URL (has url property), return it directly
+    if (img.url && typeof img.url === 'string') {
+      return img.url;
+    }
+    
+    // If it's a Sanity image asset, use urlFor
+    try {
+      return urlFor(img).width(width).url();
+    } catch (error) {
+      console.warn('Unable to resolve image URL, using fallback:', error);
+      return img.url || '';
+    }
+  };
   
   return (
     <div className="relative w-full h-auto min-h-[60vh] overflow-hidden">
-      {image && (
+      {image ? (
         <div className="relative w-full h-full">
           <div className="w-full h-[60vh] overflow-hidden">
             {/* Loading placeholder */}
@@ -16,11 +36,11 @@ export const Hero = ({ image, title, subtitle, children }) => {
               </div>
             )}
             <img
-              src={urlFor(image).width(1200).url()}
+              src={getImageUrl(image, 1200)}
               srcSet={`
-                ${urlFor(image).width(800).url()} 800w,
-                ${urlFor(image).width(1200).url()} 1200w,
-                ${urlFor(image).width(1920).url()} 1920w
+                ${getImageUrl(image, 800)} 800w,
+                ${getImageUrl(image, 1200)} 1200w,
+                ${getImageUrl(image, 1920)} 1920w
               `}
               sizes="100vw"
               alt={image.alt || 'Hero Image'}
@@ -35,16 +55,31 @@ export const Hero = ({ image, title, subtitle, children }) => {
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end pb-20 px-8 md:px-16 lg:px-24">
             <div className="max-w-4xl w-full">
-              <h1 className="font-nova-slim text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
+              <h1 className="text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
                 {title}
               </h1>
               {subtitle && (
-                <p className="font-raleway text-3xl md:text-4xl lg:text-5xl text-left text-white font-light leading-tight tracking-wide" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
+                <p className="text-3xl md:text-4xl lg:text-5xl text-left text-white font-light leading-tight tracking-wide" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
                   {subtitle}
                 </p>
               )}
               {children}
             </div>
+          </div>
+        </div>
+      ) : (
+        // Text-only hero with solid background
+        <div className={`w-full h-[60vh] ${isDarkMode ? 'bg-black' : 'bg-white'} flex items-end pb-20 px-8 md:px-16 lg:px-24`}>
+          <div className="max-w-4xl w-full">
+            <h1 className={`text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '2px 2px 4px rgba(0,0,0,0.8)' : '2px 2px 4px rgba(255,255,255,0.8)'}}>
+              {title}
+            </h1>
+            {subtitle && (
+              <p className={`text-3xl md:text-4xl lg:text-5xl text-left font-light leading-tight tracking-wide ${isDarkMode ? 'text-white' : 'text-black'}`} style={{textShadow: isDarkMode ? '1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(255,255,255,0.8)'}}>
+                {subtitle}
+              </p>
+            )}
+            {children}
           </div>
         </div>
       )}

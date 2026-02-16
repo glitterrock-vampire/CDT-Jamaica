@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply bg-[var(--background)] text-[var(--foreground)] font-['Raleway'] font-normal;
+    @apply bg-[var(--background)] text-[var(--foreground)] font-sans font-normal text-lg;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
@@ -24,28 +24,13 @@
     @apply text-[var(--muted)];
   }
 
+  /* Clean heading styles - let inline classes control everything */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight text-gray-900 dark:text-gray-50;
-  }
-
-  h1 {
-    @apply text-4xl md:text-5xl font-black text-gray-900 dark:text-gray-50;
-  }
-
-  h2 {
-    @apply text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-gray-50;
-  }
-
-  h3 {
-    @apply text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-50;
-  }
-
-  h4 {
-    @apply text-xl md:text-2xl font-semibold text-gray-900 dark:text-gray-50;
+    @apply tracking-tight;
   }
 
   p, li, a {
-    @apply text-base font-normal leading-relaxed text-gray-700 dark:text-gray-100;
+    @apply text-lg font-normal leading-relaxed;
   }
 
   .prose {
@@ -55,6 +40,8 @@
   .prose h2, .prose h3, .prose h4 {
     @apply text-gray-900 dark:text-gray-50 mt-8 mb-4;
   }
+
+  /* Font classes removed - now using Avenir globally */
 }
 
 /* Custom scrollbar */
@@ -153,30 +140,37 @@ blockquote footer span {
   @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200;
 }
 
+/* Utility: hide scrollbars but keep scrolling behavior (used for performances strip, etc.) */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;            /* Chrome, Safari, Opera */
+}
+
 /* ============================================
    ALVIN AILEY DANCE THEATER STYLES
    ============================================ */
 
-/* Import Inter font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 /* Ailey Typography */
 .ailey-hero-title {
-  font-size: clamp(3rem, 8vw, 8rem);
+  font-size: clamp(3.5rem, 8vw, 9rem);
   line-height: 0.85;
-  font-weight: 700;
-  letter-spacing: -0.05em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  font-family: 'Inter', sans-serif;
+  font-family: "Adobe Caslon", "Playfair Display", "Crimson Text", "Lora", Georgia, serif;
   color: white !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .ailey-card-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 400;
   line-height: 1.2;
-  font-family: 'Inter', sans-serif;
+  font-family: "Adobe Caslon", "Playfair Display", "Crimson Text", "Lora", Georgia, serif;
 }
 
 /* Hero Section Gradient */
@@ -205,7 +199,7 @@ blockquote footer span {
 }
 
 .ailey-nav-link {
-  @apply text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors duration-200 tracking-wide;
+  @apply text-base font-medium text-gray-900 hover:text-gray-600 transition-colors duration-200 tracking-wide;
 }
 
 /* Ailey Footer */
@@ -438,7 +432,7 @@ blockquote footer span {
 
 .menu-item {
   margin: 1.5rem 0;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   position: relative;
   overflow: hidden;
@@ -478,7 +472,7 @@ blockquote footer span {
 
 @media (max-width: 600px) {
   .menu-item {
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin: 1rem 0;
   }
 }

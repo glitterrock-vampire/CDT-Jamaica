@@ -1,94 +1,63 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
+import { useTheme } from '../../context/ThemeContext';
 
 const RepertoireItem = ({ item }) => {
   const navigate = useNavigate();
+  const { isDarkMode } = useTheme();
   
   if (!item) return null;
   
   const { _id, title, choreographer, year, thumbnail, heroImage } = item;
   
-  // Handle both thumbnail and heroImage with proper fallbacks
+  // Format title as "Title (Year)"
+  const formattedTitle = year ? `${title} (${year})` : title;
+  
   const imageUrl = thumbnail?.asset?.url || heroImage?.asset?.url;
   const imageAlt = thumbnail?.alt || heroImage?.alt || title;
 
-  console.log('Rendering item:', { 
-    title, 
-    choreographer, 
-    year,
-    thumbnail: thumbnail?.asset?.url,
-    heroImage: heroImage?.asset?.url,
-    finalImageUrl: imageUrl
-  });
+  const borderColor = isDarkMode ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+  const cardBg = isDarkMode ? 'bg-neutral-900' : 'bg-white';
 
   const handleClick = () => {
+    console.log('RepertoireItem clicked:', { _id, title });
     if (_id) {
       navigate(`/dance/${_id}`);
+    } else {
+      console.error('RepertoireItem: No _id available for item:', item);
     }
   };
 
   return (
     <motion.div 
-      className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer group relative h-full flex flex-col border border-gray-100 dark:border-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-xl dark:shadow-gray-900/20"
+      className={`grid grid-rows-[1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
       onClick={handleClick}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-      whileHover={{ 
-        y: -5,
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-        transition: { duration: 0.2 }
-      }}
     >
-      <motion.div 
-        className="w-full aspect-video overflow-hidden"
-        whileHover={{ scale: 1.03 }}
-        transition={{ duration: 0.3 }}
-      >
+      <div className={`h-56 border ${borderColor} overflow-hidden`}>
         {imageUrl ? (
-          <div className="relative w-full h-full">
-            <motion.img
-              src={`${imageUrl}?w=600&h=${Math.floor(600 * (9/16))}&fit=crop&auto=format`}
-              alt={imageAlt}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              onError={(e) => {
-                console.error('Error loading image:', imageUrl);
-                e.target.style.display = 'none';
-                e.target.nextElementSibling.style.display = 'flex';
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 hidden items-center justify-center">
-              <span className="text-gray-400 dark:text-gray-500">Image not available</span>
-            </div>
-          </div>
+          <img
+            src={`${imageUrl}?w=800&h=600&fit=crop&auto=format`}
+            alt={imageAlt}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
         ) : (
-          <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-            <span className="text-gray-400 dark:text-gray-500">No image available</span>
+          <div className={`w-full h-full flex items-center justify-center ${mutedText} text-xs`}>
+            No Image
           </div>
         )}
-      </motion.div>
-      
-      <motion.div className="p-6 flex-1 flex flex-col">
-        <div className="flex items-baseline gap-3 mb-2">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
-            {title}
-          </h3>
-          {year && (
-            <span className="text-base font-medium text-gray-600 dark:text-gray-400">
-              ({year})
-            </span>
-          )}
-        </div>
-        {choreographer && (
-          <p className="text-base text-gray-700 dark:text-gray-300 mt-1 font-medium">
-          <span className="text-gray-900 dark:text-white font-semibold">{choreographer}</span>
-          </p>
-        )}
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <div className="text-lg font-bold uppercase mb-1 font-heading">{formattedTitle}</div>
+        <div className={`text-base font-semibold font-body ${mutedText}`}>{choreographer}</div>
       </motion.div>
     </motion.div>
   );

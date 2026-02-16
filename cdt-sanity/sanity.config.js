@@ -4,6 +4,10 @@ import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import repertoireItem from './cdt/schemaTypes/repertoireItem.js';
 import siteSettings from './cdt/schemaTypes/siteSettings';
+import performance from './cdt/schemaTypes/performance.js';
+import dancer from './cdt/schemaTypes/dancer.js';
+import boardMember from './cdt/schemaTypes/boardMember.js';
+import management from './cdt/schemaTypes/management.js';
 
 export default defineConfig({
   name: 'default',
@@ -19,7 +23,7 @@ export default defineConfig({
   ],
 
   schema: {
-    types: [repertoireItem, siteSettings],
+    types: [repertoireItem, siteSettings, performance, dancer, boardMember, management],
   },
 
   // CORS settings

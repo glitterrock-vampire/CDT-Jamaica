@@ -2,7 +2,7 @@ import React from 'react';
 
 const DetailSection = ({ title, children }) => (
   <div className="mb-6">
-    <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-1 mb-2">
+    <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-1 mb-2 font-heading">
       {title}
     </h3>
     <div className="text-gray-700">{children}</div>
@@ -30,7 +30,7 @@ const RepertoireDetail = ({ item, onClose }) => {
         <div className="p-6">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-3xl font-bold text-gray-800">{item.title}</h2>
+              <h2 className="text-3xl font-bold text-gray-800 font-heading">{item.title}</h2>
               <p className="text-xl text-gray-600">{item.composer}</p>
               {item.year && (
                 <p className="text-gray-500">{item.year}</p>

@@ -59,17 +59,16 @@ const NewsletterSubscription = ({ className = '' }) => {
 
   return (
     <div className={`${className}`}>
-      {/* <h3 className="text-lg font-medium mb-3">Subscribe to Our Newsletter</h3> */}
       <form onSubmit={handleSubmit} className="w-full max-w-md">
-        <div className={`flex rounded-full border ${isDarkMode ? 'border-gray-600' : 'border-gray-300'} overflow-hidden bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-gray-300 dark:focus-within:ring-gray-600`}>
+        <div className={`flex border border-black/10 dark:border-white/10 overflow-hidden bg-white dark:bg-neutral-900 shadow-[0_12px_30px_rgba(0,0,0,0.08)] focus-within:ring-2 focus-within:ring-orange-500/50`}>
             <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className={`flex-1 px-4 py-2.5 text-sm bg-transparent border-none focus:ring-0 focus:outline-none ${
+                className={`flex-1 px-4 py-3 text-sm bg-transparent border-none focus:ring-0 focus:outline-none ${
                     isDarkMode 
-                    ? 'text-gray-100 placeholder-gray-300' 
+                    ? 'text-gray-100 placeholder-gray-400' 
                     : 'text-gray-800 placeholder-gray-500'
                 }`}
                 required
@@ -79,12 +78,12 @@ const NewsletterSubscription = ({ className = '' }) => {
             type="submit"
             disabled={status === 'loading'}
             className={`
-              px-6 py-2.5 text-sm font-medium tracking-wide
-              transition-all duration-200
+              px-6 py-3 text-sm font-medium tracking-wide
+              transition-all duration-200 border-l border-black/10 dark:border-white/10
               ${
                 status === 'loading'
-                  ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-wait' 
-                  : 'bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100'
+                  ? 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-wait' 
+                  : 'bg-orange-500 text-white hover:bg-orange-600 dark:hover:bg-orange-400'
               }
               focus:outline-none
               disabled:opacity-70

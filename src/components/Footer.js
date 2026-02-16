@@ -44,10 +44,45 @@ const Footer = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-center sm:text-left">
               <div>
                 <ul className="space-y-2">
-                  <li><a href="/" className="hover:underline">Home</a></li>
-                  <li><a href="/repertoire" className="hover:underline">Repertoire</a></li>
-                  <li><a href="/about" className="hover:underline">About Us</a></li>
-                  <li><a href="/contact" className="hover:underline">Contact Us</a></li>
+                  <li><a href="/" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">Home</a></li>
+                  <li><a href="/about" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">The Company</a></li>
+                  <li><a href="/#school" className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">THE SCHOOL</a></li>
+                  <li><a href="/news" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0;}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">News + Press</a></li>
+                </ul>
+              </div>
+              <div>
+                <ul className="space-y-2">
+                  <li><a href="/contact" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0;}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">Contact</a></li>
+                  <li>
+                    <a
+                      href="https://bredsfoundation.org/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAOP5EBleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAadBWYsEy_yt9bdmCM5xe0lSlDf_G1MD1Qych57nJLXKKbywQ1QcOR1TO7YJPQ_aem_V7u0mQ6zISPvkV5ZJCXXrQ"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300"
+                    >
+                      Hurricane Melissa Relief
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.paypal.com/paypalme/cdtjamaica"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300"
+                    >
+                      Give
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://drive.google.com/file/d/1QFtkeI2cGyEXoaCnQoChasgnZ87Q6njT/view"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300"
+                    >
+                      Press Kit
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -55,7 +90,7 @@ const Footer = () => {
 
           {/* Newsletter & Social Media */}
           <div className="w-full max-w-md lg:w-96 mt-8 lg:mt-0 text-center lg:text-left">
-            <h3 className="text-lg font-semibold mb-4">Stay Connected</h3>
+            <h3 className="text-lg font-semibold mb-4 tracking-[0.08em] uppercase text-sm">Stay Connected</h3>
             
             {/* Newsletter Subscription */}
             <div className="mb-6 p-4 bg-white/5 rounded-lg">

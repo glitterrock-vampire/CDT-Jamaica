@@ -4,13 +4,13 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Default to dark mode, but respect user preference if saved
+    // Default to light mode, but respect user preference if saved
     const savedTheme = localStorage.getItem('darkMode');
     if (savedTheme !== null) {
       return JSON.parse(savedTheme);
     }
-    // Default to dark mode instead of system preference
-    return true;
+    // Default to light mode
+    return false;
   });
 
   // Toggle dark mode

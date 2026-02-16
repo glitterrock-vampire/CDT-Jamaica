@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import PageScrollReveal from './components/PageScrollReveal';
 import Home from './pages/Home';
 import Repertoire from './pages/Repertoire';
 import About from './pages/About';
 import DanceDetail from './pages/DanceDetail';
+import PerformanceDetail from './pages/PerformanceDetail';
+import VideoDetail from './pages/VideoDetail';
 import Contact from './pages/Contact';
+import Performances from './pages/Performances';
+import News from './pages/News';
 import { getSiteSettings } from './lib/siteSettings';
 
 function App() {
   const [siteSettings, setSiteSettings] = useState(null);
+  const location = useLocation();
 
   // Fetch site settings
   useEffect(() => {
@@ -25,6 +30,11 @@ function App() {
 
     fetchSiteSettings();
   }, []);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -57,10 +67,38 @@ function App() {
             </PageScrollReveal>
           </Layout>
         } />
+        <Route path="/performances" element={
+          <Layout>
+            <PageScrollReveal>
+              <Performances />
+            </PageScrollReveal>
+          </Layout>
+        } />
+        <Route path="/performance/:slug" element={
+          <Layout>
+            <PageScrollReveal>
+              <PerformanceDetail />
+            </PageScrollReveal>
+          </Layout>
+        } />
+        <Route path="/video/:slug" element={
+          <Layout>
+            <PageScrollReveal>
+              <VideoDetail />
+            </PageScrollReveal>
+          </Layout>
+        } />
         <Route path="/contact" element={
           <Layout>
             <PageScrollReveal>
               <Contact />
+            </PageScrollReveal>
+          </Layout>
+        } />
+        <Route path="/news" element={
+          <Layout>
+            <PageScrollReveal>
+              <News />
             </PageScrollReveal>
           </Layout>
         } />
