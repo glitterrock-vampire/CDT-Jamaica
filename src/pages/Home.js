@@ -335,29 +335,29 @@ const Home = () => {
         </div>
 
         {/* Content Overlay */}
-        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex items-center">
-          <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.2fr,1fr] items-center">
-            {/* Left Column - Performance Info */}
-            <motion.div 
-              className="space-y-8"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-center">
+          {/* Mobile: Top content - Date and Venue */}
+          <div className="md:hidden flex-shrink-0">
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
               <motion.div
-                className={`text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
+                className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 {featuredPerformance 
-                  ? <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
-                  : <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
+                  ? <span className="font-light tracking-tight text-3xl md:text-4xl lg:text-5xl">{formatHeroDate(featuredPerformance.date)}</span>
+                  : <span className="font-light tracking-tight text-3xl md:text-4xl lg:text-5xl">Date TBA</span>
                 }
               </motion.div>
               {featuredPerformance && (
                 <motion.div
-                  className={`text-6xl md:text-7xl lg:text-8xl font-semibold text-white`}
+                  className={`text-4xl md:text-5xl lg:text-6xl font-semibold text-white`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
@@ -365,9 +365,48 @@ const Home = () => {
                   {featuredPerformance.venue}
                 </motion.div>
               )}
+            </motion.div>
+          </div>
+
+          {/* Spacer for mobile - pushes content down */}
+          <div className="md:hidden flex-grow"></div>
+
+          {/* Desktop: Centered content OR Mobile: Bottom content */}
+          <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.2fr,1fr] items-center md:justify-center">
+            {/* Left Column - Performance Info */}
+            <motion.div 
+              className="space-y-8 md:text-center lg:text-left"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              {/* Desktop: Date and Venue */}
+              <div className="hidden md:block">
+                <motion.div
+                  className={`text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                >
+                  {featuredPerformance 
+                    ? <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
+                    : <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
+                  }
+                </motion.div>
+                {featuredPerformance && (
+                  <motion.div
+                    className={`text-6xl md:text-7xl lg:text-8xl font-semibold text-white`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  >
+                    {featuredPerformance.venue}
+                  </motion.div>
+                )}
+              </div>
               
               <motion.h1 
-                className="text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal tracking-tight text-white"
                 style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -377,7 +416,7 @@ const Home = () => {
               </motion.h1>
               
               <motion.p
-                className={`text-xl md:text-2xl max-w-2xl leading-relaxed text-white/90`}
+                className={`text-lg md:text-xl lg:text-2xl max-w-2xl leading-relaxed text-white/90 md:mx-auto lg:mx-0`}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
@@ -386,7 +425,7 @@ const Home = () => {
               </motion.p>
               
               <motion.div
-                className="flex flex-wrap gap-4"
+                className="flex flex-wrap gap-4 justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
@@ -395,7 +434,12 @@ const Home = () => {
               </motion.div>
             </motion.div>
 
+            {/* Right Column - Empty for mobile spacing, could add content later */}
+            <div className="hidden lg:block"></div>
           </div>
+
+          {/* Mobile: Additional bottom spacing */}
+          <div className="md:hidden h-8"></div>
         </div>
       </div>
 

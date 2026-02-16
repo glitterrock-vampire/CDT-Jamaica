@@ -267,7 +267,7 @@ const About = () => {
               >
                 {/* Tony Wilson Image */}
                 {management && management.length > 0 && (
-                  <div className="mb-6">
+                  <div className="mb-6 w-[320px] md:w-[360px] mx-auto md:mx-0">
                     <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} shadow-lg`}>
                       <div className="aspect-[4/5] overflow-hidden relative">
                         {management[0].headshot ? (
@@ -289,10 +289,10 @@ const About = () => {
                         )}
                       </div>
                       <div className="p-4 text-center">
-                        <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
+                        <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-black'} mb-1`}>
                           {management[0].name}
                         </h3>
-                        <p className={`text-sm font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
+                        <p className={`text-lg font-normal ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>
                           {management[0].title}
                         </p>
                       </div>
