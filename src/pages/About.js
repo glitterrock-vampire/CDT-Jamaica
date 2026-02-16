@@ -231,7 +231,7 @@ const About = () => {
 
               <div className={`space-y-6 leading-relaxed text-justify`}>
                 <motion.p 
-                  className={`text-2xl md:text-3xl ${textColor}`}
+                  className={`text-xl md:text-2xl ${textColor}`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
@@ -397,7 +397,6 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 'Assantewaa Alberts',
-                'Nneka Alvaranga',
                 'Nathan Campbell',
                 'Kishan Carnegie',
                 'Shamitha Chindepalli',
