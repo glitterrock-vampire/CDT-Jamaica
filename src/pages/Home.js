@@ -23,55 +23,6 @@ const Home = () => {
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [player, setPlayer] = useState(null);
 
-  // Scroll bounce effect for school section
-  useEffect(() => {
-    const schoolSection = document.getElementById('school');
-    if (!schoolSection) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Center the school section with bounce effect
-            const elementTop = entry.target.offsetTop;
-            const elementHeight = entry.target.offsetHeight;
-            const windowHeight = window.innerHeight;
-            const scrollTo = elementTop - (windowHeight / 2) + (elementHeight / 2);
-
-            window.scrollTo({
-              top: scrollTo,
-              behavior: 'smooth'
-            });
-
-            // Optional: Add a slight bounce effect
-            setTimeout(() => {
-              const bounceScroll = scrollTo - 20;
-              window.scrollTo({
-                top: bounceScroll,
-                behavior: 'smooth'
-              });
-
-              setTimeout(() => {
-                window.scrollTo({
-                  top: scrollTo,
-                  behavior: 'smooth'
-                });
-              }, 150);
-            }, 300);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '-100px 0px -100px 0px'
-      }
-    );
-
-    observer.observe(schoolSection);
-
-    return () => observer.disconnect();
-  }, []);
-
   // Force scroll to top when component mounts
   useEffect(() => {
     document.documentElement.scrollTop = 0;
