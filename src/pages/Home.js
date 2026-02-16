@@ -341,7 +341,7 @@ const Home = () => {
         {/* Content Overlay */}
         <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-center">
           {/* Mobile: Top content - Date and Venue */}
-          <div className="md:hidden flex-shrink-0 pt-20">
+          <div className="md:hidden flex-shrink-0 pt-24">
             <motion.div
               className="space-y-4"
               initial={{ opacity: 0, y: -20 }}
