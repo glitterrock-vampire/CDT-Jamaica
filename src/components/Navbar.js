@@ -157,6 +157,17 @@ const Navbar = () => {
           Company Dancers
         </Link>
         <Link
+          to="/repertoire"
+          onClick={() => setIsAboutDropdownOpen(false)}
+          className={`block px-4 py-3 text-base font-medium border-b border-black/10 dark:border-white/10 ${
+            location.pathname === '/repertoire'
+              ? 'bg-gray-100 dark:bg-green-950 text-gray-900 dark:text-green-400'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-green-950/50 hover:text-gray-900 dark:hover:text-green-400'
+          } transition-colors`}
+        >
+          Repertoire
+        </Link>
+        <Link
           to="/company#board"
           onClick={() => setIsAboutDropdownOpen(false)}
           className={`block px-4 py-3 text-base font-medium rounded-b-lg ${
@@ -383,6 +394,7 @@ const Navbar = () => {
           <ul className="menu-items">
             <li className="menu-item"><Link to="/" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">Home</Link></li>
             <li className="menu-item"><Link to="/about" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">The Company</Link></li>
+            <li className="menu-item"><Link to="/repertoire" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">Repertoire</Link></li>
             <li className="menu-item"><Link to="/about" onClick={() => {setIsMenuOpen(false); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="font-semibold tracking-[0.08em] uppercase text-sm">The School</Link></li>
             {/* <li className="menu-item"><Link to="/performances" onClick={() => setIsMenuOpen(false)}>Performances</Link></li> */}
             <li className="menu-item"><Link to="/news" onClick={() => {setIsMenuOpen(false); window.scrollTo(0, 0);}} className="font-semibold tracking-[0.08em] uppercase text-sm">News + Press</Link></li>

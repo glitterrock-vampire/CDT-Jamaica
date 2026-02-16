@@ -6,6 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { Hero } from '../components/Hero';
 import { getUpcomingPerformances, getFeaturedPerformance, getVideosByCategory, getAllVideos } from '../lib/performances';
 import { getSiteSettings, urlFor } from '../lib/sanity';
+import { getRepertoireItems } from '../lib/siteSettings';
 import Calendar from '../components/Calendar/Calendar';
 import TicketButton from '../components/TicketButton';
 
@@ -15,6 +16,7 @@ const Home = () => {
   const [upcomingPerformances, setUpcomingPerformances] = useState([]);
   const [featuredPerformance, setFeaturedPerformance] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [repertoire, setRepertoire] = useState([]);
   const [newsArchiveVideos, setNewsArchiveVideos] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(2);
   const [showFullCalendar, setShowFullCalendar] = useState(true);
@@ -162,15 +164,17 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [upcoming, featured, settings, allVideos] = await Promise.all([
+        const [upcoming, featured, settings, repertoireData, allVideos] = await Promise.all([
           getUpcomingPerformances(),
           getFeaturedPerformance(),
           getSiteSettings(),
+          getRepertoireItems(),
           getAllVideos() // Temporarily fetch all videos
         ]);
         setUpcomingPerformances(upcoming || []);
         setFeaturedPerformance(featured);
         setSiteSettings(settings);
+        setRepertoire(repertoireData || []);
         
         // Filter for newsArchive, videoLog, signals, and null category videos
         const newsVideos = allVideos.filter(video => 
@@ -337,7 +341,7 @@ const Home = () => {
         {/* Content Overlay */}
         <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-center">
           {/* Mobile: Top content - Date and Venue */}
-          <div className="md:hidden flex-shrink-0">
+          <div className="md:hidden flex-shrink-0 pt-20">
             <motion.div
               className="space-y-4"
               initial={{ opacity: 0, y: -20 }}
@@ -666,7 +670,107 @@ const Home = () => {
         </motion.section>
       )}
 
-        {/* SCHOOL / TRAINING */}
+      {/* REPERTOIRE PREVIEW */}
+      {repertoire.length > 0 && (
+        <motion.section
+          className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col gap-8">
+              <motion.div
+                className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.42 }}
+              >
+                <div>
+                  <div className="text-2xl md:text-3xl uppercase">REPERTOIRE</div>
+                </div>
+                <motion.button
+                  type="button"
+                  className={`text-sm tracking-[0.12em] uppercase underline-offset-2 hover:underline ${mutedText} inline-block`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.46 }}
+                >
+                  <Link to="/repertoire">View full repertoire →</Link>
+                </motion.button>
+              </motion.div>
+
+              <div className="grid gap-5 md:grid-cols-3 auto-rows-fr">
+                {repertoire.slice(0, 3).map((item, index) => {
+                  // Format title as "Title (Year)"
+                  const formattedTitle = item.year ? `${item.title} (${item.year})` : item.title;
+
+                  // Try multiple image field approaches
+                  let imageUrl = null;
+
+                  // Try thumbnail first (direct URL)
+                  if (item.thumbnail?.url) {
+                    imageUrl = item.thumbnail.url;
+                  }
+                  // Try heroImage (direct URL)
+                  else if (item.heroImage?.url) {
+                    imageUrl = item.heroImage.url;
+                  }
+                  // Try image field (if it exists)
+                  else if (item.image?.url) {
+                    imageUrl = item.image.url;
+                  }
+
+                  const imageAlt = item.thumbnail?.alt || item.heroImage?.alt || item.image?.alt || item.title;
+
+                  const handleClick = () => {
+                    if (item._id) {
+                      navigate(`/dance/${item.slug?.current || item._id}`);
+                    } else {
+                      navigate('/repertoire');
+                    }
+                  };
+
+                  return (
+                    <motion.div
+                      key={item._id}
+                      className={`grid grid-rows-[1fr,auto] gap-3 p-3 border ${borderColor} ${cardBg} cursor-pointer`}
+                      onClick={handleClick}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                    >
+                      <div className={`h-56 border ${borderColor} overflow-hidden`}>
+                        {imageUrl ? (
+                          <img
+                            src={`${imageUrl}?w=800&h=600&fit=crop&auto=format`}
+                            alt={imageAlt}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className={`w-full h-full flex items-center justify-center ${mutedText} text-xs`}>
+                            No Image
+                          </div>
+                        )}
+                      </div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.55 + index * 0.1 }}
+                      >
+                        <div className="text-lg font-bold uppercase mb-1 font-heading">{formattedTitle}</div>
+                        <div className={`text-base font-semibold font-body ${mutedText}`}>{item.choreographer}</div>
+                      </motion.div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </motion.section>
+      )}
+
+      {/* SCHOOL / TRAINING */}
         <motion.section
           id="school"
           className={`py-10 md:py-14 border-b ${borderColor} ${isDarkMode ? 'bg-black' : 'bg-white'}`}
