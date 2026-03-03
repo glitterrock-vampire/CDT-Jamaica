@@ -57,7 +57,7 @@ export const getPerformances = async () => {
 
 export const getUpcomingPerformances = async () => {
   const query = `
-    *[_type == "performance"] | order(date asc) {
+    *[_type == "performance" && date >= now()] | order(date asc) {
       _id,
       title,
       company,
