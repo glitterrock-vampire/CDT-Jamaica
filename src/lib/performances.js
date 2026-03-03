@@ -56,10 +56,8 @@ export const getPerformances = async () => {
 };
 
 export const getUpcomingPerformances = async () => {
-  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-  
   const query = `
-    *[_type == "performance" && date >= $today] | order(date asc) {
+    *[_type == "performance"] | order(date asc) {
       _id,
       title,
       company,
@@ -86,7 +84,7 @@ export const getUpcomingPerformances = async () => {
   `;
   
   try {
-    const performances = await client.fetch(query, { today });
+    const performances = await client.fetch(query);
     // Fix timezone issues for each performance
     return performances.map(performance => ({
       ...performance,

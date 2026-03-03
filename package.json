@@ -55,6 +55,7 @@
     "dancers:update-names": "node scripts/cleanup-dancers.js --update-names",
     "dancers:cleanup": "node scripts/cleanup-dancers.js --delete"
   },
+  "proxy": "https://sbvvl9vs.apicdn.sanity.io",
   "eslintConfig": {
     "extends": [
       "react-app",

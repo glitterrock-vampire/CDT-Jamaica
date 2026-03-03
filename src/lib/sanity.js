@@ -6,7 +6,7 @@ const config = {
   projectId: process.env.REACT_APP_SANITY_PROJECT_ID || 'sbvvl9vs',
   dataset: process.env.REACT_APP_SANITY_DATASET || 'production',
   apiVersion: '2023-05-03',
-  useCdn: true,
+  useCdn: process.env.REACT_APP_SANITY_USE_CDN === 'true', // Respect environment variable
   ignoreBrowserTokenWarning: true,
 };
 
