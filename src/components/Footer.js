@@ -41,7 +41,7 @@ const Footer = () => {
             </div>
 
             {/* Navigation */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-center sm:text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-left">
               <div>
                 <ul className="space-y-2">
                   <li><a href="/" onClick={() => {document.documentElement.scrollTop = 0; document.body.scrollTop = 0; setTimeout(() => window.scrollTo(0, 0), 10);}} className="hover:underline font-semibold tracking-[0.08em] uppercase text-sm">Home</a></li>
