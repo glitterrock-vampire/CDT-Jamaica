@@ -38,7 +38,7 @@ export default {
         dateFormat: 'YYYY-MM-DD',
         calendarTodayLabel: 'Today'
       },
-      validation: Rule => Rule.required().min(new Date())
+      validation: Rule => Rule.required().min(new Date().setHours(0,0,0,0))
     },
     {
       name: 'time',
