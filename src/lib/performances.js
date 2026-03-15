@@ -94,25 +94,25 @@ export const getUpcomingPerformances = async () => {
     // Hardcoded March 14th performance - always include today
     const march14Performance = {
       _id: 'march14-2026-hardcoded',
-      title: 'Caribbean Dance Showcase',
-      company: 'CDT Senior Company',
+      title: 'STREAMS',
+      company: 'CDT',
       date: new Date(2026, 2, 14), // March 14, 2026
       time: '7:00 PM',
-      venue: 'Phillip Sherlock Center',
-      location: 'Kingston, Jamaica',
+      venue: 'Miramar Cultural Center',
+      location: 'Miramar, Florida',
       image: {
         asset: {
           _id: 'image-march14',
           url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop'
         },
-        alt: 'Caribbean Dance Showcase Performance'
+        alt: 'STREAMS Performance'
       },
-      description: 'An electrifying evening of contemporary Caribbean dance featuring original choreography that celebrates our rich cultural heritage while pushing artistic boundaries.',
-      category: 'Main Stage',
+      description: 'A contemporary Caribbean dance performance honouring the legacy of Mr. Tony Wilson, OD, exploring movement, memory, and identity.',
+      category: 'International',
       ticketUrl: 'https://www.miramarculturalcenter.org/Events-directory/Streams',
       learnMoreUrl: '/performances',
       isUpcoming: true,
-      slug: { current: 'caribbean-dance-showcase-march-14' }
+      slug: { current: 'streams-march-14' }
     };
 
     // Combine hardcoded performance with Sanity performances, remove duplicates, and sort
@@ -127,25 +127,25 @@ export const getUpcomingPerformances = async () => {
     // Return just the hardcoded performance if Sanity fails
     return [{
       _id: 'march14-2026-hardcoded',
-      title: 'Caribbean Dance Showcase',
-      company: 'CDT Senior Company',
+      title: 'STREAMS',
+      company: 'CDT',
       date: new Date(2026, 2, 14),
       time: '7:00 PM',
-      venue: 'Phillip Sherlock Center',
-      location: 'Kingston, Jamaica',
+      venue: 'Miramar Cultural Center',
+      location: 'Miramar, Florida',
       image: {
         asset: {
           _id: 'image-march14',
           url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop'
         },
-        alt: 'Caribbean Dance Showcase Performance'
+        alt: 'STREAMS Performance'
       },
-      description: 'An electrifying evening of contemporary Caribbean dance featuring original choreography that celebrates our rich cultural heritage while pushing artistic boundaries.',
-      category: 'Main Stage',
+      description: 'A contemporary Caribbean dance performance honouring the legacy of Mr. Tony Wilson, OD, exploring movement, memory, and identity.',
+      category: 'International',
       ticketUrl: 'https://www.miramarculturalcenter.org/Events-directory/Streams',
       learnMoreUrl: '/performances',
       isUpcoming: true,
-      slug: { current: 'caribbean-dance-showcase-march-14' }
+      slug: { current: 'streams-march-14' }
     }];
   }
 };
@@ -154,13 +154,13 @@ export const getFeaturedPerformance = async () => {
   // Always return hardcoded March 14th performance for today
   const march14Featured = {
     _id: 'march14-2026-featured',
-    title: 'Caribbean Dance Showcase',
-    slug: { current: 'caribbean-dance-showcase-march-14' },
+    title: 'STREAMS',
+    slug: { current: 'streams-march-14' },
     date: new Date(2026, 2, 14), // March 14, 2026
     time: '7:00 PM',
-    venue: 'Phillip Sherlock Center',
-    location: 'Kingston, Jamaica',
-    description: 'An electrifying evening of contemporary Caribbean dance featuring original choreography that celebrates our rich cultural heritage while pushing artistic boundaries.',
+    venue: 'Miramar Cultural Center',
+    location: 'Miramar, Florida',
+    description: 'A contemporary Caribbean dance performance honouring the legacy of Mr. Tony Wilson, OD, exploring movement, memory, and identity.',
     learnMoreUrl: '/performances',
     isFeatured: true,
     image: {
@@ -168,7 +168,7 @@ export const getFeaturedPerformance = async () => {
         _id: 'hero-image-march14',
         url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&h=1080&fit=crop'
       },
-      alt: 'Caribbean Dance Showcase Performance'
+      alt: 'STREAMS Performance'
     }
   };
 
