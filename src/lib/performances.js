@@ -151,7 +151,7 @@ export const getUpcomingPerformances = async () => {
 };
 
 export const getFeaturedPerformance = async () => {
-  // Hardcoded March 14th performance for hero section
+  // Always return hardcoded March 14th performance for today
   const march14Featured = {
     _id: 'march14-2026-featured',
     title: 'Caribbean Dance Showcase',
@@ -172,45 +172,7 @@ export const getFeaturedPerformance = async () => {
     }
   };
 
-  // Try to get featured from Sanity, but fallback to hardcoded March 14th
-  const query = `
-    *[_type == "performance" && isFeatured == true] | order(date asc) [0] {
-      _id,
-      title,
-      slug {
-        current
-      },
-      date,
-      time,
-      venue,
-      location,
-      description,
-      learnMoreUrl,
-      isFeatured,
-      image {
-        asset-> {
-          _id,
-          url
-        },
-        alt
-      }
-    }
-  `;
-  
-  try {
-    const performance = await client.fetch(query);
-    // Fix timezone issue for the performance
-    if (performance) {
-      performance.date = fixSanityDate(performance.date);
-      return performance;
-    }
-    // Fallback to hardcoded March 14th performance
-    return march14Featured;
-  } catch (error) {
-    console.error('Error fetching featured performance:', error);
-    // Return hardcoded March 14th performance as fallback
-    return march14Featured;
-  }
+  return march14Featured;
 };
 
 export const getPerformanceBySlug = async (slug) => {
