@@ -86,93 +86,52 @@ export const getUpcomingPerformances = async () => {
   try {
     const performances = await client.fetch(query);
     // Fix timezone issues for each performance
-    const fixedPerformances = performances.map(performance => ({
+    return performances.map(performance => ({
       ...performance,
       date: fixSanityDate(performance.date)
     }));
-
-    // Hardcoded March 14th performance - always include today
-    const march14Performance = {
-      _id: 'march14-2026-hardcoded',
-      title: 'STREAMS',
-      company: 'CDT',
-      date: new Date(2026, 2, 14), // March 14, 2026
-      time: '7:00 PM',
-      venue: 'Miramar Cultural Center',
-      location: 'Miramar, Florida',
-      image: {
-        asset: {
-          _id: 'image-march14',
-          url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop'
-        },
-        alt: 'STREAMS Performance'
-      },
-      description: 'A contemporary Caribbean dance performance honouring the legacy of Mr. Tony Wilson, OD, exploring movement, memory, and identity.',
-      category: 'International',
-      ticketUrl: 'https://www.miramarculturalcenter.org/Events-directory/Streams',
-      learnMoreUrl: '/performances',
-      isUpcoming: true,
-      slug: { current: 'streams-march-14' }
-    };
-
-    // Combine hardcoded performance with Sanity performances, remove duplicates, and sort
-    const allPerformances = [march14Performance, ...fixedPerformances];
-    const uniquePerformances = allPerformances.filter((perf, index, self) => 
-      index === self.findIndex(p => p._id === perf._id)
-    );
-    
-    return uniquePerformances.sort((a, b) => new Date(a.date) - new Date(b.date));
   } catch (error) {
     console.error('Error fetching upcoming performances:', error);
-    // Return just the hardcoded performance if Sanity fails
-    return [{
-      _id: 'march14-2026-hardcoded',
-      title: 'STREAMS',
-      company: 'CDT',
-      date: new Date(2026, 2, 14),
-      time: '7:00 PM',
-      venue: 'Miramar Cultural Center',
-      location: 'Miramar, Florida',
-      image: {
-        asset: {
-          _id: 'image-march14',
-          url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop'
-        },
-        alt: 'STREAMS Performance'
-      },
-      description: 'A contemporary Caribbean dance performance honouring the legacy of Mr. Tony Wilson, OD, exploring movement, memory, and identity.',
-      category: 'International',
-      ticketUrl: 'https://www.miramarculturalcenter.org/Events-directory/Streams',
-      learnMoreUrl: '/performances',
-      isUpcoming: true,
-      slug: { current: 'streams-march-14' }
-    }];
+    return [];
   }
 };
 
 export const getFeaturedPerformance = async () => {
-  // Always return hardcoded March 14th performance for today
-  const march14Featured = {
-    _id: 'march14-2026-featured',
-    title: 'STREAMS',
-    slug: { current: 'streams-march-14' },
-    date: new Date(2026, 2, 14), // March 14, 2026
-    time: '7:00 PM',
-    venue: 'Miramar Cultural Center',
-    location: 'Miramar, Florida',
-    description: 'A contemporary Caribbean dance performance honouring the legacy of Mr. Tony Wilson, OD, exploring movement, memory, and identity.',
-    learnMoreUrl: '/performances',
-    isFeatured: true,
-    image: {
-      asset: {
-        _id: 'hero-image-march14',
-        url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&h=1080&fit=crop'
+  const query = `
+    *[_type == "performance" && isFeatured == true] | order(date asc) [0] {
+      _id,
+      title,
+      slug {
+        current
       },
-      alt: 'STREAMS Performance'
+      date,
+      time,
+      venue,
+      location,
+      description,
+      learnMoreUrl,
+      isFeatured,
+      image {
+        asset-> {
+          _id,
+          url
+        },
+        alt
+      }
     }
-  };
-
-  return march14Featured;
+  `;
+  
+  try {
+    const performance = await client.fetch(query);
+    // Fix timezone issue for the performance
+    if (performance) {
+      performance.date = fixSanityDate(performance.date);
+    }
+    return performance;
+  } catch (error) {
+    console.error('Error fetching featured performance:', error);
+    return null;
+  }
 };
 
 export const getPerformanceBySlug = async (slug) => {
