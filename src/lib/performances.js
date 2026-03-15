@@ -86,17 +86,93 @@ export const getUpcomingPerformances = async () => {
   try {
     const performances = await client.fetch(query);
     // Fix timezone issues for each performance
-    return performances.map(performance => ({
+    const fixedPerformances = performances.map(performance => ({
       ...performance,
       date: fixSanityDate(performance.date)
     }));
+
+    // Hardcoded March 14th performance - always include today
+    const march14Performance = {
+      _id: 'march14-2026-hardcoded',
+      title: 'Caribbean Dance Showcase',
+      company: 'CDT Senior Company',
+      date: new Date(2026, 2, 14), // March 14, 2026
+      time: '7:00 PM',
+      venue: 'Phillip Sherlock Center',
+      location: 'Kingston, Jamaica',
+      image: {
+        asset: {
+          _id: 'image-march14',
+          url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop'
+        },
+        alt: 'Caribbean Dance Showcase Performance'
+      },
+      description: 'An electrifying evening of contemporary Caribbean dance featuring original choreography that celebrates our rich cultural heritage while pushing artistic boundaries.',
+      category: 'Main Stage',
+      ticketUrl: 'https://www.miramarculturalcenter.org/Events-directory/Streams',
+      learnMoreUrl: '/performances',
+      isUpcoming: true,
+      slug: { current: 'caribbean-dance-showcase-march-14' }
+    };
+
+    // Combine hardcoded performance with Sanity performances, remove duplicates, and sort
+    const allPerformances = [march14Performance, ...fixedPerformances];
+    const uniquePerformances = allPerformances.filter((perf, index, self) => 
+      index === self.findIndex(p => p._id === perf._id)
+    );
+    
+    return uniquePerformances.sort((a, b) => new Date(a.date) - new Date(b.date));
   } catch (error) {
     console.error('Error fetching upcoming performances:', error);
-    return [];
+    // Return just the hardcoded performance if Sanity fails
+    return [{
+      _id: 'march14-2026-hardcoded',
+      title: 'Caribbean Dance Showcase',
+      company: 'CDT Senior Company',
+      date: new Date(2026, 2, 14),
+      time: '7:00 PM',
+      venue: 'Phillip Sherlock Center',
+      location: 'Kingston, Jamaica',
+      image: {
+        asset: {
+          _id: 'image-march14',
+          url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop'
+        },
+        alt: 'Caribbean Dance Showcase Performance'
+      },
+      description: 'An electrifying evening of contemporary Caribbean dance featuring original choreography that celebrates our rich cultural heritage while pushing artistic boundaries.',
+      category: 'Main Stage',
+      ticketUrl: 'https://www.miramarculturalcenter.org/Events-directory/Streams',
+      learnMoreUrl: '/performances',
+      isUpcoming: true,
+      slug: { current: 'caribbean-dance-showcase-march-14' }
+    }];
   }
 };
 
 export const getFeaturedPerformance = async () => {
+  // Hardcoded March 14th performance for hero section
+  const march14Featured = {
+    _id: 'march14-2026-featured',
+    title: 'Caribbean Dance Showcase',
+    slug: { current: 'caribbean-dance-showcase-march-14' },
+    date: new Date(2026, 2, 14), // March 14, 2026
+    time: '7:00 PM',
+    venue: 'Phillip Sherlock Center',
+    location: 'Kingston, Jamaica',
+    description: 'An electrifying evening of contemporary Caribbean dance featuring original choreography that celebrates our rich cultural heritage while pushing artistic boundaries.',
+    learnMoreUrl: '/performances',
+    isFeatured: true,
+    image: {
+      asset: {
+        _id: 'hero-image-march14',
+        url: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&h=1080&fit=crop'
+      },
+      alt: 'Caribbean Dance Showcase Performance'
+    }
+  };
+
+  // Try to get featured from Sanity, but fallback to hardcoded March 14th
   const query = `
     *[_type == "performance" && isFeatured == true] | order(date asc) [0] {
       _id,
@@ -126,11 +202,14 @@ export const getFeaturedPerformance = async () => {
     // Fix timezone issue for the performance
     if (performance) {
       performance.date = fixSanityDate(performance.date);
+      return performance;
     }
-    return performance;
+    // Fallback to hardcoded March 14th performance
+    return march14Featured;
   } catch (error) {
     console.error('Error fetching featured performance:', error);
-    return null;
+    // Return hardcoded March 14th performance as fallback
+    return march14Featured;
   }
 };
 
