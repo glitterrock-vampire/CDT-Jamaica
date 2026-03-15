@@ -98,7 +98,7 @@ export const getUpcomingPerformances = async () => {
 
 export const getFeaturedPerformance = async () => {
   const query = `
-    *[_type == "performance" && isFeatured == true] | order(date asc) [0] {
+    *[_type == "performance" && isFeatured == true && date > now()] | order(date asc) [0] {
       _id,
       title,
       slug {
