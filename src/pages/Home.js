@@ -310,17 +310,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <motion.div
-                className={`text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-              >
-                {featuredPerformance 
-                  ? <span className="font-light tracking-tight text-3xl md:text-4xl lg:text-5xl">{formatHeroDate(featuredPerformance.date)}</span>
-                  : <span className="font-light tracking-tight text-3xl md:text-4xl lg:text-5xl">Date TBA</span>
-                }
-              </motion.div>
+              {/* Mobile: Date TBA removed */}
               {featuredPerformance && (
                 <motion.div
                   className={`text-4xl md:text-5xl lg:text-6xl font-semibold text-white`}
@@ -348,17 +338,7 @@ const Home = () => {
             >
               {/* Desktop: Date and Venue */}
               <div className="hidden md:block">
-                <motion.div
-                  className={`text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                >
-                  {featuredPerformance 
-                    ? <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">{formatHeroDate(featuredPerformance.date)}</span>
-                    : <span className="font-light tracking-tight text-4xl md:text-5xl lg:text-6xl">Date TBA</span>
-                  }
-                </motion.div>
+                {/* Desktop: Date TBA removed */}
                 {featuredPerformance && (
                   <motion.div
                     className={`text-6xl md:text-7xl lg:text-8xl font-semibold text-white`}
@@ -371,33 +351,7 @@ const Home = () => {
                 )}
               </div>
               
-              <motion.h1 
-                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal tracking-tight text-white"
-                style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                CDT
-              </motion.h1>
-              
-              <motion.p
-                className={`text-lg md:text-xl lg:text-2xl max-w-2xl leading-relaxed text-white/90 md:mx-auto lg:mx-0`}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.35 }}
-              >
-                Contemporary Caribbean Dance Theater
-              </motion.p>
-              
-              <motion.div
-                className="flex flex-wrap gap-4 justify-center lg:justify-start"
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                {/* Ticket button removed - keeping just Date TBA and hero image */}
-              </motion.div>
+              {/* All text removed - only hero video/image remains */}
             </motion.div>
 
             {/* Right Column - Empty for mobile spacing, could add content later */}
