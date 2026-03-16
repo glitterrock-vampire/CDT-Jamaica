@@ -378,7 +378,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {featuredPerformance ? featuredPerformance.title : 'Featured Performance'}
+                CDT
               </motion.h1>
               
               <motion.p
@@ -387,7 +387,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
               >
-                {featuredPerformance?.description || 'CDT presents exceptional contemporary Caribbean dance performances that honor our cultural heritage while exploring movement, memory, and identity through expressive choreography.'}
+                Contemporary Caribbean Dance Theater
               </motion.p>
               
               <motion.div
@@ -396,7 +396,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <TicketButton href={featuredPerformance?.ticketUrl || "https://www.miramarculturalcenter.org/Events-directory/Streams"} />
+                {/* Ticket button removed - keeping just Date TBA and hero image */}
               </motion.div>
             </motion.div>
 
