@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,7 @@ const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(2);
   const [showFullCalendar, setShowFullCalendar] = useState(true);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const [player, setPlayer] = useState(null);
+  const videoRef = useRef(null);
 
   // Force scroll to top when component mounts
   useEffect(() => {
@@ -74,53 +74,19 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Load YouTube IFrame API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    // This function creates an <iframe> (and YouTube player) after the API code downloads.
-    window.onYouTubeIframeAPIReady = () => {
-      const ytPlayer = new window.YT.Player('hero-video', {
-        videoId: 'zby-l0-XkBc',
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          loop: 1,
-          playlist: 'zby-l0-XkBc',
-          controls: 0,
-          showinfo: 0,
-          rel: 0,
-          modestbranding: 1,
-          autohide: 1,
-          disablekb: 1,
-          enablejsapi: 1,
-          origin: window.location.origin
-        },
-        events: {
-          onReady: (event) => {
-            setPlayer(event.target);
-            event.target.playVideo();
-          }
-        }
+    // Auto-play local video when loaded
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch(err => {
+        console.log('Autoplay blocked:', err);
       });
-    };
-
-    return () => {
-      if (window.onYouTubeIframeAPIReady) {
-        delete window.onYouTubeIframeAPIReady;
-      }
-    };
+    }
   }, []);
 
   const toggleMute = () => {
-    if (player) {
-      if (isVideoMuted) {
-        player.unMute();
-      } else {
-        player.mute();
-      }
+    const video = videoRef.current;
+    if (video) {
+      video.muted = !isVideoMuted;
       setIsVideoMuted(!isVideoMuted);
     }
   };
@@ -275,9 +241,19 @@ const Home = () => {
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section with Video Background */}
       <div className={`relative w-full min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} overflow-hidden`}>
-        {/* Video Background - YouTube Video */}
+        {/* Video Background - Local Video */}
         <div className="absolute inset-0 z-0">
-          <div id="hero-video" className="w-full h-full" />
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            src="/videos/hero-bg.mp4"
+            onError={(e) => console.error('Video failed to load:', e)}
+            onLoadedData={() => console.log('Video loaded successfully')}
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
           
           {/* Mute/Unmute Button */}
@@ -301,7 +277,7 @@ const Home = () => {
         </div>
 
         {/* Content Overlay */}
-        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-center">
+        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-end md:pb-32">
           {/* Mobile: Top content - Date and Venue */}
           <div className="md:hidden flex-shrink-0 pt-24">
             <motion.div
@@ -331,30 +307,43 @@ const Home = () => {
           <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.2fr,1fr] items-center md:justify-center">
             {/* Left Column - Performance Info */}
             <motion.div 
-              className="space-y-8 md:text-center lg:text-left"
+              className="space-y-6 md:text-center lg:text-left"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              {/* Desktop: Date and Venue */}
-              <div className="hidden md:block">
-                {/* Desktop: Date TBA removed */}
-                {featuredPerformance && (
-                  <motion.div
-                    className={`text-6xl md:text-7xl lg:text-8xl font-semibold text-white`}
+              {/* Show next upcoming performance details */}
+              {upcomingPerformances.length > 0 && (
+                <>
+                  <motion.h1
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                  >
+                    {upcomingPerformances[0].title}
+                  </motion.h1>
+                  <motion.p
+                    className="text-lg md:text-xl text-white/90 max-w-xl"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
                   >
-                    {featuredPerformance.venue}
+                    {upcomingPerformances[0].description}
+                  </motion.p>
+                  <motion.div
+                    className="text-sm text-white/70 tracking-wider uppercase"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                  >
+                    {upcomingPerformances[0].venue} • {formatHeroDate(upcomingPerformances[0].date)}
                   </motion.div>
-                )}
-              </div>
-              
-              {/* All text removed - only hero video/image remains */}
+                </>
+              )}
             </motion.div>
 
-            {/* Right Column - Empty for mobile spacing, could add content later */}
+            {/* Right Column - Empty */}
             <div className="hidden lg:block"></div>
           </div>
 
