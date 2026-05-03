@@ -301,7 +301,7 @@ const Home = () => {
         </div>
 
         {/* Content Overlay */}
-        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-end md:pb-32">
+        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-start md:pt-32">
           {/* Mobile: Top content - Date and Venue */}
           <div className="md:hidden flex-shrink-0 pt-24">
             <motion.div
