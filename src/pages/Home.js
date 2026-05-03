@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,7 @@ const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(2);
   const [showFullCalendar, setShowFullCalendar] = useState(true);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const videoRef = useRef(null);
+  const [player, setPlayer] = useState(null);
 
   // Force scroll to top when component mounts
   useEffect(() => {
@@ -74,19 +74,53 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Auto-play local video when loaded
-    const video = videoRef.current;
-    if (video) {
-      video.play().catch(err => {
-        console.log('Autoplay blocked:', err);
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // This function creates an <iframe> (and YouTube player) after the API code downloads.
+    window.onYouTubeIframeAPIReady = () => {
+      const ytPlayer = new window.YT.Player('hero-video', {
+        videoId: 'quJM3yOP6t4',
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          loop: 1,
+          playlist: 'quJM3yOP6t4',
+          controls: 0,
+          showinfo: 0,
+          rel: 0,
+          modestbranding: 1,
+          autohide: 1,
+          disablekb: 1,
+          enablejsapi: 1,
+          origin: window.location.origin
+        },
+        events: {
+          onReady: (event) => {
+            setPlayer(event.target);
+            event.target.playVideo();
+          }
+        }
       });
-    }
+    };
+
+    return () => {
+      if (window.onYouTubeIframeAPIReady) {
+        delete window.onYouTubeIframeAPIReady;
+      }
+    };
   }, []);
 
   const toggleMute = () => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = !isVideoMuted;
+    if (player) {
+      if (isVideoMuted) {
+        player.unMute();
+      } else {
+        player.mute();
+      }
       setIsVideoMuted(!isVideoMuted);
     }
   };
@@ -241,19 +275,9 @@ const Home = () => {
     <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Hero Section with Video Background */}
       <div className={`relative w-full min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} overflow-hidden`}>
-        {/* Video Background - Local Video */}
+        {/* Video Background - YouTube Video */}
         <div className="absolute inset-0 z-0">
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            src="/videos/hero-bg.mp4"
-            onError={(e) => console.error('Video failed to load:', e)}
-            onLoadedData={() => console.log('Video loaded successfully')}
-          />
+          <div id="hero-video" className="w-full h-full" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
           
           {/* Mute/Unmute Button */}
