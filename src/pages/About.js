@@ -219,55 +219,20 @@ const About = () => {
       </motion.div>
 
       {/* THE COMPANY section */}
-      <section id="the-company" className="py-16 md:py-24">
+      <section id="the-company" className="pt-4 pb-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
-            {/* Left Column - Title and Content */}
-            <div className="md:col-span-8">
-              <div className="text-left mb-8">
-                <div className={`text-sm tracking-[0.12em] uppercase ${mutedText} mb-2`}>About</div>
-                <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>THE COMPANY</h2>
-              </div>
-
-              <div className={`space-y-6 leading-relaxed text-justify`}>
-                <motion.p 
-                  className={`text-xl md:text-2xl ${textColor}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
-                </motion.p>
-                <motion.p 
-                  className={`text-lg ${textColor}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  CDT Jamaica is a legacy company formed to honour the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to Jamaican stage and beyond.
-                </motion.p>
-                <motion.p 
-                  className={`text-lg ${textColor}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and <span className="italic text-orange-500">to di worl!</span>
-                </motion.p>
-              </div>
-            </div>
-
-            {/* Right Column - Founder Image */}
-            <div className="md:col-span-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-16 items-start">
+            {/* Image Column - Shows first on mobile */}
+            <div className="md:col-span-4 order-1 md:order-2">
               <motion.div
-                className="sticky top-24"
+                className="md:sticky md:top-24"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 {/* Tony Wilson Image */}
                 {management && management.length > 0 && (
-                  <div className="mb-6 w-[320px] md:w-[360px] mx-auto md:mx-0">
+                  <div className="w-[320px] md:w-[360px] mx-auto md:mx-0 md:mb-6">
                     <div className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-white'} shadow-lg`}>
                       <div className="aspect-[4/5] overflow-hidden relative">
                         {management[0].headshot ? (
@@ -300,6 +265,41 @@ const About = () => {
                   </div>
                 )}
               </motion.div>
+            </div>
+
+            {/* Text Column - Shows second on mobile */}
+            <div className="md:col-span-8 order-2 md:order-1">
+              <div className="text-left mb-8">
+                <div className={`text-sm tracking-[0.12em] uppercase ${mutedText} mb-2`}>About</div>
+                <h2 className={`text-2xl md:text-3xl uppercase ${textColor}`}>THE COMPANY</h2>
+              </div>
+
+              <div className={`space-y-6 leading-relaxed text-justify`}>
+                <motion.p 
+                  className={`text-xl md:text-2xl ${textColor}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  Founded by Mr. Tony Wilson, OD in 1988 in Jamaica, The Company Dance Theatre rose to national acclaim. With an eclectic repertory of modern, contemporary and Jamaican-styled works, The Company Dance Theatre performed in Jamaica, wider Caribbean, and North America.
+                </motion.p>
+                <motion.p 
+                  className={`text-lg ${textColor}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  CDT Jamaica is a legacy company formed to honour the late Mr. Tony Wilson, OD. It is headed by four alumni of The Company Dance Theatre: Dr. Sade Bully-Bell, Artistic Director, CDT; Renée I. McDonald, Associate Artistic Director, CDT; Steven Cornwall, Artistic Director, The CDT School; and Colin Blackwood, Executive Director, CDT and The CDT School. CDT's purpose is to continue Mr. Tony Wilson's legacy of bringing dynamic, highly technical, cutting-edge modern dance to Jamaican stage and beyond.
+                </motion.p>
+                <motion.p 
+                  className={`text-lg ${textColor}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                  Our mission is to further the pioneering work of Mr. Tony Wilson, OD and his contribution to Jamaican arts and culture by continuing to provide modern dance-focused training, inspiring performances, and community outreach in Jamaica and <span className="italic text-orange-500">to di worl!</span>
+                </motion.p>
+              </div>
             </div>
           </div>
         </div>

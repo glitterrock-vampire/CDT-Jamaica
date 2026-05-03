@@ -278,6 +278,8 @@ const Home = () => {
         {/* Video Background - YouTube Video */}
         <div className="absolute inset-0 z-0">
           <div id="hero-video" className="w-full h-full" />
+          {/* Overlay to hide YouTube title */}
+          <div className="absolute top-0 left-0 right-0 h-16 bg-black z-10"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
           
           {/* Mute/Unmute Button */}
@@ -331,7 +333,7 @@ const Home = () => {
           <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.2fr,1fr] items-center md:justify-center">
             {/* Left Column - Performance Info */}
             <motion.div 
-              className="space-y-6 md:text-center lg:text-left"
+              className="space-y-6 md:text-center lg:text-left pb-[130rem] md:pb-0"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
