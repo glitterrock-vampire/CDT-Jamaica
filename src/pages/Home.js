@@ -304,41 +304,39 @@ const Home = () => {
 
         {/* Content Overlay */}
         <div className="relative z-10 container mx-auto px-4 py-16 md:py-20 min-h-screen flex flex-col md:items-center md:justify-start md:pt-32">
-          {/* Mobile: Top content - Date and Venue */}
-          <div className="md:hidden flex-shrink-0 pt-24">
-            <motion.div
-              className="space-y-4"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Mobile: Date TBA removed */}
-              {featuredPerformance && (
-                <motion.div
-                  className={`text-4xl md:text-5xl lg:text-6xl font-semibold text-white`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                >
-                  {featuredPerformance.venue}
-                </motion.div>
-              )}
-            </motion.div>
+          {/* Mobile: Performance blurb at top */}
+          <div className="md:hidden pt-8 pb-12">
+            {upcomingPerformances.length > 0 && (
+              <motion.div 
+                className="space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h1 className="text-3xl font-bold text-white leading-tight">
+                  {upcomingPerformances[0].title}
+                </h1>
+                <p className="text-base text-white/90">
+                  {upcomingPerformances[0].description}
+                </p>
+                <div className="text-xs text-white/70 tracking-wider uppercase">
+                  {upcomingPerformances[0].venue} • {formatHeroDate(upcomingPerformances[0].date)}
+                </div>
+              </motion.div>
+            )}
           </div>
 
-          {/* Spacer for mobile - pushes content down */}
-          <div className="md:hidden flex-grow"></div>
+          {/* Spacer pushes remaining content down */}
+          <div className="flex-grow"></div>
 
-          {/* Desktop: Centered content OR Mobile: Bottom content */}
-          <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.2fr,1fr] items-center md:justify-center">
-            {/* Left Column - Performance Info */}
+          {/* Desktop: Performance info */}
+          <div className="hidden md:grid gap-12 md:gap-16 lg:grid-cols-[1.2fr,1fr] items-center md:justify-center">
             <motion.div 
-              className="space-y-6 md:text-center lg:text-left pb-[130rem] md:pb-0"
+              className="space-y-6 md:text-center lg:text-left"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              {/* Show next upcoming performance details */}
               {upcomingPerformances.length > 0 && (
                 <>
                   <motion.h1
@@ -369,12 +367,11 @@ const Home = () => {
               )}
             </motion.div>
 
-            {/* Right Column - Empty */}
             <div className="hidden lg:block"></div>
           </div>
 
-          {/* Mobile: Additional bottom spacing */}
-          <div className="md:hidden h-8"></div>
+          {/* Bottom spacing */}
+          <div className="h-8"></div>
         </div>
       </div>
 
