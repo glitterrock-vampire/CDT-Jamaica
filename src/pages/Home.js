@@ -320,7 +320,7 @@ const Home = () => {
                   {upcomingPerformances[0].description}
                 </p>
                 <div className="text-xs text-white/70 tracking-wider uppercase">
-                  {upcomingPerformances[0].venue} • {formatHeroDate(upcomingPerformances[0].date)}
+                  CDT AT CURVE . LEICESTER UK . {formatHeroDate(upcomingPerformances[0].date)}
                 </div>
               </motion.div>
             )}
@@ -361,7 +361,7 @@ const Home = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                   >
-                    {upcomingPerformances[0].venue} • {formatHeroDate(upcomingPerformances[0].date)}
+                    CDT AT CURVE . LEICESTER UK . {formatHeroDate(upcomingPerformances[0].date)}
                   </motion.div>
                 </>
               )}
